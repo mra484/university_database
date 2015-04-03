@@ -45,8 +45,8 @@ if(!empty($_POST)) {
 		die();
 	}
 	$user = $result->fetch_object();
-	//create cookie for email that lasts 20 seconds
-	setCookie("user", $user->email, time() + 20);
+	//create cookie for email that lasts 600 seconds
+	setCookie("user", $user->email, time() + 600);
 	echo '1';
 	
 } else if (empty($_COOKIE)) {
@@ -112,8 +112,8 @@ if(!empty($_POST)) {
 	
 	<!-- menu panel -->
 	<div id="side_panel" >
-		<p><a href="RSO"> RSO </a></p>
-		<p><a href="University"> University </a></p>
+		<p><a href="rso.php"> RSO </a></p>
+		<p><a href="university.php"> University </a></p>
 		
 		</div>
 
