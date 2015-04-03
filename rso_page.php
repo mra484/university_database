@@ -65,9 +65,34 @@ if(!empty($_GET)){
 		WHERE (r.rid) = '" . $rso_id . "'
 		&& (r.email) = '" . $email . "'");
 	$rso_member = $temp->fetch_assoc();
+	
+	//delete rso
+	if(isset($_GET['delete']) && $rso_member['admin']){
+		$db->query("DELETE FROM rso WHERE '" . $rso_id . "' = (rid)");
+		if($db->affected_rows){
+			echo 'Group deleted returning';
+			header("Location:mainpage.php?result=rso_deleted");
+			die();
+		} else {
+			echo 'Unable to delete group';
+		}
+	}
+	
+	//delete member
+	if(isset($_GET['remove']) && $rso_member['admin']){
+		$delete = trim($_GET['remove']);
+		$db->query("DELETE FROM rso_member_list WHERE (email) = '" . $delete . "' && (rid) = '" . $rso_id . "'");
+	}
 	 
+	//change admin
+	if(isset($_GET['change']) && $rso_member['admin']){
+		$change = trim($_GET['change']);
+		$db->query("UPDATE rso_member_list SET rso_member_list.admin = b'1' WHERE (rso_member_list.email) = '" . $change . "' && (rso_member_list.rid) = '" . $rso_id . "'");
+		$db->query("UPDATE rso_member_list SET rso_member_list.admin = b'0' WHERE (rso_member_list.email) = '" . $email . "' && (rso_member_list.rid) = '" . $rso_id . "'");
+		header("Location:rso_page.php?rso=" . $rso_id . "");
+	}
 	//get list of members
-	$temp = $db->query("SELECT CONCAT_WS(' ', u.first_name, u.last_name) as name, r.created as created, r.admin as admin FROM rso_member_list AS r, userlist AS u
+	$temp = $db->query("SELECT u.email as email, CONCAT_WS(' ', u.first_name, u.last_name) as name, r.created as created, r.admin as admin FROM rso_member_list AS r, userlist AS u
 		WHERE (r.rid) = '" . $rso_id . "'
 		&& (u.email) = (r.email)
 		GROUP BY (u.last_name)");
@@ -92,6 +117,10 @@ if(!empty($_GET)){
 <html>
 <head>
 	<title>cop4710 rso page: <?php echo escape($rso['name']); ?></title>
+	<style type="text/css">
+		#greyrow{ border: 10px white solid; }
+	</style>
+		
 </head>
 
 <body>
@@ -104,6 +133,8 @@ if(!empty($_GET)){
 		<h3>Admin panel</h3>
 		
 		<p> do admin stuff here </p>
+		<form action="?rso=<?php echo escape($rso_id);?>&delete=1" method="POST">
+			<input type="submit" value="Delete group"/>
 <?php
 	}
 ?>
@@ -194,10 +225,26 @@ if(!empty($_GET)){
 		if(!count($rso_member_list)){
 			echo 'No members';
 		} else {
+			?>
+	<table bgcolor="grey" cellpadding="10">
+		<tbody>
+		<?php
 			foreach($rso_member_list as $r){
 				?>
-		<p><?php echo escape($r['name']); ?>	Joined: <?php echo escape($r['created']); if($r['admin']){ ?> Group owner<?php } else { ?></p>
-		
+				<tr>
+				<td id="greyrow"><?php echo escape($r['name']); ?></td>
+				<td id="greyrow">Joined: <?php echo escape($r['created']); ?></td>
+				<td id="greyrow"><?php if($r['admin']){ ?>
+					Group owner</td>
+				<?php } else {
+					?>
+						<form action="?rso=<?php echo escape($rso_id); ?>&remove=<?php echo escape($r['email']); ?>" method="POST">
+						<input type="submit" value="Remove" name="submit"> </td>
+					<td id="greyrow">
+						<form action="?rso=<?php echo escape($rso_id); ?>&change=<?php echo escape($r['email']); ?>" method="POST">
+						<input type="submit" value="Set admin" name="submit"> </td>
+				</tr>
+
 		<?php
 				}
 			}

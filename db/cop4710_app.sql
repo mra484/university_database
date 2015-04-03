@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2015 at 06:06 PM
+-- Generation Time: Apr 03, 2015 at 07:36 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -74,6 +74,9 @@ INSERT INTO `comment` (`cid`, `email`, `message`, `eid`) VALUES
 
 CREATE TABLE IF NOT EXISTS `event` (
 `eid` int(11) NOT NULL,
+  `rid` int(11) DEFAULT NULL,
+  `uid` int(11) DEFAULT NULL,
+  `Name` varchar(60) NOT NULL,
   `rating` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `approval` bit(1) DEFAULT NULL,
@@ -90,9 +93,9 @@ CREATE TABLE IF NOT EXISTS `event` (
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`eid`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
-(1, 3, '2015-04-17', b'1', NULL, '08:00:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 1, 1),
-(2, 4, '2015-05-17', b'1', NULL, '06:00:00', 2, '123-456-7890', 'm2@knights.ucf.edu', 2, 2);
+INSERT INTO `event` (`eid`, `rid`, `uid`, `Name`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
+(1, NULL, NULL, '', 3, '2015-04-17', b'1', NULL, '08:00:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 1, 1),
+(2, NULL, NULL, '', 4, '2015-05-17', b'1', NULL, '06:00:00', 2, '123-456-7890', 'm2@knights.ucf.edu', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -145,6 +148,7 @@ INSERT INTO `event_visibility` (`evid`, `type`) VALUES
 CREATE TABLE IF NOT EXISTS `rso` (
 `rid` int(11) NOT NULL,
   `name` varchar(60) DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
   `rtid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -152,11 +156,11 @@ CREATE TABLE IF NOT EXISTS `rso` (
 -- Dumping data for table `rso`
 --
 
-INSERT INTO `rso` (`rid`, `name`, `rtid`) VALUES
-(1, 'RSO 1', 1),
-(2, 'RSO 2', 2),
-(3, 'RSO 3', 3),
-(4, 'RSO 4', 4);
+INSERT INTO `rso` (`rid`, `name`, `description`, `rtid`) VALUES
+(1, 'RSO 1', NULL, 1),
+(2, 'RSO 2', NULL, 2),
+(3, 'RSO 3', NULL, 3),
+(4, 'RSO 4', NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -178,23 +182,28 @@ CREATE TABLE IF NOT EXISTS `rso_event_list` (
 CREATE TABLE IF NOT EXISTS `rso_member_list` (
   `rid` int(11) NOT NULL DEFAULT '0',
   `email` varchar(60) NOT NULL DEFAULT '',
-  `admin` bit(1) DEFAULT NULL
+  `admin` bit(1) DEFAULT NULL,
+  `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rso_member_list`
 --
 
-INSERT INTO `rso_member_list` (`rid`, `email`, `admin`) VALUES
-(1, 'u1@knights.ucf.edu', b'1'),
-(1, 'u2@knights.ucf.edu', b'0'),
-(1, 'u3@knights.ucf.edu', b'0'),
-(1, 'u5@knights.ucf.edu', b'0'),
-(2, 'u11@knights.ucf.edu', b'0'),
-(2, 'u12@knights.ucf.edu', b'0'),
-(2, 'u4@knights.ucf.edu', b'1'),
-(2, 'u6@knights.ucf.edu', b'0'),
-(3, 'u6@knights.ucf.edu', b'1');
+INSERT INTO `rso_member_list` (`rid`, `email`, `admin`, `created`) VALUES
+(1, 'meeeee', b'0', '0000-00-00 00:00:00'),
+(1, 'u1@knights.ucf.edu', b'1', '0000-00-00 00:00:00'),
+(1, 'u2@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(1, 'u3@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(1, 'u5@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(2, 'u11@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(2, 'u12@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(2, 'u1@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(2, 'u2@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(2, 'u4@knights.ucf.edu', b'1', '0000-00-00 00:00:00'),
+(2, 'u6@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(3, 'u6@knights.ucf.edu', b'1', '0000-00-00 00:00:00'),
+(4, 'u1@knights.ucf.edu', b'0', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -364,6 +373,9 @@ CREATE TABLE IF NOT EXISTS `userlist` (
 --
 
 INSERT INTO `userlist` (`first_name`, `last_name`, `email`, `phone_number`) VALUES
+('m', 'm', 'm', 'm'),
+('me', 'me', 'meeeee', 'me'),
+('s', 's', 's', 's'),
 ('user 10', 'u10', 'u10@knights.ucf.edu', '4070000010'),
 ('user 11', 'u11', 'u11@knights.ucf.edu', '4070000011'),
 ('user 12', 'u12', 'u12@knights.ucf.edu', '4070000012'),
