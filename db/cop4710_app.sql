@@ -2,8 +2,8 @@
 -- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 03, 2015 at 07:36 PM
+-- Host: 127.0.0.1:33060
+-- Generation Time: Apr 05, 2015 at 07:46 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `event` (
 `eid` int(11) NOT NULL,
   `rid` int(11) DEFAULT NULL,
   `uid` int(11) DEFAULT NULL,
-  `Name` varchar(60) NOT NULL,
+  `name` varchar(60) NOT NULL,
   `rating` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `approval` bit(1) DEFAULT NULL,
@@ -87,14 +87,14 @@ CREATE TABLE IF NOT EXISTS `event` (
   `contact_email` varchar(60) DEFAULT NULL,
   `ecid` int(11) DEFAULT NULL,
   `evid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`eid`, `rid`, `uid`, `Name`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
-(1, NULL, NULL, '', 3, '2015-04-17', b'1', NULL, '08:00:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 1, 1),
+INSERT INTO `event` (`eid`, `rid`, `uid`, `name`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
+(1, 1, NULL, 'Test event rso1 ', 3, '2015-04-17', b'1', 'Testing event editor', '08:00:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 1, 1),
 (2, NULL, NULL, '', 4, '2015-05-17', b'1', NULL, '06:00:00', 2, '123-456-7890', 'm2@knights.ucf.edu', 2, 2);
 
 -- --------------------------------------------------------
@@ -149,6 +149,7 @@ CREATE TABLE IF NOT EXISTS `rso` (
 `rid` int(11) NOT NULL,
   `name` varchar(60) DEFAULT NULL,
   `description` varchar(1000) DEFAULT NULL,
+  `joinable` bit(1) NOT NULL,
   `rtid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -156,11 +157,11 @@ CREATE TABLE IF NOT EXISTS `rso` (
 -- Dumping data for table `rso`
 --
 
-INSERT INTO `rso` (`rid`, `name`, `description`, `rtid`) VALUES
-(1, 'RSO 1', NULL, 1),
-(2, 'RSO 2', NULL, 2),
-(3, 'RSO 3', NULL, 3),
-(4, 'RSO 4', NULL, 4);
+INSERT INTO `rso` (`rid`, `name`, `description`, `joinable`, `rtid`) VALUES
+(1, 'RSO 1', NULL, b'0', 1),
+(2, 'RSO 2', NULL, b'0', 2),
+(3, 'RSO 3', NULL, b'0', 3),
+(4, 'RSO 4', NULL, b'0', 4);
 
 -- --------------------------------------------------------
 
@@ -182,6 +183,7 @@ CREATE TABLE IF NOT EXISTS `rso_event_list` (
 CREATE TABLE IF NOT EXISTS `rso_member_list` (
   `rid` int(11) NOT NULL DEFAULT '0',
   `email` varchar(60) NOT NULL DEFAULT '',
+  `password` varchar(100) NOT NULL,
   `admin` bit(1) DEFAULT NULL,
   `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -190,20 +192,20 @@ CREATE TABLE IF NOT EXISTS `rso_member_list` (
 -- Dumping data for table `rso_member_list`
 --
 
-INSERT INTO `rso_member_list` (`rid`, `email`, `admin`, `created`) VALUES
-(1, 'meeeee', b'0', '0000-00-00 00:00:00'),
-(1, 'u1@knights.ucf.edu', b'1', '0000-00-00 00:00:00'),
-(1, 'u2@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
-(1, 'u3@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
-(1, 'u5@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
-(2, 'u11@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
-(2, 'u12@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
-(2, 'u1@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
-(2, 'u2@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
-(2, 'u4@knights.ucf.edu', b'1', '0000-00-00 00:00:00'),
-(2, 'u6@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
-(3, 'u6@knights.ucf.edu', b'1', '0000-00-00 00:00:00'),
-(4, 'u1@knights.ucf.edu', b'0', '0000-00-00 00:00:00');
+INSERT INTO `rso_member_list` (`rid`, `email`, `password`, `admin`, `created`) VALUES
+(1, 'meeeee', '', b'0', '0000-00-00 00:00:00'),
+(1, 'u1@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
+(1, 'u2@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
+(1, 'u3@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
+(1, 'u5@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
+(2, 'u11@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
+(2, 'u12@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
+(2, 'u1@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
+(2, 'u2@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
+(2, 'u4@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
+(2, 'u6@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
+(3, 'u6@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
+(4, 'u1@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -303,16 +305,17 @@ CREATE TABLE IF NOT EXISTS `university` (
 `uid` int(11) NOT NULL,
   `name` varchar(60) DEFAULT NULL,
   `aid` int(11) DEFAULT NULL,
-  `description` varchar(250) DEFAULT NULL
+  `description` varchar(250) DEFAULT NULL,
+  `domain` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `university`
 --
 
-INSERT INTO `university` (`uid`, `name`, `aid`, `description`) VALUES
-(1, 'University of Central Florida', 1, 'test university'),
-(2, 'Valencia Community College', 2, 'test university 2');
+INSERT INTO `university` (`uid`, `name`, `aid`, `description`, `domain`) VALUES
+(1, 'University of Central Florida', 1, 'test university', ''),
+(2, 'Valencia Community College', 2, 'test university 2', '');
 
 -- --------------------------------------------------------
 
@@ -353,7 +356,9 @@ INSERT INTO `university_member_list` (`uid`, `email`, `super_admin`) VALUES
 (1, 'u6@knights.ucf.edu', b'0'),
 (1, 'u7@knights.ucf.edu', b'0'),
 (1, 'u8@knights.ucf.edu', b'0'),
-(1, 'u9@knights.ucf.edu', b'0');
+(1, 'u9@knights.ucf.edu', b'0'),
+(2, 'm', b'0'),
+(2, 's', b'0');
 
 -- --------------------------------------------------------
 
@@ -469,7 +474,7 @@ ALTER TABLE `university_event_list`
 -- Indexes for table `university_member_list`
 --
 ALTER TABLE `university_member_list`
- ADD PRIMARY KEY (`uid`,`email`), ADD KEY `email` (`email`);
+ ADD PRIMARY KEY (`uid`,`email`), ADD UNIQUE KEY `email_2` (`email`), ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `userlist`
@@ -495,7 +500,7 @@ MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `event_category`
 --

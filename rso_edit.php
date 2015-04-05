@@ -17,6 +17,7 @@ if(!empty($_COOKIE)){
 //handle action taken join/leave
 if(!empty($_POST)){
 	$rso_id = trim($_GET['rso']);
+
 } 
 
 if(!empty($_GET)){
@@ -24,25 +25,11 @@ if(!empty($_GET)){
 	if(empty($rso_id)){
 		$rso_id = trim($_GET['rso']);
 	}
-	
-	//join rso
-	if(isset($_GET['join'])){
-		$sql = $db->prepare("INSERT INTO rso_member_list (email, rid, admin, created) VALUES (?,?,b'0', NOW())");
-		$sql->bind_param('ss', $email, $rso_id);
-		if( $sql->execute() ){
-			echo 'Successfully joined group';
-		} else {
-			echo 'Unable to join group';
-		}
-		
-	//leave rso
-	} else if (isset($_GET['leave'])){
-		$db->query("DELETE FROM rso_member_list WHERE (email) = '" . $email . "' && (rid) = '" . $rso_id . "'");
-		if($db->affected_rows) {
-			echo 'Successfully left group';
-		} else {
-			echo 'Unable to leave group';
-		}
+	if(isset($_GET['joinable'])){
+		$joinable = trim($_GET['joinable']);
+	} else {
+		$joinable = '2';
+
 	}
 	
 	//get table containing rso information
@@ -52,6 +39,10 @@ if(!empty($_GET)){
 			&& (rso_type.rtid) = (rso.rtid)");
 	//echo '<pre>', var_dump($temp), '</pre>';
 	$rso = $temp->fetch_assoc();
+
+	//get table containing rso type
+	$temp = $db->query("SELECT * FROM rso_type");
+	$rso_type = $temp->fetch_all(MYSQLI_ASSOC);
 	
 	if(empty($rso)){
 		//exit if no rso using the passed rid exists
@@ -65,6 +56,29 @@ if(!empty($_GET)){
 		WHERE (r.rid) = '" . $rso_id . "'
 		&& (r.email) = '" . $email . "'");
 	$rso_member = $temp->fetch_assoc();
+
+	//return if user isn't admin of this group
+	if(!$rso_member['admin']){
+		header("Location:rso_page.php?rso=" . $rso_id . "");
+	}
+
+	//change joinable
+	if($joinable == 1){
+		if($db->query("UPDATE rso SET rso.joinable = b'1' WHERE (rso.rid) = '" . $rso_id . "'")){
+			echo 'Change successful, group can be joined by anybody';
+			$rso['joinable'] = b'1';
+		} else {
+			echo 'unable to change joinable to 1';
+		}
+	} else if($joinable == 0){
+		if($db->query("UPDATE rso SET rso.joinable = b'0' WHERE (rso.rid) = '" . $rso_id . "'")){
+			echo 'Change successful, member can only be added by admin';
+			$rso['joinable'] = b'0';
+		} else {
+			echo 'unable to change joinable to 0';
+		}
+
+	}
 	
 	//delete rso
 	if(isset($_GET['delete']) && $rso_member['admin']){
@@ -84,6 +98,12 @@ if(!empty($_GET)){
 		$db->query("DELETE FROM rso_member_list WHERE (email) = '" . $delete . "' && (rid) = '" . $rso_id . "'");
 	}
 	 
+	//add member
+	if(isset($_GET['add']) && $rso_member['admin']){
+		$add = trim($_GET['add']);
+		$db->query("INSERT INTO rso_member_list WHERE (email) = '" . $add . "' && (rid) = '" . $rso_id . "'");
+	}
+	 
 	//change admin
 	if(isset($_GET['change']) && $rso_member['admin']){
 		$change = trim($_GET['change']);
@@ -99,8 +119,9 @@ if(!empty($_GET)){
 	$rso_member_list = $temp->fetch_all(MYSQLI_ASSOC);
 	
 	//get list of events relating to this rso
-	$temp = $db->query("SELECT * FROM event WHERE event.rid = '" . $rso_id . "'");
+	$temp = $db->query("SELECT event.* FROM event WHERE event.rid = '" . $rso_id . "'");
 	$event = $temp->fetch_all(MYSQLI_ASSOC);
+	$temp->free();
 		
 } else {
 	//exit if no rso variable passed
@@ -115,7 +136,7 @@ if(!empty($_GET)){
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<title>cop4710 rso page: <?php echo escape($rso['name']); ?></title>
+	<title> Edit <?php echo escape($rso['name']); ?></title>
 	<style type="text/css">
 		#greyrow{ border: 10px white solid; }
 	</style>
@@ -124,95 +145,72 @@ if(!empty($_GET)){
 
 <body>
 <h2><?php echo $rso['name']; ?>'s page</h2>
-<?php
-	//admin panel
-	if($rso_member['admin']){
-?>
+
 		<h3>Admin panel</h3>
 		
-		<p> do admin stuff here </p>
-		<form action="rso_edit.php?rso=<?php echo escape($rso_id); ?>" method="POST">
-			<input type="submit" value="Edit group"/>
-		</form>
-<?php
-	}
-?>
-		
+		<?php
+		if($rso['joinable']){
+		?>
 
+		<p> This group is currently joinable by anybody.</p>
+		<form action ="?rso=<?php echo escape($rso_id);?>&joinable=0" method="POST">
+			<input type="submit" value="Restrict adding to admin"/>
+		</form>
+
+		<?php
+		} else {
+			?>
+
+			<p> Only admins can add users to this group.</p>
+			<form action="?rso=<?php echo escape($rso_id);?>&joinable=1" method="POST">
+				<input type="submit" value="Allow anybody to join"/>
+			</form>
+		<?php
+		}
+		?>
+		<form action="?rso=<?php echo escape($rso_id);?>&delete=1" method="POST">
+			<input type="submit" value="Delete group"/>
+		</form>
 
 <h3>Description</h3>
-<!-- TODO get description -->
-<p> add description to database and use it here </p>
-<p> <?php echo escape($rso['description']); ?></p>
+
+<form action="?rso=<?php echo escape($rso_id); ?>" method="POST">
+	<textarea name="description" ><?php echo escape($rso['description']); ?></textarea>
+	<input type="submit" value="Save changes"/>
+</form>
+
 
 <h3>Information</h3>
-	<?php
-		if(!count($rso)) {
-			echo 'No records';
-		} else {
-	?>
 
-	<table border="2px solid black" cellpadding="10">
-		<thead>
-			<tr>
-				<th>RSO Name</th>
-				<th>Total members</th>
-				<th>Type</th>
-				<th>Join</th>
-			</tr>
-		<thead>
-		<tbody>
-		
-			<?php
-			//get table of members of this rso, output fields of RSO
-					$temp = $db->query("SELECT * FROM rso_member_list WHERE (rid) = '" . $rso_id . "'");
-					$temp2 = $temp->fetch_all(MYSQLI_ASSOC);
-			?>
-			
-			<tr>
-				<td><?php echo escape($rso['name']); ?></td>
-				<td><?php echo count($temp2); ?></td>
-				<td><?php echo escape($rso['type']); ?></td>
-				<td><?php 
-				if(empty($rso_member)) {
-					if($rso['joinable']){
-						?>
-						<form action="?rso=<?php echo escape($rso_id); ?>&join=1" method="POST">
-							<input type="submit" value="Join" name="submit">
-						</form></td>
-						<?php 
-					} else {
-						echo 'restricted';
-					}
-				} else {
-					?>
-					<form action="?rso=<?php echo escape($rso_id); ?>&leave=1" method="POST">
-						<input type="submit" value="Leave" name="submit">
-					</form></td>
-					<?php 
-				}
-				$temp->free();
-				?>
-			</tr>
-		</tbody>
-	</table>
-	
+<form action="?rso=<?php echo escape($rso_id); ?>" method="POST">
+	Group Name: <input type="text" value="<?php echo escape($rso['name']); ?>" name="name"/><br>
+	Group Type: <select id="group_type" name="group_type" size="<?php echo count($rso_type); ?>">
+
 	<?php
-		}
-	?>	
+	foreach($rso_type as $r){
+		?>
+
+		<option value="<?php echo escape($r['rtid']); ?>"><?php echo escape($r['type']); ?></option>
+
+	<?php
+	}
+	?>
+</select><br>
+<input type="submit" value="Save changes"/>
+</form>
 
 <!-- event list header -->
 <h3>event list</h3>
-
-
+	<form action="event_edit.php?rso=<?php echo escape($rso_id); ?>&new=1" method="POST">
+		<input type="submit" value="create event"/>
+	</form>
 	<?php
 		if(!count($event)){
 			echo 'No events';
 		} else {
 			foreach ($event as $r){
-				//get table with all university fields, (street city state)
 				$temp = $db->query("SELECT university.*, CONCAT_WS(' ', address.street, address.city, address.sid) as address 
-					FROM university LEFT JOIN address ON university.aid = address.aid WHERE university.uid = '" . $r['uid'] . "' LIMIT 1");
+					FROM university LEFT JOIN address ON university.aid = address.aid WHERE university.uid = '" . $r['uid'] . "'");
 				$univ = $temp->fetch_assoc();
 	?>
 	
@@ -222,6 +220,11 @@ if(!empty($_GET)){
 	<p><?php echo escape($r['description']); ?></p>
 	<br>
 	<p>Contact email: <?php echo escape($r['contact_email']); ?> <br> <?php echo escape($r['contact_phone']); ?></p>
+
+	<form action="event_edit.php?rso=<?php echo escape($rso_id); ?>&event=<?php echo escape($r['eid']); ?>" method="POST">
+		<input type="submit" value="Edit event"/>
+	</form>
+
 	<br>
 	<?php
 			}
@@ -250,6 +253,11 @@ if(!empty($_GET)){
 					Group owner</td>
 				<?php } else {
 					?>
+						<form action="?rso=<?php echo escape($rso_id); ?>&remove=<?php echo escape($r['email']); ?>" method="POST">
+						<input type="submit" value="Remove" name="submit"> </td>
+					<td id="greyrow">
+						<form action="?rso=<?php echo escape($rso_id); ?>&change=<?php echo escape($r['email']); ?>" method="POST">
+						<input type="submit" value="Set admin" name="submit"> </td>
 				</tr>
 
 		<?php
