@@ -2,8 +2,8 @@
 -- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1:33060
--- Generation Time: Apr 05, 2015 at 07:46 PM
+-- Host: 127.0.0.1
+-- Generation Time: Apr 06, 2015 at 06:47 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -32,15 +32,23 @@ CREATE TABLE IF NOT EXISTS `address` (
   `city` varchar(60) DEFAULT NULL,
   `sid` varchar(2) DEFAULT NULL,
   `p_code` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `address`
 --
 
 INSERT INTO `address` (`aid`, `street`, `city`, `sid`, `p_code`) VALUES
-(1, '1234 street ', 'City1', 'FL', '32819'),
-(2, '5678 street', 'City2', 'FL', '32825');
+(0, ' ', ' ', 'AK', ' '),
+(1, '1010 street23', 'City12', 'AZ', '32819'),
+(2, '5678 street', 'City2', 'FL', '32825'),
+(4, '5000 street', 'orlando', 'FL', '32819'),
+(5, '5000 street', 'orlando', 'FL', '32819'),
+(6, '5000 street', 'orlando', 'FL', '32819'),
+(7, '5000 street', 'orlando', 'FL', '32819'),
+(8, '5000 street', 'orlando', 'FL', '32819'),
+(9, '5000 street', 'orlando', 'FL', '32819'),
+(10, '333', '3566', 'DE', '32');
 
 -- --------------------------------------------------------
 
@@ -87,15 +95,22 @@ CREATE TABLE IF NOT EXISTS `event` (
   `contact_email` varchar(60) DEFAULT NULL,
   `ecid` int(11) DEFAULT NULL,
   `evid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event`
 --
 
 INSERT INTO `event` (`eid`, `rid`, `uid`, `name`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
-(1, 1, NULL, 'Test event rso1 ', 3, '2015-04-17', b'1', 'Testing event editor', '08:00:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 1, 1),
-(2, NULL, NULL, '', 4, '2015-05-17', b'1', NULL, '06:00:00', 2, '123-456-7890', 'm2@knights.ucf.edu', 2, 2);
+(0, NULL, NULL, '', NULL, NULL, NULL, '4654654', NULL, 0, NULL, NULL, NULL, NULL),
+(1, 1, NULL, 'Test event rso1', 3, '2014-01-01', b'1', '4654654', '20:35:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 2, 4),
+(2, NULL, NULL, '', 4, '2015-05-17', b'1', '4654654', '06:00:00', 2, '123-456-7890', 'm2@knights.ucf.edu', 2, 2),
+(5, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 5, '33999--999', '-9399', 1, 1),
+(6, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 6, '33999--999', '-9399', 1, 1),
+(7, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 7, '33999--999', '-9399', 1, 1),
+(8, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 8, '33999--999', '-9399', 1, 1),
+(9, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 9, '33999--999', '-9399', 1, 1),
+(10, 1, NULL, 'df', NULL, '2004-03-30', NULL, '4654654', '15:15:00', 10, '12351', '1235412532', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -151,17 +166,18 @@ CREATE TABLE IF NOT EXISTS `rso` (
   `description` varchar(1000) DEFAULT NULL,
   `joinable` bit(1) NOT NULL,
   `rtid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rso`
 --
 
 INSERT INTO `rso` (`rid`, `name`, `description`, `joinable`, `rtid`) VALUES
-(1, 'RSO 1', NULL, b'0', 1),
-(2, 'RSO 2', NULL, b'0', 2),
-(3, 'RSO 3', NULL, b'0', 3),
-(4, 'RSO 4', NULL, b'0', 4);
+(0, '', '', b'0', 1),
+(1, 'rs', '32', b'0', 4),
+(2, 'RSO 2', '', b'0', 2),
+(3, 'RSO 3', '', b'0', 2),
+(4, 'RSO 4', '', b'0', 2);
 
 -- --------------------------------------------------------
 
@@ -307,13 +323,14 @@ CREATE TABLE IF NOT EXISTS `university` (
   `aid` int(11) DEFAULT NULL,
   `description` varchar(250) DEFAULT NULL,
   `domain` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `university`
 --
 
 INSERT INTO `university` (`uid`, `name`, `aid`, `description`, `domain`) VALUES
+(0, NULL, 0, NULL, ''),
 (1, 'University of Central Florida', 1, 'test university', ''),
 (2, 'Valencia Community College', 2, 'test university 2', '');
 
@@ -490,7 +507,7 @@ ALTER TABLE `userlist`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `comment`
 --
@@ -500,7 +517,7 @@ MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `event_category`
 --
@@ -515,7 +532,7 @@ MODIFY `evid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `rso`
 --
 ALTER TABLE `rso`
-MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `rso_type`
 --
@@ -525,7 +542,7 @@ MODIFY `rtid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --

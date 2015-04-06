@@ -2,6 +2,7 @@
 //error_reporting(0);
 require 'db/connect.php';
 require 'db/security.php';
+include 'mysql_functions.php';
 
 if(!empty($_COOKIE)){
 	//retrieve rows for user information
@@ -17,6 +18,28 @@ if(!empty($_COOKIE)){
 //handle action taken join/leave
 if(!empty($_POST)){
 	$rso_id = trim($_GET['rso']);
+	if(isset($_POST['group_type'])){
+		$group_type = trim($_POST['group_type']);
+		echo $group_type;
+		//update group type
+		$db->query("UPDATE rso SET rso.rtid = '" . $group_type . "' WHERE (rso.rid) = '" . $rso_id . "'");
+	}
+
+	if(isset($_POST['name'])){
+		$name = trim($_POST['name']);
+
+		echo $name;
+		//update name
+		$db->query("UPDATE rso SET rso.name = '" . $name . "' WHERE (rso.rid) = '" . $rso_id . "'");
+	}
+
+	if(isset($_POST['description'])){
+		$description = trim($_POST['description']);
+
+		echo $description;
+		//update description
+		$db->query("UPDATE rso SET rso.description = '" . $description . "' WHERE (rso.rid) = '" . $rso_id . "'");
+	}
 
 } 
 
@@ -32,13 +55,7 @@ if(!empty($_GET)){
 
 	}
 	
-	//get table containing rso information
-	$temp = $db->query("SELECT rso.name AS name, rso.description as description, rso_type.type as type, rso.joinable as joinable
-		FROM rso, rso_type
-		WHERE (rso.rid) = '" . $rso_id . "' 
-			&& (rso_type.rtid) = (rso.rtid)");
-	//echo '<pre>', var_dump($temp), '</pre>';
-	$rso = $temp->fetch_assoc();
+	$rso = getRSO($rso_id, $db);
 
 	//get table containing rso type
 	$temp = $db->query("SELECT * FROM rso_type");
@@ -52,10 +69,8 @@ if(!empty($_GET)){
 	}
 	
 	//get user's admin field from rso_member_list
-	$temp = $db->query("SELECT r.admin AS admin FROM rso_member_list AS r
-		WHERE (r.rid) = '" . $rso_id . "'
-		&& (r.email) = '" . $email . "'");
-	$rso_member = $temp->fetch_assoc();
+	
+	$rso_member = getAdminInfo($rso_id, $email, $db);
 
 	//return if user isn't admin of this group
 	if(!$rso_member['admin']){
@@ -175,7 +190,7 @@ if(!empty($_GET)){
 <h3>Description</h3>
 
 <form action="?rso=<?php echo escape($rso_id); ?>" method="POST">
-	<textarea name="description" ><?php echo escape($rso['description']); ?></textarea>
+	<textarea name="description" ><?php echo escape($rso['description']); ?></textarea><br>
 	<input type="submit" value="Save changes"/>
 </form>
 
@@ -184,18 +199,25 @@ if(!empty($_GET)){
 
 <form action="?rso=<?php echo escape($rso_id); ?>" method="POST">
 	Group Name: <input type="text" value="<?php echo escape($rso['name']); ?>" name="name"/><br>
-	Group Type: <select id="group_type" name="group_type" size="<?php echo count($rso_type); ?>">
+	Group Type: <select id="group_type" name="group_type" size="1">
 
 	<?php
 	foreach($rso_type as $r){
+		if($r['rtid'] == $rso['rtid']){
+			?>
+		<option selected="selected" value="<?php echo escape($r['rtid']); ?>"><?php echo escape($r['type']); ?></option>
+
+			<?php
+		} else {
 		?>
 
 		<option value="<?php echo escape($r['rtid']); ?>"><?php echo escape($r['type']); ?></option>
 
 	<?php
+		}
 	}
 	?>
-</select><br>
+	</select><br>
 <input type="submit" value="Save changes"/>
 </form>
 
