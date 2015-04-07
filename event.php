@@ -15,7 +15,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 	if(!empty($_POST['comment_text'])) {
 		$message = trim($_POST['comment_text']);
 		$db->query("INSERT INTO comment (email, message, eid, created) VALUES ('" . $email . "', '" . $message . "', '" . $eid . "', NOW())");
-		if($db->affected_rows){
+		if($db->affected_rows == 1){
 			echo 'comment created';
 		} else {
 			echo 'unable to create comment';
@@ -23,18 +23,34 @@ if(isset($_COOKIE) && isset($_GET) ){
 	}
 
 	//edit comment if posted
-	if(!empty($_POST['edit_text'])) {
-		$message = trim($_POST['edit_text']);
-		echo $message;
-		$cid = trim($_GET['cid']);
-		$sql = $db->prepare("UPDATE comment SET comment.message = ? WHERE (comment.cid) = ?");
-		$sql->bind_param('ss', $message, $cid);
-		$sql->execute();
+	if(!empty($_POST)) {
+		if(isset($_GET['cid'])){
+			$cid = trim($_GET['cid']);
+		}
+		if(isset($_POST['edit_comment'])){
+			$message = trim($_POST['edit_text']);
+			echo $message;
 
-		if($db->affected_rows){
-			echo 'comment edited';
-		} else {
-			echo 'unable to edit comment';
+			$sql = $db->prepare("UPDATE comment SET comment.message = ? WHERE (comment.cid) = ?");
+			$sql->bind_param('ss', $message, $cid);
+			$sql->execute();
+
+			if($db->affected_rows == 1){
+				echo 'comment edited';
+			} else {
+				echo 'unable to edit comment';
+			}
+
+		} else if(isset($_POST['delete_comment'])){
+			$sql = $db->prepare("DELETE FROM comment WHERE comment.cid = ?");
+			$sql->bind_param('s', $cid);
+			$sql->execute();
+
+			if($db->affected_rows == 1){
+				echo 'comment deleted';
+			} else {
+				echo 'unable to delete comment';
+			}
 		}
 	}
 
@@ -66,6 +82,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 		LEFT JOIN userlist on comment.email = userlist.email
 		WHERE (eid) = '" . $event['eid'] . "'");
 	$comments = $temp->fetch_all(MYSQLI_ASSOC);
+
 } else {
 	header("Location:index.php?result=time_out");
 }
@@ -118,7 +135,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 		<div id="event_comment">
 			<form action="?event=<?php echo escape($event['eid']); ?>" method="POST" >
 				<textarea name="comment_text"></textarea><br>
-				<input type="submit" value="New Comment" />
+				<input type="submit" value="New Comment" /><br>
 			</form>
 		</div>
 		<?php
@@ -126,33 +143,50 @@ if(isset($_COOKIE) && isset($_GET) ){
 			?>
 			<div id="event_comment">
 				<br>
+				<form action="?event=<?php echo escape($event['eid']); ?>&cid=<?php echo escape($c['cid']); ?>" method="POST" >
 
 				<?php 
 				if( strcmp($c['email'], $email) == 0) {
 					//have user's comments appear as editable text for editing
-					?>
+				?>
+					<textarea name="edit_text"><?php echo escape($c['message']); ?></textarea><br>
+					<p class="comment_tag"><?php echo escape($c['first_name']); ?> <?php echo escape($c['last_name']); ?><br>
+						<?php echo escape($c['created']); ?> 
+					</p>
+					<input type="submit" name="edit_comment" value="Edit Comment" />
+					<input type="submit" name="delete_comment" value="Delete Comment" /><br>
+					
+				<?php
+				} else {
+					//message displayed as seen by others
+				?>
 
-					<form action="?event=<?php echo escape($event['eid']); ?>&cid=<?php echo escape($c['cid']); ?>" method="POST" >
-						<textarea name="edit_text"><?php echo escape($c['message']); ?></textarea><br>
-						<p class="comment_tag"><?php echo escape($c['first_name']); ?> <?php echo escape($c['last_name']); ?><br>
-							<?php echo escape($c['created']); ?> 
-						</p>
-						<input type="submit" value="Edit Comment" /><br>
-					</form>
+					<p><?php echo escape($c['message']); ?> </p>
+					<p class="comment_tag"><?php echo escape($c['first_name']); ?> <?php echo escape($c['last_name']); ?><br>
+						<?php echo escape($c['created']); ?> 
+					</p>
 
 					<?php
-				} else {
+					if($admin || $owner || $super_admin){
+					//add delete button for owners and admins
+					?>
+						<input type="submit" name="delete_comment" value="Delete Comment" /><br>
+
+					<?php
+					}
 					?>
 
-				<p><?php echo escape($c['message']); ?> </p>
-				<p class="comment_tag"><?php echo escape($c['first_name']); ?> <?php echo escape($c['last_name']); ?><br>
-					<?php echo escape($c['created']); ?> 
-				</p>
+
+				<?php 
+				}
+				?>
+
+				</form>
 			</div>
-			<?php 
+		<?php
 		}
-	}
 		?>
+
 	</div>
 </body>
 </html>
