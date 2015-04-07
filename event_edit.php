@@ -34,7 +34,7 @@ if(!empty($_POST)){
 	if(isset($_POST['description'])){
 		//read description, (update only);
 		$description = trim($_POST['description']);
-		$temp = $db->query("UPDATE event SET event.description = '" . $description . "'");
+		$temp = $db->query("UPDATE event SET event.description = '" . $description . "' WHERE (event.eid) = '" . $event_id . "'");
 		if($temp){
 			echo 'successfully updated description';
 		} else {
