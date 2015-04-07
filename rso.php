@@ -37,7 +37,11 @@ if(!empty($_COOKIE)){
 
 	<?php
 		if(!count($user_rso_list)) {
-			echo 'No records';
+
+			echo 'No records<br>'; ?>
+			<a href="rso_create.php">Create group</a><br>
+
+	<?php
 		} else {
 	?>
 
@@ -72,6 +76,8 @@ if(!empty($_COOKIE)){
 			
 		</tbody>
 	</table>
+
+	<a href="rso_create.php">Create group</a><br>
 	
 	<?php
 		}
