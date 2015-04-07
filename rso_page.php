@@ -2,6 +2,7 @@
 //error_reporting(0);
 require 'db/connect.php';
 require 'db/security.php';
+require 'mysql_functions.php';
 
 if(!empty($_COOKIE)){
 	//retrieve rows for user information
@@ -209,27 +210,10 @@ if(!empty($_GET)){
 		if(!count($event)){
 			echo 'No events';
 		} else {
-			foreach ($event as $r){
-				//get table with all university fields, (street city state)
-				$temp = $db->query("SELECT university.*, CONCAT_WS(' ', address.street, address.city, address.sid) as address 
-					FROM university LEFT JOIN address ON university.aid = address.aid WHERE university.uid = '" . $r['uid'] . "' LIMIT 1");
-				$univ = $temp->fetch_assoc();
-	?>
-	
-	<h4><?php echo escape($r['name']); ?></h4>
-	<?php echo "" . $r['date'] . " at " . $r['time'];  ?> <br><br>
-	<p><?php echo escape($univ['name']); ?> <br> <?php echo escape($univ['address']); ?></p>
-	<p><?php echo escape($r['description']); ?></p>
-	<br>
-	<p>Contact email: <?php echo escape($r['contact_email']); ?> <br> <?php echo escape($r['contact_phone']); ?></p>
-	<br>
-	<?php
-			}
-			?>
-			<hr>
-			<?php
+			printEventList($event);
 		}
 		?>
+
 	
 <h3>Member List</h3>
 

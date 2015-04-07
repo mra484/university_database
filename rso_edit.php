@@ -230,32 +230,10 @@ if(!empty($_GET)){
 		if(!count($event)){
 			echo 'No events';
 		} else {
-			foreach ($event as $r){
-				$temp = $db->query("SELECT university.*, CONCAT_WS(' ', address.street, address.city, address.sid) as address 
-					FROM university LEFT JOIN address ON university.aid = address.aid WHERE university.uid = '" . $r['uid'] . "'");
-				$univ = $temp->fetch_assoc();
-	?>
-	
-	<h4><?php echo escape($r['name']); ?></h4>
-	<?php echo "" . $r['date'] . " at " . $r['time'];  ?> <br><br>
-	<p><?php echo escape($univ['name']); ?> <br> <?php echo escape($univ['address']); ?></p>
-	<p><?php echo escape($r['description']); ?></p>
-	<br>
-	<p>Contact email: <?php echo escape($r['contact_email']); ?> <br> <?php echo escape($r['contact_phone']); ?></p>
-
-	<form action="event_edit.php?rso=<?php echo escape($rso_id); ?>&event=<?php echo escape($r['eid']); ?>" method="POST">
-		<input type="submit" value="Edit event"/>
-	</form>
-
-	<br>
-	<?php
-			}
-			?>
-			<hr>
-			<?php
+			printEventList($event);
 		}
 		?>
-	
+		
 <h3>Member List</h3>
 
 	<?php

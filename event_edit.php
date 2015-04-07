@@ -15,8 +15,20 @@ if(!empty($_COOKIE)){
 	die();
 }
 
-if(!empty($_POST)){
+if(isset($_GET['rso'])){
 	$rso_id = trim($_GET['rso']);
+}
+
+if(isset($_GET['event'])){
+	$event_id = trim($_GET['event']);
+}
+
+if(isset($_GET['new']) ){
+	$event_id = 0;
+}
+
+if(!empty($_POST)){
+
 	$event_id = trim($_GET['event']);
 
 	if(isset($_POST['description'])){
@@ -66,10 +78,13 @@ if(!empty($_POST)){
 			$aid = $db->insert_id;
 
 			//create new event
+			if(empty($uid)){
+				$uid = NULL;
+			}
 			$temp = $db->prepare("INSERT INTO
-				event (rid, name, date, time, aid, contact_phone, contact_email, ecid, evid) 
-				VALUES (?,?,?,?,?,?,?,?,?)");
-			$temp->bind_param('sssssssss', $rso_id, $name, $date_con, $time_con, $aid,
+				event (rid, uid, owner, name, date, time, aid, contact_phone, contact_email, ecid, evid) 
+				VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+			$temp->bind_param('sssssssssss', $rso_id, $uid, $email, $name, $date_con, $time_con, $aid,
 				$contact_phone, $contact_email, $event_category, $event_visibility);
 			$temp->execute();
 			$event_id = $db->insert_id;
@@ -116,23 +131,39 @@ if(!empty($_POST)){
 
 //start retrieving data to display fields
 if(!empty($_GET)){
-	if(empty($rso_id)){
-		//retrieve rso and event ids
-		$rso_id = trim($_GET['rso']);
+
+	//event id required, error on no event in url
+	if( !isset($event_id) ){
+		echo 'no event specified';
+		die();
 	}
 	//get table containing rso information
-	$rso = getRSO($rso_id, $db);
+	//$rso = getRSO($rso_id, $db);
 
-		
-	//get user's admin field from rso_member_list
-	$temp = $db->query("SELECT r.admin AS admin FROM rso_member_list AS r
-		WHERE (r.rid) = '" . $rso_id . "'
-		&& (r.email) = '" . $email . "'");
-	$rso_member = $temp->fetch_assoc();
+	$temp = $db->query("SELECT * FROM event WHERE (eid) = '" . $event_id . "'");
+	$event = $temp->fetch_assoc();
+	
+	$admin = false;
+	$super_admin = false;
+	$owner = false;
 
-	//return if user isn't admin of this group
-	if(!$rso_member['admin']){
-		header("Location:rso_page.php?rso=" . $rso_id . "");
+	if(!empty($event['rid']) ){
+		$temp = $db->query("SELECT admin FROM rso_member_list WHERE (email) = '" . $email ."' && (rid) = '" . $event['rid'] . "'");
+		$admin = $temp->fetch_assoc();
+	}
+	if(!empty($event['uid']) ){
+		$temp = $db->query("SELECT super_admin FROM university_member_list WHERE (email) = '" . $email  . "' && (uid) = '" . $event['uid'] . "'");
+		$super_admin = $temp->fetch_assoc();
+	}
+	if(strcmp($email, $event['owner'] ) == 0){
+		$owner = true;
+	}
+
+	//error if user can't edit this event
+	if(!($admin || $super_admin || $owner) && !isset($_GET['new']) ){
+		echo 'you don\'t have the privileges to edit this event';
+		die();
+		//ader("Location:rso_page.php?rso=" . $rso_id . "");
 	}
 
 	//get event category and visibility information
@@ -151,8 +182,6 @@ if(!empty($_GET)){
 	if(isset($_GET['new'])){
 		
 		$new =true;
-		//TODO handle $event_id, $address, $event for creating new event
-		$event_id = 0;
 		$event = 0;
 		$aid = 0;
 

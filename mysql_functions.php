@@ -19,5 +19,25 @@ function getAdminInfo($rso_id, $email, $db){
 	$rso_member = $temp->fetch_assoc();
 	return $rso_member;
 }
-
 ?>
+<html>
+	<?php 
+	function printEventList($event){
+		foreach($event as $e){
+			$description = $e['description'];
+			if(count($description) > 200 ){
+				$description = substr($description, 0, 200) . "...";
+			}
+			?>
+
+			<div id="event_block">
+				<h3><a href="event.php?event=<?php echo escape($e['eid']); ?>"><?php echo escape($e['name']); ?></h3></a><br>
+				<?php echo escape($e['date']); ?> at <?php echo escape($e['time']); ?> <br>
+				<p><?php echo escape($description); ?></p>
+			</div>
+			<?php
+		}
+
+	}
+?>
+</html>
