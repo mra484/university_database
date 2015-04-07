@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2015 at 06:47 PM
+-- Generation Time: Apr 07, 2015 at 05:34 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `city` varchar(60) DEFAULT NULL,
   `sid` varchar(2) DEFAULT NULL,
   `p_code` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `address`
@@ -48,7 +48,11 @@ INSERT INTO `address` (`aid`, `street`, `city`, `sid`, `p_code`) VALUES
 (7, '5000 street', 'orlando', 'FL', '32819'),
 (8, '5000 street', 'orlando', 'FL', '32819'),
 (9, '5000 street', 'orlando', 'FL', '32819'),
-(10, '333', '3566', 'DE', '32');
+(10, '333', '3566', 'DE', '32'),
+(11, '3242', 'orlando', 'FL', '23432'),
+(12, '3242', 'orlando', 'FL', '23432'),
+(13, '3242', 'orlando', 'FL', '23432'),
+(14, '3242', 'orlando', 'FL', '23432');
 
 -- --------------------------------------------------------
 
@@ -60,19 +64,24 @@ CREATE TABLE IF NOT EXISTS `comment` (
 `cid` int(11) NOT NULL,
   `email` varchar(60) DEFAULT NULL,
   `message` varchar(250) DEFAULT NULL,
+  `created` datetime NOT NULL,
   `eid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `comment`
 --
 
-INSERT INTO `comment` (`cid`, `email`, `message`, `eid`) VALUES
-(1, 'u4@knights.ucf.edu', 'message 1', 1),
-(2, 'u1@knights.ucf.edu', 'message 2', 2),
-(3, 'u2@knights.ucf.edu', 'message 3', 1),
-(4, 'u12@knights.ucf.edu', 'message 4', 1),
-(5, 'u8@knights.ucf.edu', 'message 5', 2);
+INSERT INTO `comment` (`cid`, `email`, `message`, `created`, `eid`) VALUES
+(1, 'u4@knights.ucf.edu', 'message 1', '0000-00-00 00:00:00', 1),
+(2, 'u1@knights.ucf.edu', 'message 2', '0000-00-00 00:00:00', 2),
+(3, 'u2@knights.ucf.edu', 'message 3', '0000-00-00 00:00:00', 1),
+(4, 'u12@knights.ucf.edu', 'message 4', '0000-00-00 00:00:00', 1),
+(5, 'u8@knights.ucf.edu', 'message 5', '0000-00-00 00:00:00', 2),
+(6, 'm', 'new commenting test', '0000-00-00 00:00:00', 11),
+(7, 'u2@knights.ucf.edu', 'new comment 2 tests', '2015-04-07 10:54:14', 11),
+(8, 'm', 'testing 3 commentdfasdfd', '2015-04-07 11:11:44', 11),
+(9, 'm', 'testing 3 comment', '2015-04-07 11:18:02', 11);
 
 -- --------------------------------------------------------
 
@@ -84,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `event` (
 `eid` int(11) NOT NULL,
   `rid` int(11) DEFAULT NULL,
   `uid` int(11) DEFAULT NULL,
+  `owner` varchar(60) NOT NULL,
   `name` varchar(60) NOT NULL,
   `rating` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
@@ -95,22 +105,23 @@ CREATE TABLE IF NOT EXISTS `event` (
   `contact_email` varchar(60) DEFAULT NULL,
   `ecid` int(11) DEFAULT NULL,
   `evid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`eid`, `rid`, `uid`, `name`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
-(0, NULL, NULL, '', NULL, NULL, NULL, '4654654', NULL, 0, NULL, NULL, NULL, NULL),
-(1, 1, NULL, 'Test event rso1', 3, '2014-01-01', b'1', '4654654', '20:35:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 2, 4),
-(2, NULL, NULL, '', 4, '2015-05-17', b'1', '4654654', '06:00:00', 2, '123-456-7890', 'm2@knights.ucf.edu', 2, 2),
-(5, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 5, '33999--999', '-9399', 1, 1),
-(6, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 6, '33999--999', '-9399', 1, 1),
-(7, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 7, '33999--999', '-9399', 1, 1),
-(8, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 8, '33999--999', '-9399', 1, 1),
-(9, 1, NULL, 'event create test', NULL, '2015-04-20', NULL, '4654654', '10:21:00', 9, '33999--999', '-9399', 1, 1),
-(10, 1, NULL, 'df', NULL, '2004-03-30', NULL, '4654654', '15:15:00', 10, '12351', '1235412532', 2, 3);
+INSERT INTO `event` (`eid`, `rid`, `uid`, `owner`, `name`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
+(0, NULL, NULL, '', '', NULL, NULL, NULL, 'nothing here here', NULL, 0, NULL, NULL, NULL, NULL),
+(1, 1, NULL, '', 'Test event rso1', 3, '2014-01-01', b'1', 'nothing here here', '20:35:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 2, 4),
+(2, NULL, NULL, '', '', 4, '2015-05-17', b'1', 'nothing here here', '06:00:00', 2, '123-456-7890', 'm2@knights.ucf.edu', 2, 2),
+(5, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 5, '33999--999', '-9399', 1, 1),
+(6, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 6, '33999--999', '-9399', 1, 1),
+(7, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 7, '33999--999', '-9399', 1, 1),
+(8, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 8, '33999--999', '-9399', 1, 1),
+(9, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 9, '33999--999', '-9399', 1, 1),
+(10, 1, NULL, '', 'df', NULL, '2004-03-30', NULL, 'nothing here here', '15:15:00', 10, '12351', '1235412532', 2, 3),
+(11, 6, NULL, 'm', 'new event', NULL, '0012-02-02', NULL, 'nothing here here', '03:00:00', 14, '123421', '324234242', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -166,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `rso` (
   `description` varchar(1000) DEFAULT NULL,
   `joinable` bit(1) NOT NULL,
   `rtid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rso`
@@ -177,7 +188,8 @@ INSERT INTO `rso` (`rid`, `name`, `description`, `joinable`, `rtid`) VALUES
 (1, 'rs', '32', b'0', 4),
 (2, 'RSO 2', '', b'0', 2),
 (3, 'RSO 3', '', b'0', 2),
-(4, 'RSO 4', '', b'0', 2);
+(4, 'RSO 4', '', b'0', 2),
+(6, 'group created 1', NULL, b'0', 3);
 
 -- --------------------------------------------------------
 
@@ -209,6 +221,7 @@ CREATE TABLE IF NOT EXISTS `rso_member_list` (
 --
 
 INSERT INTO `rso_member_list` (`rid`, `email`, `password`, `admin`, `created`) VALUES
+(0, 'm', '', b'1', '0000-00-00 00:00:00'),
 (1, 'meeeee', '', b'0', '0000-00-00 00:00:00'),
 (1, 'u1@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
 (1, 'u2@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
@@ -221,7 +234,8 @@ INSERT INTO `rso_member_list` (`rid`, `email`, `password`, `admin`, `created`) V
 (2, 'u4@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
 (2, 'u6@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
 (3, 'u6@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
-(4, 'u1@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00');
+(4, 'u1@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
+(6, 'm', '', b'1', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -323,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `university` (
   `aid` int(11) DEFAULT NULL,
   `description` varchar(250) DEFAULT NULL,
   `domain` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `university`
@@ -507,17 +521,17 @@ ALTER TABLE `userlist`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `event_category`
 --
@@ -532,7 +546,7 @@ MODIFY `evid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `rso`
 --
 ALTER TABLE `rso`
-MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `rso_type`
 --
@@ -542,7 +556,7 @@ MODIFY `rtid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
