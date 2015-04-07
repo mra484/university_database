@@ -56,9 +56,10 @@ if(!empty($_COOKIE)){
 	//admin panel
 	if($user['super_admin']){
 ?>
-		<h3>Admin panel</h3>
-		
-		<p> do admin stuff here </p>
+<form action="univ_edit.php?university=<?php echo escape($univ['uid']); ?>" method="post">
+	<input type="submit" value="Edit University" />
+</form>
+
 <?php
 	}
 ?>
@@ -73,23 +74,15 @@ if(!empty($_COOKIE)){
 		if(!count($event)){
 			echo 'No events';
 		} else {
-			foreach ($event as $r){
-				$temp = $db->query("SELECT university.*, CONCAT_WS(' ', address.street, address.city, address.sid) as address 
-					FROM university LEFT JOIN address ON university.aid = address.aid WHERE university.uid = '" . $r['uid'] . "'");
-				$univ = $temp->get_assoc();
-	?>
-	
-	<h4><?php echo escape($r['name']); ?></h4>
-	<?php echo CONCAT_WS(' at ', $r['date'], $r['time']);  ?> <br><br>
-	<p><?php echo escape($univ['name']); ?> <br> <?php echo escape($univ['address']); ?></p>
-	<p><?php echo escape($r['description']); ?></p>
-	<br>
-	<p>Contact email: <?php echo escape($r['contact_email']); ?> <br> <?php echo escape($r['contact_phone']); ?></p>
-	<br>
-	<?php
-			}
+			?>
+			
+			printEventList($event);
+
+			<?php
 		}
 		?>
+
+
 
 	
 </body>

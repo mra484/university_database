@@ -114,6 +114,7 @@ if(!empty($_POST)) {
 	<div id="side_panel" >
 		<p><a href="rso.php"> RSO </a></p>
 		<p><a href="university.php"> University </a></p>
+		<p><a href="univ_edit.php?new=1"> Create University </a></p>
 		
 		</div>
 
