@@ -31,8 +31,8 @@ function getAdminInfo($rso_id, $email, $db){
 			?>
 
 			<div id="event_block">
-				<h3><a href="event.php?event=<?php echo escape($e['eid']); ?>"><?php echo escape($e['name']); ?></h3></a><br>
-				<?php echo escape($e['date']); ?> at <?php echo escape($e['time']); ?> <br>
+				<h3><a href="event.php?event=<?php echo escape($e['eid']); ?>"><?php echo escape($e['name']); ?></h3></a>
+				<?php echo escape($e['date']); ?> at <?php echo escape($e['time']); ?> <br><br>
 				<p><?php echo escape($description); ?></p>
 			</div>
 			<?php

@@ -2,8 +2,8 @@
 -- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 07, 2015 at 05:34 PM
+-- Host: 127.0.0.1:33060
+-- Generation Time: Apr 08, 2015 at 02:48 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `city` varchar(60) DEFAULT NULL,
   `sid` varchar(2) DEFAULT NULL,
   `p_code` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `address`
@@ -52,7 +52,11 @@ INSERT INTO `address` (`aid`, `street`, `city`, `sid`, `p_code`) VALUES
 (11, '3242', 'orlando', 'FL', '23432'),
 (12, '3242', 'orlando', 'FL', '23432'),
 (13, '3242', 'orlando', 'FL', '23432'),
-(14, '3242', 'orlando', 'FL', '23432');
+(14, '3242', 'orlando', 'FL', '23432'),
+(15, '55500 street', 'oralndo', 'IL', '60559'),
+(16, '55500 street', 'oralndo', 'IL', '60559'),
+(17, 'asdfadsf123123', 'asdf', 'AL', 'asdfawsddsdASD'),
+(18, '1324123 street', 'cesadfa ity', 'IA', '564156');
 
 -- --------------------------------------------------------
 
@@ -66,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `message` varchar(250) DEFAULT NULL,
   `created` datetime NOT NULL,
   `eid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `comment`
@@ -78,10 +82,9 @@ INSERT INTO `comment` (`cid`, `email`, `message`, `created`, `eid`) VALUES
 (3, 'u2@knights.ucf.edu', 'message 3', '0000-00-00 00:00:00', 1),
 (4, 'u12@knights.ucf.edu', 'message 4', '0000-00-00 00:00:00', 1),
 (5, 'u8@knights.ucf.edu', 'message 5', '0000-00-00 00:00:00', 2),
-(6, 'm', 'new commenting test', '0000-00-00 00:00:00', 11),
-(7, 'u2@knights.ucf.edu', 'new comment 2 tests', '2015-04-07 10:54:14', 11),
-(8, 'm', 'testing 3 commentdfasdfd', '2015-04-07 11:11:44', 11),
-(9, 'm', 'testing 3 comment', '2015-04-07 11:18:02', 11);
+(11, 'm', 'adsfasdfadsfads', '2015-04-07 18:45:10', 11),
+(13, 's', 'asdfasdfsdfdsfadsfsdfsdfsd', '2015-04-07 18:45:45', 11),
+(14, 'm', 'fasdfasdf', '2015-04-07 18:47:06', 11);
 
 -- --------------------------------------------------------
 
@@ -91,8 +94,6 @@ INSERT INTO `comment` (`cid`, `email`, `message`, `created`, `eid`) VALUES
 
 CREATE TABLE IF NOT EXISTS `event` (
 `eid` int(11) NOT NULL,
-  `rid` int(11) DEFAULT NULL,
-  `uid` int(11) DEFAULT NULL,
   `owner` varchar(60) NOT NULL,
   `name` varchar(60) NOT NULL,
   `rating` int(11) DEFAULT NULL,
@@ -105,23 +106,24 @@ CREATE TABLE IF NOT EXISTS `event` (
   `contact_email` varchar(60) DEFAULT NULL,
   `ecid` int(11) DEFAULT NULL,
   `evid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`eid`, `rid`, `uid`, `owner`, `name`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
-(0, NULL, NULL, '', '', NULL, NULL, NULL, 'nothing here here', NULL, 0, NULL, NULL, NULL, NULL),
-(1, 1, NULL, '', 'Test event rso1', 3, '2014-01-01', b'1', 'nothing here here', '20:35:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 2, 4),
-(2, NULL, NULL, '', '', 4, '2015-05-17', b'1', 'nothing here here', '06:00:00', 2, '123-456-7890', 'm2@knights.ucf.edu', 2, 2),
-(5, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 5, '33999--999', '-9399', 1, 1),
-(6, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 6, '33999--999', '-9399', 1, 1),
-(7, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 7, '33999--999', '-9399', 1, 1),
-(8, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 8, '33999--999', '-9399', 1, 1),
-(9, 1, NULL, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 9, '33999--999', '-9399', 1, 1),
-(10, 1, NULL, '', 'df', NULL, '2004-03-30', NULL, 'nothing here here', '15:15:00', 10, '12351', '1235412532', 2, 3),
-(11, 6, NULL, 'm', 'new event', NULL, '0012-02-02', NULL, 'nothing here here', '03:00:00', 14, '123421', '324234242', 1, 2);
+INSERT INTO `event` (`eid`, `owner`, `name`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
+(0, '', '', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL),
+(1, '', 'Test event rso1', 3, '2014-01-01', b'1', 'nothing here here', '20:35:00', 1, '123-456-7890', 'm2@knights.ucf.edu', 2, 4),
+(2, '', '', 4, '2015-05-17', b'1', 'nothing here here', '06:00:00', 2, '123-456-7890', 'm2@knights.ucf.edu', 2, 2),
+(5, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 5, '33999--999', '-9399', 1, 1),
+(6, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 6, '33999--999', '-9399', 1, 1),
+(7, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 7, '33999--999', '-9399', 1, 1),
+(8, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 8, '33999--999', '-9399', 1, 1),
+(9, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 9, '33999--999', '-9399', 1, 1),
+(10, '', 'df', NULL, '2004-03-30', NULL, 'nothing here here', '15:15:00', 10, '12351', '1235412532', 2, 3),
+(11, 'm', 'Test event', NULL, '2012-02-02', NULL, '4566456415564e', '03:00:00', 14, '123421', '324234242', 1, 2),
+(12, 'm', 'dafd', NULL, '2016-02-12', NULL, 'ldafkj;sdklfjas;df l;asdf', '18:30:00', 18, '564564564156', '546544@asdlfkj.aso', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -177,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `rso` (
   `description` varchar(1000) DEFAULT NULL,
   `joinable` bit(1) NOT NULL,
   `rtid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rso`
@@ -189,7 +191,8 @@ INSERT INTO `rso` (`rid`, `name`, `description`, `joinable`, `rtid`) VALUES
 (2, 'RSO 2', '', b'0', 2),
 (3, 'RSO 3', '', b'0', 2),
 (4, 'RSO 4', '', b'0', 2),
-(6, 'group created 1', NULL, b'0', 3);
+(6, 'group created 1', NULL, b'1', 3),
+(7, '415123', '32151651532', b'0', 1);
 
 -- --------------------------------------------------------
 
@@ -201,6 +204,13 @@ CREATE TABLE IF NOT EXISTS `rso_event_list` (
   `rid` int(11) NOT NULL DEFAULT '0',
   `eid` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rso_event_list`
+--
+
+INSERT INTO `rso_event_list` (`rid`, `eid`) VALUES
+(6, 12);
 
 -- --------------------------------------------------------
 
@@ -235,7 +245,8 @@ INSERT INTO `rso_member_list` (`rid`, `email`, `password`, `admin`, `created`) V
 (2, 'u6@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
 (3, 'u6@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
 (4, 'u1@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(6, 'm', '', b'1', '0000-00-00 00:00:00');
+(6, 'm', '', b'1', '0000-00-00 00:00:00'),
+(7, 'm', '', b'1', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -337,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `university` (
   `aid` int(11) DEFAULT NULL,
   `description` varchar(250) DEFAULT NULL,
   `domain` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `university`
@@ -345,8 +356,11 @@ CREATE TABLE IF NOT EXISTS `university` (
 
 INSERT INTO `university` (`uid`, `name`, `aid`, `description`, `domain`) VALUES
 (0, NULL, 0, NULL, ''),
-(1, 'University of Central Florida', 1, 'test university', ''),
-(2, 'Valencia Community College', 2, 'test university 2', '');
+(1, 'University of Central Florida', 1, 'dafadsfds', ''),
+(2, 'Valencia Community College', 2, 'dafadsfds', ''),
+(3, 'University of Mark', 15, 'dafadsfds', '63030540932509'),
+(4, 'University of 55', 16, 'dafadsfds', '63030540932509'),
+(5, 'dfggsfdgsf', 17, 'afdfasdfasdfasdfasd', 'sadfdsfa.edu');
 
 -- --------------------------------------------------------
 
@@ -388,8 +402,19 @@ INSERT INTO `university_member_list` (`uid`, `email`, `super_admin`) VALUES
 (1, 'u7@knights.ucf.edu', b'0'),
 (1, 'u8@knights.ucf.edu', b'0'),
 (1, 'u9@knights.ucf.edu', b'0'),
-(2, 'm', b'0'),
-(2, 's', b'0');
+(2, 's', b'0'),
+(5, 'm', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `university_rso_link`
+--
+
+CREATE TABLE IF NOT EXISTS `university_rso_link` (
+  `uid` int(11) NOT NULL DEFAULT '0',
+  `rid` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -508,6 +533,12 @@ ALTER TABLE `university_member_list`
  ADD PRIMARY KEY (`uid`,`email`), ADD UNIQUE KEY `email_2` (`email`), ADD KEY `email` (`email`);
 
 --
+-- Indexes for table `university_rso_link`
+--
+ALTER TABLE `university_rso_link`
+ ADD PRIMARY KEY (`uid`,`rid`), ADD KEY `rid` (`rid`);
+
+--
 -- Indexes for table `userlist`
 --
 ALTER TABLE `userlist`
@@ -521,17 +552,17 @@ ALTER TABLE `userlist`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `event_category`
 --
@@ -546,7 +577,7 @@ MODIFY `evid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `rso`
 --
 ALTER TABLE `rso`
-MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `rid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `rso_type`
 --
@@ -556,7 +587,7 @@ MODIFY `rtid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- Constraints for dumped tables
 --
@@ -620,6 +651,13 @@ ADD CONSTRAINT `university_event_list_ibfk_2` FOREIGN KEY (`eid`) REFERENCES `ev
 ALTER TABLE `university_member_list`
 ADD CONSTRAINT `university_member_list_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `university` (`uid`) ON DELETE CASCADE,
 ADD CONSTRAINT `university_member_list_ibfk_2` FOREIGN KEY (`email`) REFERENCES `userlist` (`email`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `university_rso_link`
+--
+ALTER TABLE `university_rso_link`
+ADD CONSTRAINT `university_rso_link_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `university` (`uid`),
+ADD CONSTRAINT `university_rso_link_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `rso` (`rid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

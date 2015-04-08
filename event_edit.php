@@ -15,26 +15,48 @@ if(!empty($_COOKIE)){
 	die();
 }
 
+$mode = 0;
+
 if(isset($_GET['rso'])){
-	$rso_id = trim($_GET['rso']);
+	$rid = trim($_GET['rso']);
+	$mode = 1;
+}
+
+if(isset($_GET['university'])){
+	$uid = trim($_GET['university']);
+	$mode = 2;
 }
 
 if(isset($_GET['event'])){
-	$event_id = trim($_GET['event']);
+	$eid = trim($_GET['event']);
 }
 
 if(isset($_GET['new']) ){
-	$event_id = 0;
+	$eid = 0;
 }
 
 if(!empty($_POST)){
 
-	$event_id = trim($_GET['event']);
+	$eid = trim($_GET['event']);
+
+	if(isset($_POST['delete'])) {
+
+		$sql = $db->prepare("DELETE FROM event WHERE (event.eid) = ?");
+		$sql->bind_param('s', $eid);
+
+		if($sql.execute()){
+			$db->query("DELETE FROM rso_event_list WHERE (rso_event_list.eid) = '" . $eid . "')");
+			$db->query("DELETE FROM university_event_list WHERE (university_event_list.eid) = '" . $eid . "')");
+			echo 'event deleted';
+		} else {
+			echo 'unable to delete event';
+		}
+	}
 
 	if(isset($_POST['description'])){
 		//read description, (update only);
 		$description = trim($_POST['description']);
-		$temp = $db->query("UPDATE event SET event.description = '" . $description . "' WHERE (event.eid) = '" . $event_id . "'");
+		$temp = $db->query("UPDATE event SET event.description = '" . $description . "' WHERE (event.eid) = '" . $eid . "'");
 		if($temp){
 			echo 'successfully updated description';
 		} else {
@@ -65,7 +87,7 @@ if(!empty($_POST)){
 		$time_con = $datetime->format("H:i");
 
 
-		if($event_id == 0){
+		if($eid == 0){
 			//create new address
 			$temp = $db->prepare("INSERT INTO address (street, city, sid, p_code) VALUES (?,?,?,?)");
 			$temp->bind_param('ssss', $street, $city, $state, $p_code);
@@ -82,15 +104,45 @@ if(!empty($_POST)){
 				$uid = NULL;
 			}
 			$temp = $db->prepare("INSERT INTO
-				event (rid, uid, owner, name, date, time, aid, contact_phone, contact_email, ecid, evid) 
-				VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-			$temp->bind_param('sssssssssss', $rso_id, $uid, $email, $name, $date_con, $time_con, $aid,
+				event (owner, name, date, time, aid, contact_phone, contact_email, ecid, evid) 
+				VALUES (?,?,?,?,?,?,?,?,?)");
+			$temp->bind_param('sssssssss', $email, $name, $date_con, $time_con, $aid,
 				$contact_phone, $contact_email, $event_category, $event_visibility);
 			$temp->execute();
-			$event_id = $db->insert_id;
+			$eid = $db->insert_id;
+
+			//add connections
+			if($mode == 1){
+				//created by rso, get list of related university groups
+				$temp = $db->query("SELECT uid FROM university_rso_link WHERE (rid) = '" . $rid . "'");
+				$uid_list = $temp->fetch_all(MYSQLI_ASSOC);
+
+				//add rso link to event
+				$db->query("INSERT INTO rso_event_list (eid, rid) VALUES ('" . $eid . "', '" . $rid . "')");
+
+				//add university link to event if present
+				foreach($uid_list as $uid){
+					$db->query("INSERT INTO university_event_list (eid, uid) VALUES ('" . $eid . "', '" . $uid . "')");
+				}
+
+
+			} else if($mode == 2){
+				//created by university, get list of related rso groups
+				$temp = $db->query("SELECT rid FROM university_rso_link WHERE (uid) = '" . $uid . "'");
+				$rid_list = $temp->fetch_all(MYSQLI_ASSOC);
+
+				//add university link to event
+				$db->query("INSERT INTO university_event_list (eid, uid) VALUES ('" . $eid . "', '" . $uid . "')");
+
+				//add rso link to event if present
+				foreach($rid_list as $rid){
+					$db->query("INSERT INTO rso_event_list (eid, rid) VALUES ('" . $eid . "', '" . $rid . "')");
+				}
+			}
+
 		} else {
 			//update address
-			$temp = $db->query("SELECT aid FROM event WHERE (eid) = '" . $event_id . "'");
+			$temp = $db->query("SELECT aid FROM event WHERE (eid) = '" . $eid . "'");
 			$aid = $temp->fetch_assoc();
 			$temp = $db->prepare("UPDATE address SET 
 				address.street = ?,
@@ -115,7 +167,7 @@ if(!empty($_POST)){
 				event.contact_email = ?,
 				event.ecid = ?,
 				event.evid = ?
-				WHERE (event.eid) = '" . $event_id . "'");
+				WHERE (event.eid) = '" . $eid . "'");
 			$temp->bind_param('sssssss', $name, $date_con, $time_con, $contact_phone, $contact_email,
 				$event_category, $event_visibility);
 			$temp2 = $temp->execute();
@@ -133,14 +185,12 @@ if(!empty($_POST)){
 if(!empty($_GET)){
 
 	//event id required, error on no event in url
-	if( !isset($event_id) ){
+	if( !isset($eid) ){
 		echo 'no event specified';
 		die();
 	}
-	//get table containing rso information
-	//$rso = getRSO($rso_id, $db);
 
-	$temp = $db->query("SELECT * FROM event WHERE (eid) = '" . $event_id . "'");
+	$temp = $db->query("SELECT * FROM event WHERE (eid) = '" . $eid . "'");
 	$event = $temp->fetch_assoc();
 	
 	$admin = false;
@@ -163,7 +213,7 @@ if(!empty($_GET)){
 	if(!($admin || $super_admin || $owner) && !isset($_GET['new']) ){
 		echo 'you don\'t have the privileges to edit this event';
 		die();
-		//ader("Location:rso_page.php?rso=" . $rso_id . "");
+		//ader("Location:rso_page.php?rso=" . $rid . "");
 	}
 
 	//get event category and visibility information
@@ -189,11 +239,11 @@ if(!empty($_GET)){
 		$new = false;
 
 		//only change if event id hasn't already been created
-		if(empty($event_id)){
-			$event_id = trim($_GET['event']);
+		if(empty($eid)){
+			$eid = trim($_GET['event']);
 		}
 		//get event information
-		$temp = $db->query("SELECT * FROM event WHERE (eid) = '" . $event_id . "'");
+		$temp = $db->query("SELECT * FROM event WHERE (eid) = '" . $eid . "'");
 		$event = $temp->fetch_assoc();
 		
 		if(empty($event)){
@@ -264,7 +314,7 @@ if(!empty($_GET)){
 				?>
 		<h3>Description</h3>
 
-		<form action="?rso=<?php echo escape($rso_id); ?>&event=<?php echo escape($event_id);?>" method="POST">
+		<form action="?rso=<?php echo escape($rid); ?>&event=<?php echo escape($eid);?>" method="POST">
 			<textarea name="description"><?php echo escape($event['description']); ?></textarea><br>
 			<input type="submit" value="Save changes"/>
 		</form>
@@ -284,7 +334,7 @@ if(!empty($_GET)){
 
 <h2>Edit event information</h2>
 
-<form action="?rso=<?php echo escape($rso_id); ?>&event=<?php echo escape($event_id);?>" method="POST">
+<form action="?rso=<?php echo escape($rid); ?>&event=<?php echo escape($eid);?>" method="POST">
 	Event name:<input type="text" name="name" value="<?php echo escape($event['name']) ;?>"/><br>
 	Date:<input type="date" name="date" value="<?php echo escape($event['date']);?>"/><br>
 	Time:<input type="time" name="time" value="<?php echo escape($time) ;?>"/><br><br>

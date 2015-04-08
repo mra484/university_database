@@ -2,6 +2,7 @@
 error_reporting(1);
 require 'db/connect.php';
 require 'db/security.php';
+include 'mysql_functions.php';
 
 if(!empty($_COOKIE)){
 	//retrieve rows for user, super_admin field depends on database only allowing one university per user
@@ -24,6 +25,8 @@ if(!empty($_COOKIE)){
 		//get events belonging to university
 		$temp = $db->query("SELECT * FROM event WHERE (event.uid) = '" . $univ['uid'] . "'");
 		$event = $temp->fetch_all(MYSQLI_ASSOC);
+
+		$temp = $db->query("SELECT * FROM ")
 
 	} else {
 
@@ -75,12 +78,14 @@ if(!empty($_COOKIE)){
 			echo 'No events';
 		} else {
 			?>
-			
+
 			printEventList($event);
 
 			<?php
 		}
 		?>
+<h3>Affiliated groups</h3>
+
 
 
 

@@ -17,19 +17,19 @@ if(!empty($_COOKIE)){
 
 //handle action taken join/leave
 if(!empty($_POST)){
-	$rso_id = trim($_GET['rso']);
+	$rid = trim($_GET['rso']);
 } 
 
 if(!empty($_GET)){
 	//retrieve rso information
-	if(empty($rso_id)){
-		$rso_id = trim($_GET['rso']);
+	if(empty($rid)){
+		$rid = trim($_GET['rso']);
 	}
 	
 	//join rso
 	if(isset($_GET['join'])){
 		$sql = $db->prepare("INSERT INTO rso_member_list (email, rid, admin, created) VALUES (?,?,b'0', NOW())");
-		$sql->bind_param('ss', $email, $rso_id);
+		$sql->bind_param('ss', $email, $rid);
 		if( $sql->execute() ){
 			echo 'Successfully joined group';
 		} else {
@@ -38,7 +38,7 @@ if(!empty($_GET)){
 		
 	//leave rso
 	} else if (isset($_GET['leave'])){
-		$db->query("DELETE FROM rso_member_list WHERE (email) = '" . $email . "' && (rid) = '" . $rso_id . "'");
+		$db->query("DELETE FROM rso_member_list WHERE (email) = '" . $email . "' && (rid) = '" . $rid . "'");
 		if($db->affected_rows) {
 			echo 'Successfully left group';
 		} else {
@@ -49,7 +49,7 @@ if(!empty($_GET)){
 	//get table containing rso information
 	$temp = $db->query("SELECT rso.name AS name, rso.description as description, rso_type.type as type, rso.joinable as joinable
 		FROM rso, rso_type
-		WHERE (rso.rid) = '" . $rso_id . "' 
+		WHERE (rso.rid) = '" . $rid . "' 
 			&& (rso_type.rtid) = (rso.rtid)");
 	//echo '<pre>', var_dump($temp), '</pre>';
 	$rso = $temp->fetch_assoc();
@@ -63,13 +63,13 @@ if(!empty($_GET)){
 	
 	//get user's admin field from rso_member_list
 	$temp = $db->query("SELECT r.admin AS admin FROM rso_member_list AS r
-		WHERE (r.rid) = '" . $rso_id . "'
+		WHERE (r.rid) = '" . $rid . "'
 		&& (r.email) = '" . $email . "'");
 	$rso_member = $temp->fetch_assoc();
 	
 	//delete rso
 	if(isset($_GET['delete']) && $rso_member['admin']){
-		$db->query("DELETE FROM rso WHERE '" . $rso_id . "' = (rid)");
+		$db->query("DELETE FROM rso WHERE '" . $rid . "' = (rid)");
 		if($db->affected_rows){
 			echo 'Group deleted returning';
 			header("Location:mainpage.php?result=rso_deleted");
@@ -82,26 +82,30 @@ if(!empty($_GET)){
 	//delete member
 	if(isset($_GET['remove']) && $rso_member['admin']){
 		$delete = trim($_GET['remove']);
-		$db->query("DELETE FROM rso_member_list WHERE (email) = '" . $delete . "' && (rid) = '" . $rso_id . "'");
+		$db->query("DELETE FROM rso_member_list WHERE (email) = '" . $delete . "' && (rid) = '" . $rid . "'");
 	}
 	 
 	//change admin
 	if(isset($_GET['change']) && $rso_member['admin']){
 		$change = trim($_GET['change']);
-		$db->query("UPDATE rso_member_list SET rso_member_list.admin = b'1' WHERE (rso_member_list.email) = '" . $change . "' && (rso_member_list.rid) = '" . $rso_id . "'");
-		$db->query("UPDATE rso_member_list SET rso_member_list.admin = b'0' WHERE (rso_member_list.email) = '" . $email . "' && (rso_member_list.rid) = '" . $rso_id . "'");
-		header("Location:rso_page.php?rso=" . $rso_id . "");
+		$db->query("UPDATE rso_member_list SET rso_member_list.admin = b'1' WHERE (rso_member_list.email) = '" . $change . "' && (rso_member_list.rid) = '" . $rid . "'");
+		$db->query("UPDATE rso_member_list SET rso_member_list.admin = b'0' WHERE (rso_member_list.email) = '" . $email . "' && (rso_member_list.rid) = '" . $rid . "'");
+		header("Location:rso_page.php?rso=" . $rid . "");
 	}
 	//get list of members
 	$temp = $db->query("SELECT u.email as email, CONCAT_WS(' ', u.first_name, u.last_name) as name, r.created as created, r.admin as admin FROM rso_member_list AS r, userlist AS u
-		WHERE (r.rid) = '" . $rso_id . "'
+		WHERE (r.rid) = '" . $rid . "'
 		&& (u.email) = (r.email)
 		GROUP BY (u.last_name)");
 	$rso_member_list = $temp->fetch_all(MYSQLI_ASSOC);
 	
 	//get list of events relating to this rso
-	$temp = $db->query("SELECT * FROM event WHERE event.rid = '" . $rso_id . "'");
+	$temp = $db->query("SELECT * FROM rso_event_list
+	LEFT JOIN event ON rso_event_list.eid = event.eid 
+	WHERE rso_event_list.rid = '" . $rid . "'");
 	$event = $temp->fetch_all(MYSQLI_ASSOC);
+	echo '<pre>', var_dump($event), '</pre>';
+
 		
 } else {
 	//exit if no rso variable passed
@@ -132,7 +136,7 @@ if(!empty($_GET)){
 		<h3>Admin panel</h3>
 		
 		<p> do admin stuff here </p>
-		<form action="rso_edit.php?rso=<?php echo escape($rso_id); ?>" method="POST">
+		<form action="rso_edit.php?rso=<?php echo escape($rid); ?>" method="POST">
 			<input type="submit" value="Edit group"/>
 		</form>
 <?php
@@ -153,7 +157,7 @@ if(!empty($_GET)){
 		} else {
 	?>
 
-	<table border="2px solid black" cellpadding="10">
+	<table border="2" cellpadding="10">
 		<thead>
 			<tr>
 				<th>RSO Name</th>
@@ -166,7 +170,7 @@ if(!empty($_GET)){
 		
 			<?php
 			//get table of members of this rso, output fields of RSO
-					$temp = $db->query("SELECT * FROM rso_member_list WHERE (rid) = '" . $rso_id . "'");
+					$temp = $db->query("SELECT * FROM rso_member_list WHERE (rid) = '" . $rid . "'");
 					$temp2 = $temp->fetch_all(MYSQLI_ASSOC);
 			?>
 			
@@ -178,7 +182,7 @@ if(!empty($_GET)){
 				if(empty($rso_member)) {
 					if($rso['joinable']){
 						?>
-						<form action="?rso=<?php echo escape($rso_id); ?>&join=1" method="POST">
+						<form action="?rso=<?php echo escape($rid); ?>&join=1" method="POST">
 							<input type="submit" value="Join" name="submit">
 						</form></td>
 						<?php 
@@ -187,7 +191,7 @@ if(!empty($_GET)){
 					}
 				} else {
 					?>
-					<form action="?rso=<?php echo escape($rso_id); ?>&leave=1" method="POST">
+					<form action="?rso=<?php echo escape($rid); ?>&leave=1" method="POST">
 						<input type="submit" value="Leave" name="submit">
 					</form></td>
 					<?php 
