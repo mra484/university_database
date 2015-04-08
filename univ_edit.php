@@ -27,7 +27,21 @@ if(!empty($_POST)){
 
 	$uid = trim($_GET['university']);
 
-	if(isset($_POST['description'])){
+	if(isset($_POST['remove'])){
+		//unlink group from this university
+		$rid = trim($_POST['remove']);
+		$sql = $db->prepare("DELETE FROM university_rso_link WHERE (university_rso_link.uid) = ? && (university_rso_link.rid) = ?");
+		$sql->bind_param('ss', $uid, $rid);
+		$sql->execute();
+
+	} else if (isset($_POST['rso_select'])){
+		//link group to this university
+		$rid = trim($_POST['rso_select']);
+		$sql = $db->prepare("INSERT INTO university_rso_link (uid, rid) VALUES (?,?)");
+		$sql->bind_param('ss', $uid, $rid);
+		$sql->execute();
+
+	} else if(isset($_POST['description'])){
 		//read description, (update only);
 		$description = trim($_POST['description']);
 		$temp = $db->query("UPDATE university SET 
@@ -168,6 +182,20 @@ if(!empty($_GET)){
 	//get address information
 	$temp = $db->query("SELECT * FROM address WHERE (aid) = '" . $aid . "'");
 	$address = $temp->fetch_assoc();
+
+	//get list of affiliated groups
+	$temp = $db->query("SELECT * FROM university_rso_link 
+		LEFT JOIN rso ON university_rso_link.rid = rso.rid
+		LEFT JOIN rso_type ON rso.rtid = rso_type.rtid
+		WHERE (uid) = '" . $uid . "'");
+	$rso_list = $temp->fetch_all(MYSQLI_ASSOC);
+
+	//get list of other groups
+	$temp = $db->query("SELECT rid, name, rtid FROM rso r WHERE NOT EXISTS
+			(SELECT * FROM university_rso_link WHERE (university_rso_link.uid) = '" . $uid . "'
+				&& (university_rso_link.rid) = (r.rid) )");
+	$non_member = $temp->fetch_all(MYSQLI_ASSOC);
+
 		
 } else {
 	//exit if no rso variable passed
@@ -248,6 +276,49 @@ if(!empty($_GET)){
 	Domain:<input type="text" name="domain" value="<?php echo escape($university['domain']);?>"/><br>
 	<input type="submit" value="Save changes"/>
 </form>
+
+<h2>Group list</h2>
+<form action="?university=<?php echo escape($university['uid']); ?>" method="POST" >
+	<!-- list of possible groups to add -->
+	<select id= "rso_select" name="rso_select" size="1">
+		<?php
+		foreach($non_member as $r){
+			?>
+			<option value="<?php echo escape($r['rid']); ?>" ><?php echo escape($r['name']); ?> </option>
+
+		<?php
+		}
+		?>
+	</select>
+	<input type="submit" value="Link" />
+</form>
+
+<?php
+if(!count($rso_list)){
+	echo 'No affiliated groups';
+} else {
+	//list of groups that are part of this university
+	?>
+
+	<table border="2">
+		<?php
+	foreach($rso_list as $r){
+		?>
+
+		<tr>
+			<td><?php echo escape($r['name']); ?> </td>
+			<td><?php echo escape($r['type']); ?> </td>
+			<td><form action="?university=<?php echo escape($university['uid']); ?>&remove=<?php echo escape($r['rid']); ?>" method="POST">
+				<input type="submit" name="remove" value="remove" />
+			</form></td>
+		</tr>
+			<?php
+	}
+	?>
+	</table>
+	<?php
+}
+?>
 
 </body>
 </html>

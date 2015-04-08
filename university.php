@@ -20,13 +20,24 @@ if(!empty($_COOKIE)){
 			SELECT uml.uid FROM university_member_list AS uml WHERE (uml.email) = '" . $user['email'] . "'
 			)");
 	$univ = $temp->fetch_assoc();
+
 	if(!empty($univ)){
+		$uid = trim($univ['uid']);
 
 		//get events belonging to university
-		$temp = $db->query("SELECT * FROM event WHERE (event.uid) = '" . $univ['uid'] . "'");
+		$temp = $db->query("SELECT * FROM university_event_list 
+			LEFT JOIN event ON university_event_list.eid = event.eid
+			WHERE (university_event_list.uid) = '" . $uid . "'");
 		$event = $temp->fetch_all(MYSQLI_ASSOC);
 
-		$temp = $db->query("SELECT * FROM ")
+		$temp = $db->query("SELECT * FROM ");
+
+		//get list of affiliated groups
+		$temp = $db->query("SELECT * FROM university_rso_link 
+			LEFT JOIN rso ON university_rso_link.rid = rso.rid
+			LEFT JOIN rso_type ON rso.rtid = rso_type.rtid
+			WHERE (uid) = '" . $uid . "'");
+		$rso_list = $temp->fetch_all(MYSQLI_ASSOC);
 
 	} else {
 
@@ -85,10 +96,29 @@ if(!empty($_COOKIE)){
 		}
 		?>
 <h3>Affiliated groups</h3>
+<?php
+if(!count($rso_list)){
+	echo 'No affiliated groups';
+} else {
+	//list of groups that are part of this university
+	?>
 
+	<table border="2">
+		<?php
+	foreach($rso_list as $r){
+		?>
 
+		<tr>
+			<td><?php echo escape($r['name']); ?> </td>
+			<td><?php echo escape($r['type']); ?> </td>
+		</tr>
+			<?php
+	}
+	?>
+	</table>
+	<?php
+}
+?>
 
-
-	
 </body>
 </html>
