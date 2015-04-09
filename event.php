@@ -151,7 +151,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 					//have user's comments appear as editable text for editing
 				?>
 					<textarea name="edit_text"><?php echo escape($c['message']); ?></textarea><br>
-					<p class="comment_tag"><?php echo escape($c['first_name']); ?> <?php echo escape($c['last_name']); ?><br>
+					<p id="comment_tag"><?php echo escape($c['first_name']); ?> <?php echo escape($c['last_name']); ?><br>
 						<?php echo escape($c['created']); ?> 
 					</p>
 					<input type="submit" name="edit_comment" value="Edit Comment" />

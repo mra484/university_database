@@ -1,0 +1,47 @@
+
+
+/* temporary style for tables */
+#greyrow{ border: 10px white solid; }
+
+/* side panel on main page */
+#side_panel {border: 2px solid black;
+	position: absolute;
+	width: 20%;	left: 80%; 
+	}
+
+#user_panel {
+
+}
+
+/* comment information user/created */
+#comment_tag{
+
+}
+
+/*block containing single comment*/
+#event_comment{
+
+}
+
+/*section containing comments*/
+#event_comment_section{
+
+}
+
+/*text for events*/
+#event_title{
+
+}
+
+#event_time{
+
+}
+
+#event_location{
+
+}
+
+#event_contact{
+
+}
+

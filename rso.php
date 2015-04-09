@@ -94,7 +94,7 @@ if(!empty($_COOKIE)){
 	} else {
 	?>
 		
-	<table border="2px solid black" cellpadding="10">
+	<table border="2px" cellpadding="10">
 		<thead>
 			<tr>
 				<th> RSO Name</th>
