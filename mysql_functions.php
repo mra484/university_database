@@ -60,7 +60,9 @@ function getAdminInfo($rso_id, $email, $db){
 	<?php 
 	function printEventList2($rid, $uid, $db){
 		if($rid == NULL){
-			$temp = $db->query("SELECT * FROM university_event_list
+			echo 'checking for rso events: uid is ' . $uid . "\n";
+			$temp = $db->query(
+			"SELECT * FROM university_event_list
 			LEFT JOIN event ON university_event_list.eid = event.eid
 			WHERE (university_event_list.uid) = '" . $uid . "'
 			UNION
@@ -68,11 +70,13 @@ function getAdminInfo($rso_id, $email, $db){
 			LEFT JOIN event ON rso_event_list.eid = event.eid
 			WHERE (rso_event_list.rid) = (
 				SELECT rid FROM university_rso_link
-				WHERE uid = '" . $uid . "')
+				WHERE (uid) = '" . $uid . "')
 			");
 			
 		} else if ($uid == NULL){
-			$temp = $db->query("SELECT * FROM rso_event_list
+			echo 'checking univ for events: rid is ' . $rid . "\n";
+			$temp = $db->query(
+			"SELECT * FROM rso_event_list
 			LEFT JOIN event ON rso_event_list.eid = event.eid
 			WHERE (rso_event_list.rid) = '" . $rid . "'
 			UNION
@@ -80,12 +84,16 @@ function getAdminInfo($rso_id, $email, $db){
 			LEFT JOIN event ON university_event_list.eid = event.eid
 			WHERE (university_event_list.uid) = (
 				SELECT uid FROM university_rso_link
-				WHERE rid = '" . $rid . "')
+				WHERE (rid) = '" . $rid . "')
 			");
 			
 		}
 	
 		$event = $temp->fetch_all(MYSQLI_ASSOC);
+
+		if(!count($event)){
+			echo 'no events';
+		}
 		
 		foreach($event as $e){
 			$description = $e['description'];
