@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1:33060
--- Generation Time: Apr 08, 2015 at 02:48 AM
+-- Generation Time: Apr 10, 2015 at 12:38 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `city` varchar(60) DEFAULT NULL,
   `sid` varchar(2) DEFAULT NULL,
   `p_code` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `address`
@@ -56,7 +56,12 @@ INSERT INTO `address` (`aid`, `street`, `city`, `sid`, `p_code`) VALUES
 (15, '55500 street', 'oralndo', 'IL', '60559'),
 (16, '55500 street', 'oralndo', 'IL', '60559'),
 (17, 'asdfadsf123123', 'asdf', 'AL', 'asdfawsddsdASD'),
-(18, '1324123 street', 'cesadfa ity', 'IA', '564156');
+(18, '1324123 streetdd', 'cesadfa ity', 'IA', '564156'),
+(19, 'kl;jasd;lkfj', ';l', 'AK', '234243'),
+(20, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465'),
+(21, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465'),
+(22, '456', '456456', 'AK', '546'),
+(23, '4564', '654', 'AK', '456');
 
 -- --------------------------------------------------------
 
@@ -70,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `message` varchar(250) DEFAULT NULL,
   `created` datetime NOT NULL,
   `eid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `comment`
@@ -84,7 +89,9 @@ INSERT INTO `comment` (`cid`, `email`, `message`, `created`, `eid`) VALUES
 (5, 'u8@knights.ucf.edu', 'message 5', '0000-00-00 00:00:00', 2),
 (11, 'm', 'adsfasdfadsfads', '2015-04-07 18:45:10', 11),
 (13, 's', 'asdfasdfsdfdsfadsfsdfsdfsd', '2015-04-07 18:45:45', 11),
-(14, 'm', 'fasdfasdf', '2015-04-07 18:47:06', 11);
+(14, 'm', 'fasdfasdf', '2015-04-07 18:47:06', 11),
+(15, 'm', '4545645', '2015-04-09 16:27:27', 12),
+(16, 'm', '4545645', '2015-04-09 16:27:43', 12);
 
 -- --------------------------------------------------------
 
@@ -106,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `contact_email` varchar(60) DEFAULT NULL,
   `ecid` int(11) DEFAULT NULL,
   `evid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event`
@@ -123,7 +130,12 @@ INSERT INTO `event` (`eid`, `owner`, `name`, `rating`, `date`, `approval`, `desc
 (9, '', 'event create test', NULL, '2015-04-20', NULL, 'nothing here here', '10:21:00', 9, '33999--999', '-9399', 1, 1),
 (10, '', 'df', NULL, '2004-03-30', NULL, 'nothing here here', '15:15:00', 10, '12351', '1235412532', 2, 3),
 (11, 'm', 'Test event', NULL, '2012-02-02', NULL, '4566456415564e', '03:00:00', 14, '123421', '324234242', 1, 2),
-(12, 'm', 'dafd', NULL, '2016-02-12', NULL, 'ldafkj;sdklfjas;df l;asdf', '18:30:00', 18, '564564564156', '546544@asdlfkj.aso', 4, 1);
+(12, 'm', 'dafd', NULL, '2016-02-12', NULL, 'ldafkj;sdklfjas;df l;asdfdgfdg', '18:30:00', 18, '564564564156', '546544@asdlfkj.aso', 4, 1),
+(13, 'm', 'as;df', NULL, '1984-11-04', NULL, 'event created by university', '20:00:00', 19, '123412341324', '242342', 1, 1),
+(14, 'm', 'university event 1', NULL, '1990-04-12', NULL, 'Test university event 1', '20:00:00', 20, '1654156465', '564', 1, 1),
+(15, 'm', 'university event 2', NULL, '1990-04-12', NULL, 'test description university event 2', '20:00:00', 21, '1654156465', '564', 1, 1),
+(16, 'm', 'university event 3', NULL, '1990-04-12', NULL, NULL, '20:00:00', 22, '56', '456', 1, 1),
+(17, 'm', 'university event 4', NULL, '2016-02-12', NULL, NULL, '20:00:00', 23, '456564', '45564', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -166,6 +178,54 @@ INSERT INTO `event_visibility` (`evid`, `type`) VALUES
 (2, 'Event visibility 2'),
 (3, 'Event visibility 3'),
 (4, 'Event visibility 4');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mail`
+--
+
+CREATE TABLE IF NOT EXISTS `mail` (
+`mid` int(11) NOT NULL,
+  `sent` date DEFAULT NULL,
+  `opened` date DEFAULT NULL,
+  `subject` varchar(150) NOT NULL,
+  `message` varchar(1000) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mail`
+--
+
+INSERT INTO `mail` (`mid`, `sent`, `opened`, `subject`, `message`) VALUES
+(1, '2015-04-09', NULL, 'mmm', 'masedlfkajsdlfl'),
+(2, '2015-04-09', NULL, 'Re: mmm', '\\n______________\\nmasedlfkajsdlfl'),
+(5, '2015-04-09', NULL, 'Re: mmm', '_______________\r\nSent on: 2015-04-09\r\nFrom: m\r\nTo: m\r\nSubject: mmm\r\n\r\nmasedlfkajsdlfl'),
+(6, '2015-04-09', NULL, 'test 2', 'new message test 2\r\n\r\n\r\n<?php echo ''1111'' ?>'),
+(7, '2015-04-09', NULL, 'Re: test 2', '_______________\r\nSent on: 2015-04-09\r\nFrom: m\r\nTo: u1@knights.ucf.edu\r\nSubject: test 2\r\n\r\nnew message test 2\r\n\r\n\r\n<?php echo ''1111''; ?>');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mail_list`
+--
+
+CREATE TABLE IF NOT EXISTS `mail_list` (
+  `mid` int(11) NOT NULL,
+  `to_user` varchar(60) DEFAULT NULL,
+  `from_user` varchar(60) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mail_list`
+--
+
+INSERT INTO `mail_list` (`mid`, `to_user`, `from_user`) VALUES
+(1, 'm', 'm'),
+(2, 'm', 'm'),
+(5, 'm', 'm'),
+(6, 'u1@knights.ucf.edu', 'm'),
+(7, 'm', 'u1@knights.ucf.edu');
 
 -- --------------------------------------------------------
 
@@ -231,7 +291,6 @@ CREATE TABLE IF NOT EXISTS `rso_member_list` (
 --
 
 INSERT INTO `rso_member_list` (`rid`, `email`, `password`, `admin`, `created`) VALUES
-(0, 'm', '', b'1', '0000-00-00 00:00:00'),
 (1, 'meeeee', '', b'0', '0000-00-00 00:00:00'),
 (1, 'u1@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
 (1, 'u2@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
@@ -356,8 +415,8 @@ CREATE TABLE IF NOT EXISTS `university` (
 
 INSERT INTO `university` (`uid`, `name`, `aid`, `description`, `domain`) VALUES
 (0, NULL, 0, NULL, ''),
-(1, 'University of Central Florida', 1, 'dafadsfds', ''),
-(2, 'Valencia Community College', 2, 'dafadsfds', ''),
+(1, 'University of Central Florida', 1, 'dafadsfds', 'ucf.edu'),
+(2, 'Valencia Community College', 2, 'dafadsfds', 'valenciacollege.edu'),
 (3, 'University of Mark', 15, 'dafadsfds', '63030540932509'),
 (4, 'University of 55', 16, 'dafadsfds', '63030540932509'),
 (5, 'dfggsfdgsf', 17, 'afdfasdfasdfasdfasd', 'sadfdsfa.edu');
@@ -372,6 +431,13 @@ CREATE TABLE IF NOT EXISTS `university_event_list` (
   `uid` int(11) NOT NULL DEFAULT '0',
   `eid` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `university_event_list`
+--
+
+INSERT INTO `university_event_list` (`uid`, `eid`) VALUES
+(5, 17);
 
 -- --------------------------------------------------------
 
@@ -390,6 +456,8 @@ CREATE TABLE IF NOT EXISTS `university_member_list` (
 --
 
 INSERT INTO `university_member_list` (`uid`, `email`, `super_admin`) VALUES
+(1, 'b@knights.ucf.edu', b'0'),
+(1, 'm', b'0'),
 (1, 'u10@knights.ucf.edu', b'0'),
 (1, 'u11@knights.ucf.edu', b'0'),
 (1, 'u12@knights.ucf.edu', b'0'),
@@ -402,8 +470,8 @@ INSERT INTO `university_member_list` (`uid`, `email`, `super_admin`) VALUES
 (1, 'u7@knights.ucf.edu', b'0'),
 (1, 'u8@knights.ucf.edu', b'0'),
 (1, 'u9@knights.ucf.edu', b'0'),
-(2, 's', b'0'),
-(5, 'm', b'1');
+(2, 'c@valenciacollege.edu', b'0'),
+(2, 's', b'1');
 
 -- --------------------------------------------------------
 
@@ -415,6 +483,16 @@ CREATE TABLE IF NOT EXISTS `university_rso_link` (
   `uid` int(11) NOT NULL DEFAULT '0',
   `rid` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `university_rso_link`
+--
+
+INSERT INTO `university_rso_link` (`uid`, `rid`) VALUES
+(1, 1),
+(5, 3),
+(1, 6),
+(2, 6);
 
 -- --------------------------------------------------------
 
@@ -434,8 +512,17 @@ CREATE TABLE IF NOT EXISTS `userlist` (
 --
 
 INSERT INTO `userlist` (`first_name`, `last_name`, `email`, `phone_number`) VALUES
+('a', 'a', 'a@knights.ucf.edu', 'aaa'),
+('b', 'b', 'b@knights.ucf.edu', 'bbb'),
+('c', 'c', 'c@valenciacollege.edu', 'ccc'),
+('d', 'd', 'd@do.com', 'ddd'),
+('d', 'd', 'd@knights.ucf.edu', '33'),
+('d', 'd', 'e@knights.ucf.edu', '33'),
+('k', 'k', 'k@knights.ucf.edu', 'kkk'),
+('l', 'l', 'l@knights.ucf.edu', 'lll'),
 ('m', 'm', 'm', 'm'),
 ('me', 'me', 'meeeee', 'me'),
+('mrrm', 'rrmrr', 'mrm@knights.ucf.edu', '22299220000'),
 ('s', 's', 's', 's'),
 ('user 10', 'u10', 'u10@knights.ucf.edu', '4070000010'),
 ('user 11', 'u11', 'u11@knights.ucf.edu', '4070000011'),
@@ -483,6 +570,18 @@ ALTER TABLE `event_category`
 --
 ALTER TABLE `event_visibility`
  ADD PRIMARY KEY (`evid`);
+
+--
+-- Indexes for table `mail`
+--
+ALTER TABLE `mail`
+ ADD PRIMARY KEY (`mid`);
+
+--
+-- Indexes for table `mail_list`
+--
+ALTER TABLE `mail_list`
+ ADD PRIMARY KEY (`mid`), ADD KEY `to_user` (`to_user`), ADD KEY `from_user` (`from_user`);
 
 --
 -- Indexes for table `rso`
@@ -552,17 +651,17 @@ ALTER TABLE `userlist`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `event_category`
 --
@@ -573,6 +672,11 @@ MODIFY `ecid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 ALTER TABLE `event_visibility`
 MODIFY `evid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `mail`
+--
+ALTER TABLE `mail`
+MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `rso`
 --
@@ -611,6 +715,13 @@ ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`eid`) REFERENCES `event` (`eid`) O
 ALTER TABLE `event`
 ADD CONSTRAINT `event_ibfk_1` FOREIGN KEY (`ecid`) REFERENCES `event_category` (`ecid`) ON DELETE SET NULL,
 ADD CONSTRAINT `event_ibfk_2` FOREIGN KEY (`evid`) REFERENCES `event_visibility` (`evid`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `mail_list`
+--
+ALTER TABLE `mail_list`
+ADD CONSTRAINT `mail_list_ibfk_1` FOREIGN KEY (`to_user`) REFERENCES `userlist` (`email`),
+ADD CONSTRAINT `mail_list_ibfk_2` FOREIGN KEY (`from_user`) REFERENCES `userlist` (`email`);
 
 --
 -- Constraints for table `rso`
