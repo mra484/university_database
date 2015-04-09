@@ -17,6 +17,7 @@ if(!empty($_GET)){
 <html>
 <head>
 	<title>Cop4710_app login</title>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 </head>
 
 <body>

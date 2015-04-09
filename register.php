@@ -73,6 +73,7 @@ if(!empty($_POST)){
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 	<title>Cop4710_app register</title>
 </head>
 

@@ -68,12 +68,7 @@ if(!empty($_POST)) {
 <html>
 <head>
 	<title>Main page</title>
-	
-	<style type="text/css">
-	#side_panel {border: 2px solid black;
-		position: absolute;
-		width: 20%;	left: 80%; 
-		}
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 		
 	</style>
 </head>

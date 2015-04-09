@@ -92,6 +92,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css"/>
 	<title><?php echo escape($event['name']); ?> </title>
 </head>
 
@@ -103,7 +104,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 		<?php
 	}
 	?>
-	<h3><?php echo escape($event['name']); ?> </h3>
+	<div id="event_title"><?php echo escape($event['name']); ?> </div>
 
 	<div id="event_time" >
 		<?php echo escape($event['date']); ?> at <?php echo escape($event['time']); ?> <br>

@@ -37,6 +37,7 @@ if(isset($_COOKIE)){
 
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 	<title>Create new group</title>
 </head>
 

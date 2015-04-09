@@ -104,7 +104,6 @@ if(!empty($_GET)){
 	LEFT JOIN event ON rso_event_list.eid = event.eid 
 	WHERE rso_event_list.rid = '" . $rid . "'");
 	$event = $temp->fetch_all(MYSQLI_ASSOC);
-	echo '<pre>', var_dump($event), '</pre>';
 
 		
 } else {
@@ -121,9 +120,7 @@ if(!empty($_GET)){
 <html>
 <head>
 	<title>cop4710 rso page: <?php echo escape($rso['name']); ?></title>
-	<style type="text/css">
-		#greyrow{ border: 10px white solid; }
-	</style>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 		
 </head>
 

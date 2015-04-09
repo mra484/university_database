@@ -20,7 +20,7 @@ if(!empty($_POST)){
 	$rid = trim($_GET['rso']);
 	if(isset($_POST['group_type'])){
 		$group_type = trim($_POST['group_type']);
-		echo $group_type;
+
 		//update group type
 		$db->query("UPDATE rso SET rso.rtid = '" . $group_type . "' WHERE (rso.rid) = '" . $rid . "'");
 	}
@@ -28,7 +28,6 @@ if(!empty($_POST)){
 	if(isset($_POST['name'])){
 		$name = trim($_POST['name']);
 
-		echo $name;
 		//update name
 		$db->query("UPDATE rso SET rso.name = '" . $name . "' WHERE (rso.rid) = '" . $rid . "'");
 	}
@@ -36,7 +35,6 @@ if(!empty($_POST)){
 	if(isset($_POST['description'])){
 		$description = trim($_POST['description']);
 
-		echo $description;
 		//update description
 		$db->query("UPDATE rso SET rso.description = '" . $description . "' WHERE (rso.rid) = '" . $rid . "'");
 	}
@@ -154,9 +152,7 @@ if(!empty($_GET)){
 <html>
 <head>
 	<title> Edit <?php echo escape($rso['name']); ?></title>
-	<style type="text/css">
-		#greyrow{ border: 10px white solid; }
-	</style>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 		
 </head>
 

@@ -59,7 +59,8 @@ if(!empty($_COOKIE)){
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-		<title>Welcome to <?php echo escape($univ['name']); ?></title>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
+	<title>Welcome to <?php echo escape($univ['name']); ?></title>
 </head>
 
 <body>

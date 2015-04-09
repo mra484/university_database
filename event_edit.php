@@ -273,9 +273,7 @@ if(!empty($_GET)){
 <html>
 <head>
 	<title> Edit <?php echo escape($event['name']); ?></title>
-	<style type="text/css">
-		#greyrow{ border: 10px white solid; }
-	</style>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 
 	<?php 
 		function optionSelect($return_name, $field, $value, $name, $current) {

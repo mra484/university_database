@@ -52,9 +52,7 @@ if(!empty($_GET)){
 <html>
 <head>
 	<title>University Select</title>
-	<style type="text/css">
-		#greyrow{ border: 10px white solid; }
-	</style>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 		
 </head>
 

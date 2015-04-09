@@ -29,6 +29,7 @@ if(!empty($_COOKIE)){
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 	<title>cop4710 rso</title>
 </head>
 
@@ -45,7 +46,7 @@ if(!empty($_COOKIE)){
 		} else {
 	?>
 
-	<table border="2px solid black" cellpadding="10">
+	<table border="2px" cellpadding="10">
 		<thead>
 			<tr>
 				<th>RSO Name</th>
