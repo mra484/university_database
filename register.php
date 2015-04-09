@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting(1);
 require 'db/connect.php';
 require 'db/security.php';
 
@@ -14,14 +14,46 @@ if(!empty($_POST)){
 		$qry = "SELECT * FROM userlist WHERE '" . $email . "' = (email) LIMIT 1";
 		$user = $db->query($qry);
 		
-		echo '4';
 		if($user->num_rows > 0){
 			echo 'email already in use';
+
+
 		} else {
+			//add to userlist
 			$sql = $db->prepare("INSERT INTO userlist (first_name, last_name, email, phone_number) VALUES (?,?,?,?)");
 			$sql->bind_param('ssss', $first_name, $last_name, $email, $phone_number);
 			
 			if($sql->execute()){
+				//try to link to university
+				$e_domain = substr(strrchr($email, "@"), 1);
+				$temp = $db->query("SELECT uid, domain FROM university");
+				$univ = $temp->fetch_all(MYSQLI_ASSOC);
+				echo $e_domain;
+				foreach($univ as $u){
+					if(strpos($e_domain, $u['domain']) !== false){
+						$uid = $u['uid'];
+						if($uid != 0){
+							break;
+						}
+					} else {
+						$strpso = strpos($e_domain, $univ['domain']);
+						echo $strpso;
+						echo $univ['domain'];
+						$uid = 0;
+					}
+				}
+				echo $uid;
+				//link if domain found
+				if($uid != 0){
+					$sql = $db->prepare("INSERT INTO university_member_list (email, uid, super_admin)
+						VALUES (?,?, b'0') ");
+					$sql->bind_param('ss', $email, $uid);
+					$sql->execute();
+
+				}
+
+
+
 				header("Location:index.php?result=success_create");
 				die();
 			} else {
