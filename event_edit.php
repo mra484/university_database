@@ -16,14 +16,17 @@ if(!empty($_COOKIE)){
 }
 
 $mode = 0;
+$destination = "";
 
 if(isset($_GET['rso'])){
 	$rid = trim($_GET['rso']);
+	$destination = "rso=$rid&";
 	$mode = 1;
 }
 
 if(isset($_GET['university'])){
 	$uid = trim($_GET['university']);
+	$destination = "university=$uid&";
 	$mode = 2;
 }
 
@@ -122,7 +125,7 @@ if(!empty($_POST)){
 
 				//add university link to event if present
 				foreach($uid_list as $uid){
-					$db->query("INSERT INTO university_event_list (eid, uid) VALUES ('" . $eid . "', '" . $uid . "')");
+					$db->query("INSERT INTO university_event_list (eid, uid) VALUES ('" . $eid . "', '" . $uid['uid'] . "')");
 				}
 
 
@@ -136,7 +139,7 @@ if(!empty($_POST)){
 
 				//add rso link to event if present
 				foreach($rid_list as $rid){
-					$db->query("INSERT INTO rso_event_list (eid, rid) VALUES ('" . $eid . "', '" . $rid . "')");
+					$db->query("INSERT INTO rso_event_list (eid, rid) VALUES ('" . $eid . "', '" . $rid['rid'] . "')");
 				}
 			}
 
@@ -193,18 +196,12 @@ if(!empty($_GET)){
 	$temp = $db->query("SELECT * FROM event WHERE (eid) = '" . $eid . "'");
 	$event = $temp->fetch_assoc();
 	
-	$admin = false;
-	$super_admin = false;
-	$owner = false;
 
-	if(!empty($event['rid']) ){
-		$temp = $db->query("SELECT admin FROM rso_member_list WHERE (email) = '" . $email ."' && (rid) = '" . $event['rid'] . "'");
-		$admin = $temp->fetch_assoc();
-	}
-	if(!empty($event['uid']) ){
-		$temp = $db->query("SELECT super_admin FROM university_member_list WHERE (email) = '" . $email  . "' && (uid) = '" . $event['uid'] . "'");
-		$super_admin = $temp->fetch_assoc();
-	}
+	$admin = checkEventAdmin($eid, $email, $db);
+	$super_admin = checkEventSuperAdmin($eid, $email, $db);
+
+
+	$owner = false;
 	if(strcmp($email, $event['owner'] ) == 0){
 		$owner = true;
 	}
@@ -333,7 +330,7 @@ if(!empty($_GET)){
 
 <h2>Edit event information</h2>
 
-<form action="?rso=<?php echo escape($rid); ?>&event=<?php echo escape($eid);?>" method="POST">
+<form action="?<?php echo $destination; ?>event=<?php echo escape($eid);?>" method="POST">
 	Event name:<input type="text" name="name" value="<?php echo escape($event['name']) ;?>"/><br>
 	Date:<input type="date" name="date" value="<?php echo escape($event['date']);?>"/><br>
 	Time:<input type="time" name="time" value="<?php echo escape($time) ;?>"/><br><br>

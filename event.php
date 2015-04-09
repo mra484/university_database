@@ -66,17 +66,17 @@ if(isset($_COOKIE) && isset($_GET) ){
 	$super_admin = false;
 	$owner = false;
 
-	if(!empty($event['rid']) ){
-		$temp = $db->query("SELECT admin FROM rso_member_list WHERE (email) = '" . $email ."' && (rid) = '" . $event['rid'] . "'");
-		$admin = $temp->fetch_assoc();
-	}
-	if(!empty($event['uid']) ){
-		$temp = $db->query("SELECT super_admin FROM university_member_list WHERE (email) = '" . $email  . "' && (uid) = '" . $event['uid'] . "'");
-		$super_admin = $temp->fetch_assoc();
-	}
-	if(strcmp($email, $event['owner'] ) == 0) {
+
+	$admin = checkEventAdmin($eid, $email, $db);
+	echo 'is admin?' . var_dump($admin) . '<br>';
+	$super_admin = checkEventSuperAdmin($eid, $email, $db);
+	echo 'is super_admin?' . var_dump($super_admin);
+
+	$owner = false;
+	if(strcmp($email, $event['owner'] ) == 0){
 		$owner = true;
 	}
+
 
 	//get comments for this event
 	$temp = $db->query("SELECT *, userlist.first_name as first_name, userlist.last_name as last_name FROM comment 
