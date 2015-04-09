@@ -1,6 +1,7 @@
 <?php
 require 'db/connect.php';
 require 'db/security.php';
+require 'mysql_functions.php';
 
 	if( !empty($_COOKIE)){
 		$email = trim($_COOKIE['user']);
@@ -21,6 +22,7 @@ require 'db/security.php';
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css">
+	<?php createUserPanel($db, $email); ?>
 	<title>Welcome<?php echo escape($email); ?></title>
 </head>
 

@@ -274,6 +274,7 @@ if(!empty($_GET)){
 <head>
 	<title> Edit <?php echo escape($event['name']); ?></title>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css">
+	<?php createUserPanel($db, $email); ?>
 
 	<?php 
 		function optionSelect($return_name, $field, $value, $name, $current) {

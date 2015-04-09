@@ -1,6 +1,7 @@
 <?php
 require 'db/connect.php';
 require 'db/security.php';
+require 'mysql_functions.php';
 
 if(isset($_COOKIE) && isset($_GET) ){
 	$email = trim($_COOKIE['user']);
@@ -93,6 +94,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css"/>
+	<?php createUserPanel($db, $email); ?>
 	<title><?php echo escape($event['name']); ?> </title>
 </head>
 

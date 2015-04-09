@@ -60,6 +60,9 @@ if(!empty($_COOKIE)){
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css">
+	<?php createUserPanel($db, $email); ?>
+
+	
 	<title>Welcome to <?php echo escape($univ['name']); ?></title>
 </head>
 

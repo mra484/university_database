@@ -120,6 +120,7 @@ if(!empty($_GET)){
 <html>
 <head>
 	<title>cop4710 rso page: <?php echo escape($rso['name']); ?></title>
+	<?php createUserPanel($db, $email); ?>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 		
 </head>

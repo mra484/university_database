@@ -2,6 +2,7 @@
 error_reporting(0);
 require 'db/connect.php';
 require 'db/security.php';
+require 'mysql_functions.php';
 
 if(!empty($_COOKIE)){
 	//retrieve rows for user, rso that contains user and list of all rso
@@ -30,6 +31,7 @@ if(!empty($_COOKIE)){
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css">
+	<?php createUserPanel($db, $email); ?>
 	<title>cop4710 rso</title>
 </head>
 

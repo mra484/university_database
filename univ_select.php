@@ -2,6 +2,7 @@
 //error_reporting(0);
 require 'db/connect.php';
 require 'db/security.php';
+require 'mysql_functions.php';
 
 if(!empty($_COOKIE)){
 	//retrieve rows for user information and universities
@@ -53,6 +54,7 @@ if(!empty($_GET)){
 <head>
 	<title>University Select</title>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css">
+	<?php createUserPanel($db, $email); ?>
 		
 </head>
 

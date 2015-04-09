@@ -211,6 +211,7 @@ if(!empty($_GET)){
 <html>
 <head>
 	<title> Edit <?php echo escape($university['name']); ?></title>
+	<?php createUserPanel($db, $email); ?>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 
 	<?php 

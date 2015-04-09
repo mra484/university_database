@@ -18,11 +18,12 @@
 
 /* comment information user/created */
 #comment_tag{
-
+color: red;
 }
 
 /*block containing single comment*/
 #event_comment{
+background:gray;
 
 }
 
@@ -33,7 +34,7 @@
 
 /*text for events*/
 #event_title{
-
+font-size:30;
 }
 
 #event_time{

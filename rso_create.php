@@ -2,6 +2,7 @@
 
 require 'db/connect.php';
 require 'db/security.php';
+require 'mysql_functions.php';
 
 if(isset($_COOKIE)){
 	$email = trim($_COOKIE['user']);
@@ -38,6 +39,7 @@ if(isset($_COOKIE)){
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css">
+	<?php createUserPanel($db, $email); ?>
 	<title>Create new group</title>
 </head>
 

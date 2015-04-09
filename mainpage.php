@@ -4,7 +4,7 @@
 error_reporting(0);
 require 'db/connect.php';
 require 'db/security.php';
-require 'pg_head.php';
+require 'mysql_functions.php';
 
 $records = array();
 
