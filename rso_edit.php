@@ -226,12 +226,9 @@ if(!empty($_GET)){
 		<input type="submit" value="create event"/>
 	</form>
 	<?php
-		if(!count($event)){
-			echo 'No events';
-		} else {
-			printEventList($event);
-		}
-		?>
+		printEventList2($rid, NULL, $db);
+	}
+	?>
 		
 <h3>Member List</h3>
 

@@ -207,14 +207,9 @@ if(!empty($_GET)){
 <!-- event list header -->
 <h3>event list</h3>
 
-
 	<?php
-		if(!count($event)){
-			echo 'No events';
-		} else {
-			printEventList2($rid, NULL, $db);
-		}
-		?>
+		printEventList2($rid, NULL, $db);
+	?>
 
 	
 <h3>Member List</h3>

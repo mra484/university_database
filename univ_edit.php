@@ -319,5 +319,15 @@ if(!count($rso_list)){
 }
 ?>
 
+<!-- event list header -->
+<h3>event list</h3>
+	<form action="event_edit.php?university=<?php echo escape($uid); ?>&new=1" method="POST">
+		<input type="submit" value="create event"/>
+	</form>
+	<?php
+		printEventList2(NULL, $uid, $db);
+		
+	?>
+
 </body>
 </html>
