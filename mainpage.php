@@ -4,7 +4,7 @@
 error_reporting(0);
 require 'db/connect.php';
 require 'db/security.php';
-
+require 'pg_head.php';
 
 $records = array();
 
@@ -74,6 +74,9 @@ if(!empty($_POST)) {
 </head>
 
 <body>
+<?php
+createUserPanel($db, $email);
+?>
 <h3>Welcome <?php echo escape($user->first_name);?> </h2> <br />
 
 			<?php
@@ -100,7 +103,8 @@ if(!empty($_POST)) {
 			<td><?php echo escape($user->phone_number); ?></td>
 			</tr>
 		</tbody>
-	</table>
+	</table> <br>
+
 	<?php
 			}
 			?>

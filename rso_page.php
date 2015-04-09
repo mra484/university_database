@@ -211,7 +211,7 @@ if(!empty($_GET)){
 		if(!count($event)){
 			echo 'No events';
 		} else {
-			printEventList($event);
+			printEventList2($rid, NULL, $db);
 		}
 		?>
 

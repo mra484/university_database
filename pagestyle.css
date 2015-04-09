@@ -9,8 +9,11 @@
 	width: 20%;	left: 80%; 
 	}
 
-#user_panel {
-
+#user_panel {border: 1px solid blue;
+	position: absolute;
+	top: 0px;
+	width: 20%;	left: 80%; 
+	text-align: center;
 }
 
 /* comment information user/created */
