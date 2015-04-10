@@ -17,9 +17,9 @@ if(isset($_COOKIE) && isset($_GET) ){
 		$message = trim($_POST['comment_text']);
 		$db->query("INSERT INTO comment (email, message, eid, created) VALUES ('" . $email . "', '" . $message . "', '" . $eid . "', NOW())");
 		if($db->affected_rows == 1){
-			echo 'comment created';
+			//echo 'comment created';
 		} else {
-			echo 'unable to create comment';
+			//echo 'unable to create comment';
 		}
 	}
 
@@ -37,9 +37,9 @@ if(isset($_COOKIE) && isset($_GET) ){
 			$sql->execute();
 
 			if($db->affected_rows == 1){
-				echo 'comment edited';
+				//echo 'comment edited';
 			} else {
-				echo 'unable to edit comment';
+				//echo 'unable to edit comment';
 			}
 
 		} else if(isset($_POST['delete_comment'])){
@@ -48,9 +48,9 @@ if(isset($_COOKIE) && isset($_GET) ){
 			$sql->execute();
 
 			if($db->affected_rows == 1){
-				echo 'comment deleted';
+				//echo 'comment deleted';
 			} else {
-				echo 'unable to delete comment';
+				//echo 'unable to delete comment';
 			}
 		}
 	}
@@ -68,9 +68,9 @@ if(isset($_COOKIE) && isset($_GET) ){
 
 
 	$admin = checkEventAdmin($eid, $email, $db);
-	echo 'is admin?' . var_dump($admin) . '<br>';
+	//echo 'is admin?' . var_dump($admin) . '<br>';
 	$super_admin = checkEventSuperAdmin($eid, $email, $db);
-	echo 'is super_admin?' . var_dump($super_admin);
+	//echo 'is super_admin?' . var_dump($super_admin);
 
 	$owner = false;
 	if(strcmp($email, $event['owner'] ) == 0){
@@ -100,10 +100,10 @@ if(isset($_COOKIE) && isset($_GET) ){
 
 <body>
 	<?php if($admin || $super_admin || $owner) {
-		?>
+	?>
 		<br>
 		<a href="event_edit.php?event=<?php echo escape($event['eid']); ?>">Edit event</a><br>
-		<?php
+	<?php
 	}
 	?>
 	<div id="event_title"><?php echo escape($event['name']); ?> </div>
@@ -114,6 +114,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 
 	<br>
 
+<?php if(!empty($event['aid'])){ ?>
 	<div id="event_location" >
 		<?php echo escape($address['street']); ?><br>
 		<?php echo escape($address['city']); ?> <?php echo escape($address['sid']); ?> <?php echo escape($address['p_code']); ?><br>
@@ -121,23 +122,26 @@ if(isset($_COOKIE) && isset($_GET) ){
 
 	<br>
 
+<?php } ?>
 	<div id="event_description" >
 		<p><?php echo escape($event['description']); ?></p>
 	</div>
 
 	<br>
 
+<?php if(!empty($event['contact_phone']) && !empty($event['contact_email'])){ ?>
 	<div id="event_contact" >
 		Contact Phone: <?php echo escape($event['contact_phone']); ?> <br>
 		Contact Email: <?php echo escape($event['contact_email']); ?> <br>
 	</div>
+<?php } ?>
 
 	<hr>
 	<br>
 	<div id="event_comment_section" >
 		<div id="event_comment">
 			<form action="?event=<?php echo escape($event['eid']); ?>" method="POST" >
-				<textarea name="comment_text"></textarea><br>
+				<textarea cols="40" rows="5" name="comment_text"></textarea><br>
 				<input type="submit" value="New Comment" /><br>
 			</form>
 		</div>
@@ -152,7 +156,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 				if( strcmp($c['email'], $email) == 0) {
 					//have user's comments appear as editable text for editing
 				?>
-					<textarea name="edit_text"><?php echo escape($c['message']); ?></textarea><br>
+					<textarea cols="40" rows="5" name="edit_text"><?php echo escape($c['message']); ?></textarea><br>
 					<p id="comment_tag"><?php echo escape($c['first_name']); ?> <?php echo escape($c['last_name']); ?><br>
 						<?php echo escape($c['created']); ?> 
 					</p>

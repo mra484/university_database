@@ -33,7 +33,7 @@ require 'mysql_functions.php';
 		} else{
 			?>
 
-	<table>
+	<table cellpadding="10">
 		<tr>
 			<td>Subject</td>
 			<td>From</td>
@@ -43,9 +43,9 @@ require 'mysql_functions.php';
 			foreach($message_list as $m){
 				?>
 			<tr>
-				<td><a href="message.php?mid=<?php echo escape($m['mid']); ?>"> <?php echo escape($m['subject']); ?></td>
-				<td><?php echo escape($m['from_user']); ?></td>
-				<td><?php echo escape($m['sent']); ?></td>
+				<td width="60%"><a href="message.php?mid=<?php echo escape($m['mid']); ?>"> <?php echo escape($m['subject']); ?></td>
+				<td ><?php echo escape($m['from_user']); ?></td>
+				<td ><?php echo escape($m['sent']); ?></td>
 			</tr>
 			<?php				
 			}

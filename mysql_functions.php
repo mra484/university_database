@@ -164,8 +164,8 @@ function printEventList2($rid, $uid, $db){
 	
 	foreach($event as $e){
 		$description = $e['description'];
-		if(count($description) > 200 ){
-			$description = substr($description, 0, 200) . '...';
+		if(strlen($description) > 150 ){
+			$description = substr($description, 0, 150) . ' ...';
 		}
 
 		$datetime = DateTime::createFromFormat("Y-m-d H:i:s", "" . $e['date'] . " " . $e['time'] . "");
@@ -198,7 +198,7 @@ function getRSS($uid, $db){
 		$date3 = $date2->format('Y-m-d');
 		$time = $date2->format('g:i a');
 
-		$sql = $db->prepare("INSERT INTO event (name, description, date, time) VALUES (?,?,?,?)");
+		$sql = $db->prepare("INSERT INTO event (name, description, date, time, approval) VALUES (?,?,?,?, b'1')");
 		$sql->bind_param('ssss', $title, $desc, $date3, $time);
 		if($sql->execute()){
 			$id = $db->insert_id;

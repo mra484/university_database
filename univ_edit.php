@@ -29,7 +29,7 @@ if(!empty($_POST)){
 
 	if(isset($_POST['remove'])){
 		//unlink group from this university
-		$rid = trim($_POST['remove']);
+		$rid = trim($_GET['remove']);
 		$sql = $db->prepare("DELETE FROM university_rso_link WHERE (university_rso_link.uid) = ? && (university_rso_link.rid) = ?");
 		$sql->bind_param('ss', $uid, $rid);
 		$sql->execute();
@@ -268,7 +268,7 @@ if(!empty($_GET)){
 		<h3>Description</h3>
 
 		<form action="?university=<?php echo escape($uid);?>" method="POST">
-			<textarea name="description"><?php echo escape($university['description']); ?></textarea><br>
+			<textarea name="description" cols="80" rows="25"><?php echo escape($university['description']); ?></textarea><br>
 			<input type="submit" value="Save changes"/>
 		</form>
 
@@ -281,15 +281,15 @@ if(!empty($_GET)){
 <h2>Edit university information</h2>
 
 <form action="?university=<?php echo escape($uid);?>" method="POST">
-	University name:<input type="text" name="name" value="<?php echo escape($university['name']) ;?>"/><br><br>
+	University name:<input type="text" name="name" size="90" value="<?php echo escape($university['name']) ;?>"/><br><br>
 	Location:<br>
-	Street:<input type="text" name="street" value="<?php echo escape($address['street']);?>"/><br>
-	City:<input type="text" name="city" value="<?php echo escape($address['city']);?>"/><br>
-	State:<?php optionSelect("state", $state, "sid", "name", $address['sid']); ?><br>
+	Street:<input type="text" name="street" size="90"value="<?php echo escape($address['street']);?>"/><br>
+	City:<input type="text" name="city" size="40" value="<?php echo escape($address['city']);?>"/>
+	State:<?php optionSelect("state", $state, "sid", "name", $address['sid']); ?>
 	Postal code:<input type="text" name="p_code" value="<?php echo escape($address['p_code']);?>"/><br><br>
 
-	Domain:<input type="text" name="domain" value="<?php echo escape($university['domain']);?>"/><br>
-	RSS address:<input type="text" name="rss" value="<?php echo escape($university['rss']);?>"/><br>
+	Domain:<input type="text" name="domain" size="90" value="<?php echo escape($university['domain']);?>"/><br>
+	RSS address:<input type="text" name="rss" size="90" value="<?php echo escape($university['rss']);?>"/><br>
 	<input type="submit" value="Save changes"/>
 </form>
 

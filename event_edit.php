@@ -61,9 +61,9 @@ if(!empty($_POST)){
 		$description = trim($_POST['description']);
 		$temp = $db->query("UPDATE event SET event.description = '" . $description . "' WHERE (event.eid) = '" . $eid . "'");
 		if($temp){
-			echo 'successfully updated description';
+			//echo 'successfully updated description';
 		} else {
-			echo 'unable to update description';
+			//echo 'unable to update description';
 		}
 	} else {
 
@@ -96,9 +96,9 @@ if(!empty($_POST)){
 			$temp->bind_param('ssss', $street, $city, $state, $p_code);
 			$temp->execute();
 			if($db->affected_rows){
-				echo 'successfully created new address';
+				//echo 'successfully created new address';
 			} else {
-				echo 'unable to create new address';
+				//echo 'unable to create new address';
 			}
 			$aid = $db->insert_id;
 
@@ -156,9 +156,9 @@ if(!empty($_POST)){
 			$temp->bind_param('ssss', $street, $city, $state, $p_code);
 			$temp2 = $temp->execute();
 			if($db->affected_rows){
-				echo 'successfully updated address';
+				//echo 'successfully updated address';
 			} else {
-				echo 'unable to update address';
+				//echo 'unable to update address';
 			}
 
 			//update event
@@ -175,9 +175,9 @@ if(!empty($_POST)){
 				$event_category, $event_visibility);
 			$temp2 = $temp->execute();
 			if($db->affected_rows){
-				echo 'successfully updated event';
+				//echo 'successfully updated event';
 			} else {
-				echo 'unable to update event';
+				//echo 'unable to update event';
 			}
 		}
 	}
@@ -311,7 +311,7 @@ if(!empty($_GET)){
 		<h3>Description</h3>
 
 		<form action="?rso=<?php echo escape($rid); ?>&event=<?php echo escape($eid);?>" method="POST">
-			<textarea name="description"><?php echo escape($event['description']); ?></textarea><br>
+			<textarea cols="80" rows="25"name="description"><?php echo escape($event['description']); ?></textarea><br>
 			<input type="submit" value="Save changes"/>
 		</form>
 
@@ -331,16 +331,16 @@ if(!empty($_GET)){
 <h2>Edit event information</h2>
 
 <form action="?<?php echo $destination; ?>event=<?php echo escape($eid);?>" method="POST">
-	Event name:<input type="text" name="name" value="<?php echo escape($event['name']) ;?>"/><br>
+	Event name:<input type="text" size="90" name="name" value="<?php echo escape($event['name']) ;?>"/><br>
 	Date:<input type="date" name="date" value="<?php echo escape($event['date']);?>"/><br>
 	Time:<input type="time" name="time" value="<?php echo escape($time) ;?>"/><br><br>
 	Location:<br>
-	Street:<input type="text" name="street" value="<?php echo escape($address['street']);?>"/><br>
-	City:<input type="text" name="city" value="<?php echo escape($address['city']);?>"/><br>
-	State:<?php optionSelect("state", $state, "sid", "name", $address['sid']); ?><br>
+	Street:<input type="text" name="street" size="90" value="<?php echo escape($address['street']);?>"/><br>
+	City:<input type="text" name="city" size="40" value="<?php echo escape($address['city']);?>"/> 
+	State:<?php optionSelect("state", $state, "sid", "name", $address['sid']); ?> 
 	Postal code:<input type="text" name="p_code" value="<?php echo escape($address['p_code']);?>"/><br>
 	Contact Phone:<input type="time" name="contact_phone" value="<?php echo escape($event['contact_phone']);?>"/><br>
-	Contact Email:<input type="time" name="contact_email" value="<?php echo escape($event['contact_email']);?>"/><br>
+	Contact Email:<input type="time" size="60" name="contact_email" value="<?php echo escape($event['contact_email']);?>"/><br>
 
 	Event Category:<?php optionSelect("event_category", $event_category, "ecid", "type", $event['ecid']); ?><br>
 
