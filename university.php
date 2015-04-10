@@ -88,17 +88,9 @@ if(!empty($_COOKIE)){
 
 <!-- output event list -->
 <h3>event list</h3>
-	<?php
-		if(!count($event)){
-			echo 'No events';
-		} else {
-			?>
 
-			printEventList($event);
-
-			<?php
-		}
-		?>
+	<?php printEventList2(NULL, $uid, $db); ?>
+	
 <h3>Affiliated groups</h3>
 <?php
 if(!count($rso_list)){

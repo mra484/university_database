@@ -34,7 +34,22 @@ if(!empty($_POST)){
 		$sql->bind_param('ss', $uid, $rid);
 		$sql->execute();
 
-	} else if (isset($_POST['rso_select'])){
+	} else if(isset($_POST['updaterss'])){
+		$temp = $db->query("SELECT * FROM university WHERE (uid) = '" . $uid . "'");
+		$univ = $temp->fetch_assoc();
+
+		if(!empty($univ['rss']) ){
+			$db->query("DELETE FROM event WHERE (eid) = 
+				(SELECT eid FROM university_event_list 
+					WHERE (university_list.uid) = '" . $uid . "')");
+			$db->query("DELETE FROM university_event_list WHERE (university_event_list.uid) = '" . $uid . "'");
+			getRSS($uid, $db);
+		}
+
+
+
+
+	}else if (isset($_POST['rso_select'])){
 		//link group to this university
 		$rid = trim($_POST['rso_select']);
 		$sql = $db->prepare("INSERT INTO university_rso_link (uid, rid) VALUES (?,?)");
@@ -61,6 +76,7 @@ if(!empty($_POST)){
 		$state = trim($_POST['state']);
 		$p_code = trim($_POST['p_code']);
 		$domain = trim($_POST['domain']);
+		$rss = trim($_POST['rss']);
 
 		if($uid == 0){
 			//create new address
@@ -273,6 +289,7 @@ if(!empty($_GET)){
 	Postal code:<input type="text" name="p_code" value="<?php echo escape($address['p_code']);?>"/><br><br>
 
 	Domain:<input type="text" name="domain" value="<?php echo escape($university['domain']);?>"/><br>
+	RSS address:<input type="text" name="rss" value="<?php echo escape($university['rss']);?>"/><br>
 	<input type="submit" value="Save changes"/>
 </form>
 
@@ -323,6 +340,9 @@ if(!count($rso_list)){
 <h3>event list</h3>
 	<form action="event_edit.php?university=<?php echo escape($uid); ?>&new=1" method="POST">
 		<input type="submit" value="create event"/>
+	</form>
+	<form action="?university=<?php echo escape($uid); ?>" method="POST">
+		<input type="submit" name="updaterss" value="recreate event list from rss" />
 	</form>
 	<?php
 		printEventList2(NULL, $uid, $db);

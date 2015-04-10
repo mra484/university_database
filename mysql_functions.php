@@ -167,15 +167,43 @@ function printEventList2($rid, $uid, $db){
 		if(count($description) > 200 ){
 			$description = substr($description, 0, 200) . '...';
 		}
+
+		$datetime = DateTime::createFromFormat("Y-m-d H:i:s", "" . $e['date'] . " " . $e['time'] . "");
+		$date_con = $datetime->format("D, M d, Y");
+		$time_con = $datetime->format("h:i a");
 		?>
 
 		<div id="event_block">
 			<h3><a href="event.php?event=<?php echo escape($e['eid']); ?>"><?php echo escape($e['name']); ?></h3></a>
-			<?php echo escape($e['date']); ?> at <?php echo escape($e['time']); ?> <br><br>
+			<?php echo escape($date_con); ?> at <?php echo escape($time_con); ?> <br><br>
 			<p><?php echo escape($description); ?></p>
 		</div>
 		<?php
 	}
 
+}
+
+function getRSS($uid, $db){
+	$temp = $db->query("SELECT rss FROM university WHERE (uid) = '" . $uid . "'");
+	$temp2 = $temp->fetch_assoc();
+	$url = $temp2['rss'];
+	$rss = simplexml_load_file($url);
+	$feed = array();
+
+	foreach($rss->channel->item as $node){
+		$title =(string) $node->title;
+		$desc = (string) $node->description;
+		$date = (string) $node->pubDate;
+		$date2 = DateTime::createFromFormat("D, d M Y H:i:s e", $date);
+		$date3 = $date2->format('Y-m-d');
+		$time = $date2->format('g:i a');
+
+		$sql = $db->prepare("INSERT INTO event (name, description, date, time) VALUES (?,?,?,?)");
+		$sql->bind_param('ssss', $title, $desc, $date3, $time);
+		if($sql->execute()){
+			$id = $db->insert_id;
+			$db->query("INSERT INTO university_event_list (uid, eid) VALUES ('" . $uid . "', '" . $id . "')");
+		}
+	}
 }
 ?>
