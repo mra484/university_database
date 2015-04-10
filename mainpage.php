@@ -1,5 +1,3 @@
-
-
 <?php
 error_reporting(0);
 require 'db/connect.php';
@@ -38,16 +36,15 @@ if(!empty($_POST)) {
 	
 	//get row for username, return to index if no record exists
 	$email	 = trim($_POST['email']);
-	$query = "SELECT * FROM userlist WHERE (email) = '" . $email . "' LIMIT 1";
+	$query = "SELECT * FROM userlist WHERE (email) = '" . $email . "'";
 	$result = $db->query($query);
-	if(!$result->num_rows){
+	if(mysqli_num_rows($result) == 0){
 		header("Location:index.php?result=loginFailed");
 		die();
 	}
-	$user = $result->fetch_object();
+	$user = $result->fetch_assoc();
 	//create cookie for email that lasts 600 seconds
-	setCookie("user", $user->email, time() + 600);
-	echo '1';
+	setCookie("user", $user['email'], time() + (86400), "/");
 	
 } else if (empty($_COOKIE)) {
 	//return if no cookie present
@@ -58,7 +55,7 @@ if(!empty($_POST)) {
 	$email = trim($_COOKIE['user']);
 	$result = $db->query("SELECT * FROM userlist WHERE (email) = '" . $email . "' LIMIT 1");
 	//echo $result->num_rows;
-	$user = $result->fetch_object();
+	$user = $result->fetch_assoc();
 
 }
 ?>
@@ -77,8 +74,7 @@ if(!empty($_POST)) {
 <?php
 createUserPanel($db, $email);
 ?>
-<h3>Welcome <?php echo escape($user->first_name);?> </h2> <br />
-
+<h3>Welcome <?php echo escape($user['first_name']); ?></h3>
 			<?php
 			if(!count($user)) {
 				echo 'No records';
@@ -97,10 +93,10 @@ createUserPanel($db, $email);
 		<thead>
 		<tbody>
 			<tr>
-			<td><?php echo escape($user->first_name); ?></td>
-			<td><?php echo escape($user->last_name); ?></td>
-			<td><?php echo escape($user->email); ?></td>
-			<td><?php echo escape($user->phone_number); ?></td>
+			<td><?php echo escape($user['first_name']); ?></td>
+			<td><?php echo escape($user['last_name']); ?></td>
+			<td><?php echo escape($user['email']); ?></td>
+			<td><?php echo escape($user['phone_number']); ?></td>
 			</tr>
 		</tbody>
 	</table> <br>

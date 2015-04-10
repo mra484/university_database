@@ -28,7 +28,6 @@ if(!empty($_POST)){
 				$e_domain = substr(strrchr($email, "@"), 1);
 				$temp = $db->query("SELECT uid, domain FROM university");
 				$univ = $temp->fetch_all(MYSQLI_ASSOC);
-				echo $e_domain;
 				foreach($univ as $u){
 					if(strpos($e_domain, $u['domain']) !== false){
 						$uid = $u['uid'];
@@ -37,12 +36,9 @@ if(!empty($_POST)){
 						}
 					} else {
 						$strpso = strpos($e_domain, $univ['domain']);
-						echo $strpso;
-						echo $univ['domain'];
 						$uid = 0;
 					}
 				}
-				echo $uid;
 				//link if domain found
 				if($uid != 0){
 					$sql = $db->prepare("INSERT INTO university_member_list (email, uid, super_admin)
@@ -51,9 +47,7 @@ if(!empty($_POST)){
 					$sql->execute();
 
 				}
-
-
-
+				
 				header("Location:index.php?result=success_create");
 				die();
 			} else {

@@ -12,9 +12,7 @@ function createUserPanel($db, $email){
 	</div>
 <?php
 }
-?>
 
-<?php
 function getRSO($rso_id, $db){
 //Return assoc variable containing rso
 
@@ -35,9 +33,7 @@ function getAdminInfo($rso_id, $email, $db){
 	$rso_member = $temp->fetch_assoc();
 	return $rso_member;
 }
-?>
 
-<?php
 function checkEventAdmin($eid, $email, $db){
 	//check if the event belongs to an rso
 	if(mysqli_num_rows($db->query("SELECT * FROM rso_event_list WHERE (eid) = '" . $eid . "'")) != 0){
@@ -73,9 +69,7 @@ function checkEventAdmin($eid, $email, $db){
 
 	return false;
 }
-?>
 
-<?php
 function checkEventSuperAdmin($eid, $email, $db){
 	//check if the event belongs to a university
 	if(mysqli_num_rows($db->query("SELECT * FROM university_event_list WHERE (eid) = '" . $eid . "'")) != 0){
@@ -88,7 +82,7 @@ function checkEventSuperAdmin($eid, $email, $db){
 
 		//check to see if the user is an admin of any of these Universities
 		foreach($user AS $u){
-			if($u['admin']){
+			if($u['super_admin']){
 				return true;
 			}
 
@@ -112,9 +106,7 @@ function checkEventSuperAdmin($eid, $email, $db){
 
 	return false;
 }
-?>
 
-<?php 
 function printEventList($event, $email){
 	foreach($event as $e){
 		$description = $e['description'];
@@ -132,9 +124,7 @@ function printEventList($event, $email){
 	}
 
 }
-?>
 
-<?php 
 function printEventList2($rid, $uid, $db){
 	if($rid == NULL){
 		//echo 'checking for rso events: uid is ' . $uid . "\n";
