@@ -46,6 +46,32 @@ if(!empty($_GET)){
 	if(empty($rid)){
 		$rid = trim($_GET['rso']);
 	}
+
+	$rso = getRSO($rid, $db);
+
+	if(isset($_GET['message'])){
+		//create and send message
+		$to_user = trim($_POST['to_user']);
+		$subject = "Invitation to " . $rso['name'];
+		$link = '<a href="rso_page.php?rso=' . $rid . '&join=2">' . 'Join the group' . '</a>';
+		$description = "You have been invited to the group \"" . $rso['name'] . "\" follow the link to join this group\n\n"
+		 . $link;
+		$sql = $db->prepare("INSERT INTO mail (subject, message, sent)
+		VALUES (?,?,NOW())");
+		$sql->bind_param('ss', $subject, $description);
+		if( mysqli_num_rows($db->query("SELECT * FROM userlist WHERE (email) = '" . $to_user . "'"))  == 1 ){
+			$sql->execute();
+			$mid = $db->insert_id;
+			$db->query("INSERT INTO mail_list (to_user, from_user, mid)
+			VALUES ('" . $to_user . "', '" . $email . "', '" . $mid . "')");
+			$db->query("INSERT INTO rso_member_list (email, rid, admin) 
+				VALUES ('" . $to_user . "', '" . $rid . "', NULL)");
+			echo 'Message sent';
+			
+		} else {
+			echo 'unable to send message, check recipient email';
+		}
+	}
 	if(isset($_GET['joinable'])){
 		$joinable = trim($_GET['joinable']);
 	} else {
@@ -53,7 +79,6 @@ if(!empty($_GET)){
 
 	}
 	
-	$rso = getRSO($rid, $db);
 
 	//get table containing rso type
 	$temp = $db->query("SELECT * FROM rso_type");
@@ -127,7 +152,7 @@ if(!empty($_GET)){
 	//get list of members
 	$temp = $db->query("SELECT u.email as email, CONCAT_WS(' ', u.first_name, u.last_name) as name, r.created as created, r.admin as admin FROM rso_member_list AS r, userlist AS u
 		WHERE (r.rid) = '" . $rid . "'
-		&& (u.email) = (r.email)
+		&& (u.email) = (r.email) && (r.admin) IS NOT NULL
 		GROUP BY (u.last_name)");
 	$rso_member_list = $temp->fetch_all(MYSQLI_ASSOC);
 	
@@ -159,8 +184,20 @@ if(!empty($_GET)){
 
 <body>
 <h2><?php echo $rso['name']; ?>'s page</h2>
+<?php if(count($rso_member_list) < 5){
+	?>
+	This group does not meet the member requirement, events only visible 
+	within group until member count reaches 5<br>
+	<?php
+}
+?>
 
 		<h3>Admin panel</h3>
+		Invite user by email address<br>
+		<form method="POST" action="?rso=<?php echo escape($rid); ?>&message=1">
+			<input type="text" name="to_user"/>
+			<input type="submit" value="Send invitation" />
+		</form><br> 
 		
 		<?php
 		if($rso['joinable']){
@@ -227,7 +264,6 @@ if(!empty($_GET)){
 	</form>
 	<?php
 		printEventList2($rid, NULL, $db);
-	}
 	?>
 		
 <h3>Member List</h3>

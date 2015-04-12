@@ -25,13 +25,21 @@ if(!empty($_GET)){
 	if(empty($rid)){
 		$rid = trim($_GET['rso']);
 	}
+	$rso = getRSO($rid, $db);
 	
 	//join rso
 	if(isset($_GET['join'])){
-		$sql = $db->prepare("INSERT INTO rso_member_list (email, rid, admin, created) VALUES (?,?,b'0', NOW())");
-		$sql->bind_param('ss', $email, $rid);
+		if($_GET['join'] == 1 && $rso['joinable'] != 0){
+			$sql = $db->prepare("INSERT INTO rso_member_list (email, rid, admin, created) VALUES (?,?,b'0', NOW())");
+			$sql->bind_param('ss', $email, $rid);
+		}else if ($_GET['join'] == 2){
+			$sql = $db->prepare("UPDATE rso_member_list SET 
+				rso_member_list.admin = b'0',
+				created = NOW()
+				WHERE (rso_member_list.email) = '" . $email . "'");
+		}	
 		if( $sql->execute() ){
-			echo 'Successfully joined group';
+			echo 'Welcome to ' . $rso['name'];
 		} else {
 			echo 'Unable to join group';
 		}
@@ -63,39 +71,14 @@ if(!empty($_GET)){
 	
 	//get user's admin field from rso_member_list
 	$temp = $db->query("SELECT r.admin AS admin FROM rso_member_list AS r
-		WHERE (r.rid) = '" . $rid . "'
+		WHERE (r.rid) = '" . $rid . "' 
 		&& (r.email) = '" . $email . "'");
 	$rso_member = $temp->fetch_assoc();
 	
-	//delete rso
-	if(isset($_GET['delete']) && $rso_member['admin']){
-		$db->query("DELETE FROM rso WHERE '" . $rid . "' = (rid)");
-		if($db->affected_rows){
-			echo 'Group deleted returning';
-			header("Location:mainpage.php?result=rso_deleted");
-			die();
-		} else {
-			echo 'Unable to delete group';
-		}
-	}
-	
-	//delete member
-	if(isset($_GET['remove']) && $rso_member['admin']){
-		$delete = trim($_GET['remove']);
-		$db->query("DELETE FROM rso_member_list WHERE (email) = '" . $delete . "' && (rid) = '" . $rid . "'");
-	}
-	 
-	//change admin
-	if(isset($_GET['change']) && $rso_member['admin']){
-		$change = trim($_GET['change']);
-		$db->query("UPDATE rso_member_list SET rso_member_list.admin = b'1' WHERE (rso_member_list.email) = '" . $change . "' && (rso_member_list.rid) = '" . $rid . "'");
-		$db->query("UPDATE rso_member_list SET rso_member_list.admin = b'0' WHERE (rso_member_list.email) = '" . $email . "' && (rso_member_list.rid) = '" . $rid . "'");
-		header("Location:rso_page.php?rso=" . $rid . "");
-	}
 	//get list of members
 	$temp = $db->query("SELECT u.email as email, CONCAT_WS(' ', u.first_name, u.last_name) as name, r.created as created, r.admin as admin FROM rso_member_list AS r, userlist AS u
 		WHERE (r.rid) = '" . $rid . "'
-		&& (u.email) = (r.email)
+		&& (u.email) = (r.email) && (r.admin) IS NOT NULL
 		GROUP BY (u.last_name)");
 	$rso_member_list = $temp->fetch_all(MYSQLI_ASSOC);
 	
@@ -127,6 +110,13 @@ if(!empty($_GET)){
 
 <body>
 <h2><?php echo $rso['name']; ?>'s page</h2>
+<?php if(count($rso_member_list) < 5){
+	?>
+	This group does not meet the member requirement, events only visible 
+	within group until member count reaches 5<br>
+	<?php
+}
+?>
 <?php
 	//admin panel
 	if($rso_member['admin']){
