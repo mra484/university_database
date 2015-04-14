@@ -61,7 +61,8 @@ if(isset($_COOKIE) && isset($_GET) ){
 	$temp = $db->query("SELECT address.*, state.name FROM address, state
 			WHERE (address.aid) = '" . $event['aid'] . "' && (state.sid) = (address.sid) " );
 	$address = $temp->fetch_assoc();
-
+	$address_string = "" . $address['street'] . ", " . $address['city'] . ", " . $address['sid'] .  ", " . $address['p_code'];
+	$address_default = "4000 central florida blvd, orlando, fl, 32816";
 	$admin = false;
 	$super_admin = false;
 	$owner = false;
@@ -96,9 +97,51 @@ if(isset($_COOKIE) && isset($_GET) ){
 	<link rel="stylesheet" type="text/css" href="pagestyle.css"/>
 	<?php createUserPanel($db, $email); ?>
 	<title><?php echo escape($event['name']); ?> </title>
+	<style>
+		#map-canvas {
+			width: 500px;
+			height: 400px;
+		}
+	</style>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+	<script>
+	var map;
+	var geocoder;
+		function initialize() {
+			geocoder = new google.maps.Geocoder();
+			var mapCanvas = document.getElementById('map-canvas');
+			var mapOptions = {
+				center: new google.maps.LatLng(38, -98.5463),
+				zoom: 3,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			}
+			map = new google.maps.Map(mapCanvas, mapOptions);
+		}
+		google.maps.event.addDomListener(window, 'load', initialize);
+
+		function codeAddress(){
+			var address = <?php echo json_encode($address_string); ?>;
+			geocoder.geocode( { 'address': address}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					map.setCenter(results[0].geometry.location);
+					map.setZoom(12);
+					var marker = new google.maps.Marker({
+						map: map,
+						position: results[0].geometry.location
+					});
+				} else {
+					//alert("Geocode was not successful for the following reasons: " + status);
+					
+				}
+			});
+		}
+
+		
+	</script>
 </head>
 
-<body>
+<body onLoad="codeAddress()">
+		<div id="map-canvas"></div>
 	<?php if($admin || $super_admin || $owner) {
 	?>
 		<br>
