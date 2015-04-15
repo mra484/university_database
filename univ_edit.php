@@ -293,6 +293,8 @@ if(!empty($_GET)){
 	<input type="submit" value="Save changes"/>
 </form>
 
+<?php if(!$new){
+	?>
 <h2>Group list</h2>
 <form action="?university=<?php echo escape($university['uid']); ?>" method="POST" >
 	<!-- list of possible groups to add -->
@@ -346,7 +348,7 @@ if(!count($rso_list)){
 	</form>
 	<?php
 		printEventList2(NULL, $uid, $db);
-		
+		}
 	?>
 
 </body>
