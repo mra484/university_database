@@ -61,8 +61,10 @@ if(isset($_COOKIE) && isset($_GET) ){
 	$temp = $db->query("SELECT address.*, state.name FROM address, state
 			WHERE (address.aid) = '" . $event['aid'] . "' && (state.sid) = (address.sid) " );
 	$address = $temp->fetch_assoc();
-	$address_string = "" . $address['street'] . ", " . $address['city'] . ", " . $address['sid'] .  ", " . $address['p_code'];
-	$address_default = "4000 central florida blvd, orlando, fl, 32816";
+	$address_string = "";
+	if(!empty($event['aid'] && $event['aid'] != 0)){
+		$address_string = "" . $address['street'] . ", " . $address['city'] . ", " . $address['sid'] .  ", " . $address['p_code'];
+	}
 	$admin = false;
 	$super_admin = false;
 	$owner = false;
@@ -94,13 +96,19 @@ if(isset($_COOKIE) && isset($_GET) ){
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="pagestyle.css"/>
+	<link rel="stylesheet" type="text/css" href="pagestyle.css">
 	<?php createUserPanel($db, $email); ?>
 	<title><?php echo escape($event['name']); ?> </title>
 	<style>
 		#map-canvas {
 			width: 500px;
 			height: 400px;
+			margin-left: 10px;
+			margin-top: 30px;
+			float: right;
+		}
+		#event_info {
+			min-height: 450px;
 		}
 	</style>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
@@ -141,43 +149,46 @@ if(isset($_COOKIE) && isset($_GET) ){
 </head>
 
 <body onLoad="codeAddress()">
-		<div id="map-canvas"></div>
-	<?php if($admin || $super_admin || $owner) {
-	?>
-		<br>
-		<a href="event_edit.php?event=<?php echo escape($event['eid']); ?>">Edit event</a><br>
-	<?php
-	}
-	?>
-	<div id="event_title"><?php echo escape($event['name']); ?> </div>
 
-	<div id="event_time" >
-		<?php echo escape($event['date']); ?> at <?php echo escape($event['time']); ?> <br>
-	</div>
+	<div id="map-canvas"></div>
+		<div id="event_info">
+			<?php if($admin || $super_admin || $owner) {
+			?>
+				<br>
+				<a href="event_edit.php?event=<?php echo escape($event['eid']); ?>">Edit event</a><br>
+			<?php
+			}
+			?>
+			<div id="event_title"><?php echo escape($event['name']); ?> </div>
 
-	<br>
+			<div id="event_time" >
+				<?php echo escape($event['date']); ?> at <?php echo escape($event['time']); ?> <br>
+			</div>
 
-<?php if(!empty($event['aid'])){ ?>
-	<div id="event_location" >
-		<?php echo escape($address['street']); ?><br>
-		<?php echo escape($address['city']); ?> <?php echo escape($address['sid']); ?> <?php echo escape($address['p_code']); ?><br>
-	</div>
+			<br>
 
-	<br>
+		<?php if(!empty($event['aid'])){ ?>
+			<div id="event_location" >
+				<?php echo escape($address['street']); ?><br>
+				<?php echo escape($address['city']); ?> <?php echo escape($address['sid']); ?> <?php echo escape($address['p_code']); ?><br>
+			</div>
 
-<?php } ?>
-	<div id="event_description" >
-		<p><?php echo escape($event['description']); ?></p>
-	</div>
+			<br>
 
-	<br>
+		<?php } ?>
+			<div id="event_description" >
+				<p><?php echo escape($event['description']); ?></p>
+			</div>
 
-<?php if(!empty($event['contact_phone']) && !empty($event['contact_email'])){ ?>
-	<div id="event_contact" >
-		Contact Phone: <?php echo escape($event['contact_phone']); ?> <br>
-		Contact Email: <?php echo escape($event['contact_email']); ?> <br>
-	</div>
-<?php } ?>
+			<br>
+
+		<?php if(!empty($event['contact_phone']) && !empty($event['contact_email'])){ ?>
+			<div id="event_contact" >
+				Contact Phone: <?php echo escape($event['contact_phone']); ?> <br>
+				Contact Email: <?php echo escape($event['contact_email']); ?> <br>
+			</div>
+		<?php } ?>
+		</div>
 
 	<hr>
 	<br>

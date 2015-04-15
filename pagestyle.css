@@ -1,5 +1,4 @@
 
-
 /* temporary style for tables */
 #greyrow{ border: 10px white solid; }
 
@@ -34,7 +33,7 @@ color: red;
 
 /*text for events*/
 #event_title{
-font-size:50;
+font-size: 25px ;
 }
 
 #event_time{
