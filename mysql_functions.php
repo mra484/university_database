@@ -37,7 +37,7 @@ function getAdminInfo($rso_id, $email, $db){
 function checkEventAdmin($eid, $email, $db){
 	//check if the event belongs to an rso
 	if(mysqli_num_rows($db->query("SELECT * FROM rso_event_list WHERE (eid) = '" . $eid . "'")) != 0){
-		//return a list of rsos that the user is a member of and this event is part of
+				//return a list of rsos that the user is a member of and this event is part of
 		$temp = $db->query("SELECT * FROM rso_event_list 
 			LEFT JOIN rso_member_list ON rso_event_list.rid = rso_member_list.rid
 			WHERE (rso_event_list.eid) = '" . $eid . "' && (rso_member_list.email) = '" . $email . "'");
@@ -58,10 +58,10 @@ function checkEventAdmin($eid, $email, $db){
 
 		//check each university for an rso link in which this user is an admin
 		foreach($univ AS $u){
-			if($db->query("SELECT * FROM university_rso_link WHERE 
-				(uid) = '" . $u['uid'] . "' && (rid) = 
+			if(mysqli_num_rows($db->query("SELECT * FROM university_rso_link WHERE 
+				(uid) = '" . $u['uid'] . "' && (rid) IN 
 					(SELECT rid FROM rso_member_list 
-					WHERE (email) = '" . $email . "' && (admin) = b'1')")) {
+					WHERE (email) = '" . $email . "' && (admin) = b'1' ) ")) != 0) {
 				return true;
 			}
 		}
@@ -96,7 +96,7 @@ function checkEventSuperAdmin($eid, $email, $db){
 		//check each rso for a university link in which this user is a super admin
 		foreach($rso AS $r){
 			if($db->query("SELECT * FROM university_rso_link WHERE 
-				(rid) = '" . $r['rid'] . "' && (uid) = 
+				(rid) = '" . $r['rid'] . "' && (uid) IN 
 					(SELECT uid FROM university_member_list 
 					WHERE (email) = '" . $email . "' && (super_admin) = b'1')")) {
 				return true;
@@ -105,24 +105,6 @@ function checkEventSuperAdmin($eid, $email, $db){
 	}
 
 	return false;
-}
-
-function printEventList($event, $email){
-	foreach($event as $e){
-		$description = $e['description'];
-		if(count($description) > 200 ){
-			$description = substr($description, 0, 200) . "...";
-		}
-		?>
-
-		<div id="event_block">
-			<h3><a href="event.php?event=<?php echo escape($e['eid']); ?>"><?php echo escape($e['name']); ?></h3></a>
-			<?php echo escape($e['date']); ?> at <?php echo escape($e['time']); ?> <br><br>
-			<p><?php echo escape($description); ?></p>
-		</div>
-		<?php
-	}
-
 }
 
 function printEventList2($rid, $uid, $db){
@@ -206,4 +188,5 @@ function getRSS($uid, $db){
 		}
 	}
 }
+
 ?>
