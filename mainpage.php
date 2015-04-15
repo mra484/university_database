@@ -11,28 +11,29 @@ $records = array();
 if(!empty($_POST)) {
 //passwords not implemented yet, can log in with just a correct email address
 
-/* 	if(isset($_POST['email'], $_POST['password'])) {
+ 	if(isset($_POST['email'], $_POST['password'])) {
 		$email	 = trim($_POST['email']);
 		$password	 = trim($_POST['password']);
 		
-		if(!empty($email) && !empty($password)) {
-			$salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
-			$salt = sprintf("$2a$%02d$", 10) . $salt;
-			$hash = crypt($password, $salt);
-			$check = $db->prepare('SELECT password FROM userlist WHERE email = :email LIMIT 1');
-			$check->bindParam(':email', $email);			
-			if($check->execute()) {
+			$check = $db->query("SELECT password FROM userlist WHERE email = '" . $email . "' LIMIT 1");
+			if(mysqli_num_rows($check) != 0) {
 				$user = $check->fetch_object();
-				if( hash_equals($user->password, crypt($password, $user->password)) ) {
+				//if(strcmp($password, $user->password) == 0) {
+				if( password_verify($password, $user->password) ) {
 					//continue
 				} else {
-					//failed
-					header("Location:mainpage.php?result=loginFailed");
+						//failed
+					header("Location:index.php?result=loginFailed");
 					die();
 				}
-			}
-		}
-	} */
+			} else { 
+				echo 'check failed';
+				die(); }
+		
+	} else {
+		header("Location:index.php?result=loginFailed");
+		die();
+	}
 	
 	//get row for username, return to index if no record exists
 	$email	 = trim($_POST['email']);

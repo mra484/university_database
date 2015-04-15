@@ -1,5 +1,5 @@
 <?php
-error_reporting(1);
+error_reporting(0);
 require 'db/connect.php';
 require 'db/security.php';
 
@@ -8,20 +8,21 @@ if(!empty($_POST)){
 		$first_name = trim($_POST['first_name']);
 		$last_name = trim($_POST['last_name']);
 		$phone_number = trim($_POST['phone_number']);
-		//$password = trim($_POST['password']);
+		$password = trim($_POST['password']);
 		
-	if(!empty($email) && !empty($first_name) && !empty($last_name) && !empty($phone_number)) {
+	if(!empty($email) && !empty($first_name) && !empty($last_name) && !empty($phone_number && !empty($password))) {
 		$qry = "SELECT * FROM userlist WHERE '" . $email . "' = (email) LIMIT 1";
 		$user = $db->query($qry);
 		
 		if($user->num_rows > 0){
 			echo 'email already in use';
-
-
 		} else {
+			//hash password
+			$hash = password_hash($password, PASSWORD_DEFAULT);
+
 			//add to userlist
-			$sql = $db->prepare("INSERT INTO userlist (first_name, last_name, email, phone_number) VALUES (?,?,?,?)");
-			$sql->bind_param('ssss', $first_name, $last_name, $email, $phone_number);
+			$sql = $db->prepare("INSERT INTO userlist (first_name, last_name, email, phone_number, password) VALUES (?,?,?,?,?)");
+			$sql->bind_param('sssss', $first_name, $last_name, $email, $phone_number, $hash);
 			
 			if($sql->execute()){
 				//try to link to university
