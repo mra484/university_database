@@ -52,6 +52,13 @@ if(isset($_COOKIE) && isset($_GET) ){
 			} else {
 				//echo 'unable to delete comment';
 			}
+		} else if(isset($_POST['rating'])){
+			$rating = trim($_POST['rating']);
+			$db->query("INSERT INTO event_voters (email, eid, vote)
+				VALUES ('" . $email . "', '" . $eid . "', '" . $rating . "')
+				ON DUPLICATE KEY UPDATE
+				vote = '" . $rating . "'");
+
 		}
 	}
 
@@ -79,6 +86,11 @@ if(isset($_COOKIE) && isset($_GET) ){
 	if(strcmp($email, $event['owner'] ) == 0){
 		$owner = true;
 	}
+
+	//get ratings
+	$temp = $db->query("SELECT SUM(vote) as sum, COUNT(vote) as votes FROM event_voters
+		WHERE (eid) = '" . $eid . "'");
+	$votes = $temp->fetch_assoc();
 
 
 	//get comments for this event
@@ -144,7 +156,11 @@ if(isset($_COOKIE) && isset($_GET) ){
 			});
 		}
 
-		
+		function handleRating(input){
+			if(input.value < 0) input.value = 0;
+			if(input.value > 5) input.value = 5;
+		}
+
 	</script>
 </head>
 
@@ -188,6 +204,12 @@ if(isset($_COOKIE) && isset($_GET) ){
 				Contact Email: <?php echo escape($event['contact_email']); ?> <br>
 			</div>
 		<?php } ?>
+
+		User rating: <?php echo escape( ($votes['votes'] == 0 ? 0.0 : $votes['sum'] / $votes['votes']) ); ?> (<?php echo escape($votes['votes']); ?>)<br>
+		<form method="POST" action="?event=<?php echo escape($eid); ?>">
+			My rating: <input type="text" onchange="handleRating(this);" name="rating" />
+			<input type="submit" value="Rate" name="rate"/>
+		</form>
 		</div>
 
 	<hr>
