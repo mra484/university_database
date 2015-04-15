@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1:33060
--- Generation Time: Apr 10, 2015 at 03:30 PM
+-- Generation Time: Apr 16, 2015 at 01:44 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -31,37 +31,42 @@ CREATE TABLE IF NOT EXISTS `address` (
   `street` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `sid` varchar(2) DEFAULT NULL,
-  `p_code` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+  `p_code` varchar(30) DEFAULT NULL,
+  `latitude` float(10,6) NOT NULL DEFAULT '38.000000',
+  `longitude` float(10,6) NOT NULL DEFAULT '-98.000000'
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `address`
 --
 
-INSERT INTO `address` (`aid`, `street`, `city`, `sid`, `p_code`) VALUES
-(0, '', '', 'AK', ''),
-(1, '1010 street23', 'City12', 'AZ', '32819'),
-(2, '5678 street', 'City2', 'FL', '32825'),
-(4, '5000 street', 'orlando', 'FL', '32819'),
-(5, '5000 street', 'orlando', 'FL', '32819'),
-(6, '5000 street', 'orlando', 'FL', '32819'),
-(7, '5000 street', 'orlando', 'FL', '32819'),
-(8, '5000 street', 'orlando', 'FL', '32819'),
-(9, '5000 street', 'orlando', 'FL', '32819'),
-(10, '333', '3566', 'DE', '32'),
-(11, '3242', 'orlando', 'FL', '23432'),
-(12, '3242', 'orlando', 'FL', '23432'),
-(13, '3242', 'orlando', 'FL', '23432'),
-(14, '3242', 'orlando', 'FL', '23432'),
-(15, '55500 street', 'oralndo', 'IL', '60559'),
-(16, '55500 street', 'oralndo', 'IL', '60559'),
-(17, 'asdfadsf123123', 'asdf', 'AL', 'asdfawsddsdASD'),
-(18, '1324123 streetdd', 'cesadfa ity', 'IA', '564156'),
-(19, 'kl;jasd;lkfj', ';l', 'AK', '234243'),
-(20, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465'),
-(21, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465'),
-(22, '456', '456456', 'AK', '546'),
-(23, '4564', '654', 'AK', '456');
+INSERT INTO `address` (`aid`, `street`, `city`, `sid`, `p_code`, `latitude`, `longitude`) VALUES
+(0, '', '', 'IN', '', 41.782860, -87.974892),
+(1, '1010 street23', 'City12', 'AZ', '32819', 0.000000, -98.000000),
+(2, '5678 street', 'City2', 'FL', '32825', 0.000000, -98.000000),
+(4, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
+(5, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
+(6, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
+(7, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
+(8, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
+(9, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
+(10, '333', '3566', 'DE', '32', 0.000000, -98.000000),
+(11, '3242', 'orlando', 'FL', '23432', 0.000000, -98.000000),
+(12, '3242', 'orlando', 'FL', '23432', 0.000000, -98.000000),
+(13, '3242', 'orlando', 'FL', '23432', 0.000000, -98.000000),
+(14, '3242', 'orlando', 'FL', '23432', 0.000000, -98.000000),
+(15, '55500 street', 'oralndo', 'IL', '60559', 0.000000, -98.000000),
+(16, '55500 street', 'oralndo', 'IL', '60559', 0.000000, -98.000000),
+(17, 'asdfadsf123123', 'asdf', 'AL', 'asdfawsddsdASD', 0.000000, -98.000000),
+(18, '1324123 streetdd', 'cesadfa ity', 'IA', '564156', 0.000000, -98.000000),
+(19, 'kl;jasd;lkfj', ';l', 'AK', '234243', 0.000000, -98.000000),
+(20, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465', 0.000000, -98.000000),
+(21, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465', 0.000000, -98.000000),
+(22, '456', '456456', 'AK', '546', 0.000000, -98.000000),
+(23, '4564', '654', 'AK', '456', 0.000000, -98.000000),
+(24, '4000 central florida blvd', 'orlando', 'FL', '32816', 0.000000, -98.000000),
+(25, '7503 fake street', '', 'AK', '', 38.000000, -98.000000),
+(26, '3330 cass avenue12333333333333333', 'westmont', 'IL', '60559', 38.000000, -98.000000);
 
 -- --------------------------------------------------------
 
@@ -113,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `contact_email` varchar(255) DEFAULT NULL,
   `ecid` int(11) DEFAULT NULL,
   `evid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event`
@@ -286,7 +291,11 @@ INSERT INTO `event` (`eid`, `owner`, `name`, `rating`, `date`, `approval`, `desc
 (193, '', 'Theatre UCF Showcase', NULL, '2015-04-11', NULL, 'Theatre UCF students and alumni join together for a collage of musical numbers from past and future UCF productions, presentations of student projects, and scenes by students nominated for Kennedy Center Irene Ryan Acting Awards.<br><br>The UCF Celebrates the Arts event is an annual showcase featuring an interactive exhibition of student artwork in areas of Studio Art, Music, Theatre, Dance, Digital Media, Gaming, Animation, Photography, Web Design, and Film. It utilizes the entire Dr. Phillips Center for Performing Arts facility, including the adjacent CNL Plaza. Each year there are several projects in our community that demonstrate the artsâ€™ vital role in innovation, fostering creativity. This event will allow UCF to share the products and performances of the arts units, demonstrate the universityâ€™s commitment to partnerships, and illustrates UCFâ€™s strong positive impact in the Central Florida Region and beyond.<br><br>Reserve your free ticket online atÂ <a href="http://arts.cah.ucf.edu/" target="">http://arts.cah.ucf.edu/</a>', '06:00:00', NULL, NULL, NULL, NULL, NULL),
 (194, '', '"Shakespeare Swings!": Orlando Shakespeare Theater Cabaret Singers perform with the Flying Horse Big Band', NULL, '2015-04-11', NULL, 'Petruchio<br>and Katherine backstage, Romeo and Juliet on a fire escape, shipwrecked<br>identical twins â€œfalling in love with love.â€<br><br>Itâ€™s<br>hard to imagine the American Songbook without the contributions of such greats<br>as Leonard Bernstein, Stephen Sondheim, Duke Ellington, Cole Porter, Rogers and<br>Hart, and...William Shakespeare? Â  Join us<br>as we celebrate the immortal Bard and his impact on the American musical<br>landscape in this world-premiere revue featuring some of your favorite songs<br>from <i>West Side Story; Kiss Me, Kate;</i> and <i>The Boys from Syracuse;</i> along<br>with popular big band tunes from UCFâ€™s Flying Horse Big Band, original<br>compositions and arrangements of Shakespeare lyrics and sonnets, and so much<br>more! Song, dance, and poetry await you in this bewitching musical evening.<br><br>The UCF Celebrates the Arts event is an annual showcase featuring an interactive exhibition of student artwork in areas of Studio Art, Music, Theatre, Dance, Digital Media, Gaming, Animation, Photography, Web Design, and Film. It utilizes the entire Dr. Phillips Center for Performing Arts facility, including the adjacent CNL Plaza. Each year there are several projects in our community that demonstrate the artsâ€™ vital role in innovation, fostering creativity. This event will allow UCF to share the products and performances of the arts units, demonstrate the universityâ€™s commitment to partnerships, and illustrates UCFâ€™s strong positive impact in the Central Florida Region and beyond.<br><br>Reserve your free ticket online atÂ <a href="http://arts.cah.ucf.edu/" target="">http://arts.cah.ucf.edu/</a>', '08:00:00', NULL, NULL, NULL, NULL, NULL),
 (195, '', 'UCF Men''s Tennis vs. Memphis', NULL, '2015-04-12', NULL, 'Come out and support your UCF Men''s Tennis team as they take on the Memphis Tigers. Admission is free for everyone.', '10:00:00', NULL, '', '', 1, 1),
-(196, '', 'Orlando REP & UCF Choirs perform Civil War Voices', NULL, '2015-04-12', NULL, 'By James<br>R. Harris | Original Musical Arrangements by Mark Hayes<br>Best<br>suited for 6th grade and up<br><i>Civil<br>War Voices</i> tells<br>the compelling and passionate true stories of individuals who lived through the<br>conflict, using their actual words that were left behind in diaries, letters,<br>and other writings. The show features songs of the period, such as â€œBattle Hymn<br>of the Republic,â€ â€œAmazing Grace,â€ and â€œSometimes I Feel Like a Motherless<br>Child.â€ Â  Actors bring the characters to life and join<br>with a stirringÂ <br><br>The UCF Celebrates the Arts event is an annual showcase featuring an interactive exhibition of student artwork in areas of Studio Art, Music, Theatre, Dance, Digital Media, Gaming, Animation, Photography, Web Design, and Film. It utilizes the entire Dr. Phillips Center for Performing Arts facility, including the adjacent CNL Plaza. Each year there are several projects in our community that demonstrate the artsâ€™ vital role in innovation, fostering creativity. This event will allow UCF to share the products and performances of the arts units, demonstrate the universityâ€™s commitment to partnerships, and illustrates UCFâ€™s strong positive impact in the Central Florida Region and beyond.<br><br>Reserve your free ticket online atÂ <a href="http://arts.cah.ucf.edu/" target="">http://arts.cah.ucf.edu/</a>', '10:30:00', NULL, NULL, NULL, NULL, NULL);
+(196, '', 'Orlando REP & UCF Choirs perform Civil War Voices', NULL, '2015-04-12', NULL, 'By James<br>R. Harris | Original Musical Arrangements by Mark Hayes<br>Best<br>suited for 6th grade and up<br><i>Civil<br>War Voices</i> tells<br>the compelling and passionate true stories of individuals who lived through the<br>conflict, using their actual words that were left behind in diaries, letters,<br>and other writings. The show features songs of the period, such as â€œBattle Hymn<br>of the Republic,â€ â€œAmazing Grace,â€ and â€œSometimes I Feel Like a Motherless<br>Child.â€ Â  Actors bring the characters to life and join<br>with a stirringÂ <br><br>The UCF Celebrates the Arts event is an annual showcase featuring an interactive exhibition of student artwork in areas of Studio Art, Music, Theatre, Dance, Digital Media, Gaming, Animation, Photography, Web Design, and Film. It utilizes the entire Dr. Phillips Center for Performing Arts facility, including the adjacent CNL Plaza. Each year there are several projects in our community that demonstrate the artsâ€™ vital role in innovation, fostering creativity. This event will allow UCF to share the products and performances of the arts units, demonstrate the universityâ€™s commitment to partnerships, and illustrates UCFâ€™s strong positive impact in the Central Florida Region and beyond.<br><br>Reserve your free ticket online atÂ <a href="http://arts.cah.ucf.edu/" target="">http://arts.cah.ucf.edu/</a>', '10:30:00', NULL, NULL, NULL, NULL, NULL),
+(197, 'm', 'Event with good map location', NULL, '2015-04-13', NULL, 'Event with a proper address for map', '07:30:00', 24, 'nophone', 'noemail', 1, 1),
+(198, 'm', 'eventevents', NULL, '1984-11-04', NULL, NULL, '12:01:00', 1, 'nono', 'nononono', 1, 1),
+(199, 'm', 'eventeventevent', NULL, '0012-05-15', NULL, NULL, '17:00:00', 0, 'no', 'nono', 1, 1),
+(200, 'm', 'eventeventevent5682333333333333333', NULL, '2031-01-01', NULL, NULL, '03:00:00', 26, 'no', 'no', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -342,6 +351,14 @@ CREATE TABLE IF NOT EXISTS `event_voters` (
   `vote` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `event_voters`
+--
+
+INSERT INTO `event_voters` (`email`, `eid`, `vote`) VALUES
+('m', 194, 2),
+('s', 194, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -354,7 +371,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `opened` date DEFAULT NULL,
   `subject` varchar(255) NOT NULL,
   `message` varchar(10000) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `mail`
@@ -362,11 +379,20 @@ CREATE TABLE IF NOT EXISTS `mail` (
 
 INSERT INTO `mail` (`mid`, `sent`, `opened`, `subject`, `message`) VALUES
 (1, '2015-04-09', NULL, 'mmm', 'masedlfkajsdlfl'),
-(2, '2015-04-09', NULL, 'Re: mmm', '\\n______________\\nmasedlfkajsdlfl'),
 (5, '2015-04-09', NULL, 'Re: mmm', '_______________\r\nSent on: 2015-04-09\r\nFrom: m\r\nTo: m\r\nSubject: mmm\r\n\r\nmasedlfkajsdlfl'),
 (6, '2015-04-09', NULL, 'test 2', 'new message test 2\r\n\r\n\r\n<?php echo ''1111'' ?>'),
 (7, '2015-04-09', NULL, 'Re: test 2', '_______________\r\nSent on: 2015-04-09\r\nFrom: m\r\nTo: u1@knights.ucf.edu\r\nSubject: test 2\r\n\r\nnew message test 2\r\n\r\n\r\n<?php echo ''1111''; ?>'),
-(8, '2015-04-10', NULL, 'sendingmessage', 'adf;aklsdfn;klasd fkl;ads k;fdfsfdsf\r\nsdaf;lkad sf\r\nsdjnfklasd f\r\nasdffkljsd');
+(8, '2015-04-10', NULL, 'sendingmessage', 'adf;aklsdfn;klasd fkl;ads k;fdfsfdsf\r\nsdaf;lkad sf\r\nsdjnfklasd f\r\nasdffkljsd'),
+(9, '2015-04-12', NULL, 'Invitation to group created 1', ''),
+(10, '2015-04-12', NULL, 'Invitation to group created 1', ''),
+(11, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page=6&join=2>Join the group</a>'),
+(12, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page=6&join=2>Join the group</a>'),
+(13, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page=6&join=2>Join the group</a>'),
+(14, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page=6&join=2>Join the group</a>'),
+(15, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page=6&join=2">Join the group</a>'),
+(16, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page.php?rso=6&join=2">Join the group</a>'),
+(17, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page.php?rso=6&join=2">Join the group</a>'),
+(18, '2015-04-15', NULL, 'Invitation to 415123', 'You have been invited to the group "415123" follow the link to join this group\n\n<a href="rso_page.php?rso=7&join=2">Join the group</a>');
 
 -- --------------------------------------------------------
 
@@ -386,11 +412,17 @@ CREATE TABLE IF NOT EXISTS `mail_list` (
 
 INSERT INTO `mail_list` (`mid`, `to_user`, `from_user`) VALUES
 (1, 'm', 'm'),
-(2, 'm', 'm'),
 (5, 'm', 'm'),
 (6, 'u1@knights.ucf.edu', 'm'),
 (7, 'm', 'u1@knights.ucf.edu'),
-(8, 'u5@knights.ucf.edu', 'u5@knights.ucf.edu');
+(8, 'u5@knights.ucf.edu', 'u5@knights.ucf.edu'),
+(10, 'u11@knights.ucf.edu', 'm'),
+(11, 'u9@knights.ucf.edu', 'm'),
+(14, 'a@knights.ucf.edu', 'm'),
+(15, 'a@knights.ucf.edu', 'm'),
+(16, 'a@knights.ucf.edu', 'm'),
+(17, 'u1@knights.ucf.edu', 'm'),
+(18, 's', 'm');
 
 -- --------------------------------------------------------
 
@@ -435,7 +467,11 @@ CREATE TABLE IF NOT EXISTS `rso_event_list` (
 --
 
 INSERT INTO `rso_event_list` (`rid`, `eid`) VALUES
-(6, 12);
+(6, 12),
+(6, 197),
+(7, 198),
+(7, 199),
+(7, 200);
 
 -- --------------------------------------------------------
 
@@ -446,7 +482,6 @@ INSERT INTO `rso_event_list` (`rid`, `eid`) VALUES
 CREATE TABLE IF NOT EXISTS `rso_member_list` (
   `rid` int(11) NOT NULL DEFAULT '0',
   `email` varchar(255) NOT NULL DEFAULT '',
-  `password` varchar(100) NOT NULL,
   `admin` bit(1) DEFAULT NULL,
   `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -455,22 +490,27 @@ CREATE TABLE IF NOT EXISTS `rso_member_list` (
 -- Dumping data for table `rso_member_list`
 --
 
-INSERT INTO `rso_member_list` (`rid`, `email`, `password`, `admin`, `created`) VALUES
-(1, 'meeeee', '', b'0', '0000-00-00 00:00:00'),
-(1, 'u1@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
-(1, 'u2@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(1, 'u3@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(1, 'u5@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(2, 'u11@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(2, 'u12@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(2, 'u1@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(2, 'u2@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(2, 'u4@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
-(2, 'u6@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(3, 'u6@knights.ucf.edu', '', b'1', '0000-00-00 00:00:00'),
-(4, 'u1@knights.ucf.edu', '', b'0', '0000-00-00 00:00:00'),
-(6, 'm', '', b'1', '0000-00-00 00:00:00'),
-(7, 'm', '', b'1', '0000-00-00 00:00:00');
+INSERT INTO `rso_member_list` (`rid`, `email`, `admin`, `created`) VALUES
+(1, 'meeeee', b'0', '0000-00-00 00:00:00'),
+(1, 'u1@knights.ucf.edu', b'0', '2015-04-12 11:41:07'),
+(1, 'u2@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(1, 'u3@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(1, 'u5@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(2, 'u11@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(2, 'u12@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(2, 'u1@knights.ucf.edu', b'0', '2015-04-12 11:41:07'),
+(2, 'u2@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(2, 'u4@knights.ucf.edu', b'1', '0000-00-00 00:00:00'),
+(2, 'u6@knights.ucf.edu', b'0', '0000-00-00 00:00:00'),
+(3, 'u6@knights.ucf.edu', b'1', '0000-00-00 00:00:00'),
+(4, 'u1@knights.ucf.edu', b'0', '2015-04-12 11:41:07'),
+(6, 'a@knights.ucf.edu', b'0', '2015-04-12 11:38:34'),
+(6, 'm', b'0', '2015-04-15 15:02:43'),
+(6, 'u11@knights.ucf.edu', NULL, '0000-00-00 00:00:00'),
+(6, 'u1@knights.ucf.edu', b'1', '2015-04-12 11:41:07'),
+(6, 'u9@knights.ucf.edu', NULL, '0000-00-00 00:00:00'),
+(7, 'm', b'1', '2015-04-15 15:02:43'),
+(7, 's', b'0', '2015-04-15 13:24:48');
 
 -- --------------------------------------------------------
 
@@ -573,7 +613,7 @@ CREATE TABLE IF NOT EXISTS `university` (
   `description` varchar(10000) DEFAULT NULL,
   `domain` varchar(255) NOT NULL,
   `rss` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `university`
@@ -585,7 +625,8 @@ INSERT INTO `university` (`uid`, `name`, `aid`, `description`, `domain`, `rss`) 
 (2, 'Valencia Community College', 2, 'dafadsfds', 'valenciacollege.edu', ''),
 (3, 'University of Mark', 15, 'dafadsfds', '63030540932509', ''),
 (4, 'University of 55', 16, 'dafadsfds', '63030540932509', ''),
-(5, 'dfggsfdgsf', 17, 'afdfasdfasdfasdfasd', 'sadfdsfa.edu', '');
+(5, 'dfggsfdgsf', 17, 'afdfasdfasdfasdfasd', 'sadfdsfa.edu', ''),
+(6, 'ununi', 25, 'uniuniuni', '', '');
 
 -- --------------------------------------------------------
 
@@ -628,7 +669,9 @@ INSERT INTO `university_event_list` (`uid`, `eid`) VALUES
 (1, 193),
 (1, 194),
 (1, 195),
-(1, 196);
+(1, 196),
+(1, 197),
+(2, 197);
 
 -- --------------------------------------------------------
 
@@ -648,7 +691,9 @@ CREATE TABLE IF NOT EXISTS `university_member_list` (
 
 INSERT INTO `university_member_list` (`uid`, `email`, `super_admin`) VALUES
 (1, 'b@knights.ucf.edu', b'0'),
-(1, 'm', b'0'),
+(1, 'new@knights.ucf.edu', b'0'),
+(1, 'newnew@knights.ucf.edu', b'0'),
+(1, 'newnewnew@knights.ucf.edu', b'0'),
 (1, 'u10@knights.ucf.edu', b'0'),
 (1, 'u11@knights.ucf.edu', b'0'),
 (1, 'u12@knights.ucf.edu', b'0'),
@@ -662,7 +707,8 @@ INSERT INTO `university_member_list` (`uid`, `email`, `super_admin`) VALUES
 (1, 'u8@knights.ucf.edu', b'0'),
 (1, 'u9@knights.ucf.edu', b'0'),
 (2, 'c@valenciacollege.edu', b'0'),
-(2, 's', b'1');
+(2, 's', b'1'),
+(6, 'm', b'1');
 
 -- --------------------------------------------------------
 
@@ -681,9 +727,15 @@ CREATE TABLE IF NOT EXISTS `university_rso_link` (
 
 INSERT INTO `university_rso_link` (`uid`, `rid`) VALUES
 (1, 1),
+(6, 1),
+(6, 2),
+(2, 3),
 (5, 3),
+(6, 3),
+(6, 4),
 (1, 6),
-(2, 6);
+(2, 6),
+(6, 6);
 
 -- --------------------------------------------------------
 
@@ -695,38 +747,42 @@ CREATE TABLE IF NOT EXISTS `userlist` (
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL DEFAULT '',
-  `phone_number` varchar(12) DEFAULT NULL
+  `phone_number` varchar(12) DEFAULT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `userlist`
 --
 
-INSERT INTO `userlist` (`first_name`, `last_name`, `email`, `phone_number`) VALUES
-('a', 'a', 'a@knights.ucf.edu', 'aaa'),
-('b', 'b', 'b@knights.ucf.edu', 'bbb'),
-('c', 'c', 'c@valenciacollege.edu', 'ccc'),
-('d', 'd', 'd@do.com', 'ddd'),
-('d', 'd', 'd@knights.ucf.edu', '33'),
-('d', 'd', 'e@knights.ucf.edu', '33'),
-('k', 'k', 'k@knights.ucf.edu', 'kkk'),
-('l', 'l', 'l@knights.ucf.edu', 'lll'),
-('m', 'm', 'm', 'm'),
-('me', 'me', 'meeeee', 'me'),
-('mrrm', 'rrmrr', 'mrm@knights.ucf.edu', '22299220000'),
-('s', 's', 's', 's'),
-('user 10', 'u10', 'u10@knights.ucf.edu', '4070000010'),
-('user 11', 'u11', 'u11@knights.ucf.edu', '4070000011'),
-('user 12', 'u12', 'u12@knights.ucf.edu', '4070000012'),
-('user 1', 'u1', 'u1@knights.ucf.edu', '4070000001'),
-('user 2', 'u2', 'u2@knights.ucf.edu', '4070000002'),
-('user 3', 'u3', 'u3@knights.ucf.edu', '4070000003'),
-('user 4', 'u4', 'u4@knights.ucf.edu', '4070000004'),
-('user 5', 'u5', 'u5@knights.ucf.edu', '4070000005'),
-('user 6', 'u6', 'u6@knights.ucf.edu', '4070000006'),
-('user 7', 'u7', 'u7@knights.ucf.edu', '4070000007'),
-('user 8', 'u8', 'u8@knights.ucf.edu', '4070000008'),
-('user 9', 'u9', 'u9@knights.ucf.edu', '4070000009');
+INSERT INTO `userlist` (`first_name`, `last_name`, `email`, `phone_number`, `password`) VALUES
+('a', 'a', 'a@knights.ucf.edu', 'aaa', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('b', 'b', 'b@knights.ucf.edu', 'bbb', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('c', 'c', 'c@valenciacollege.edu', 'ccc', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('d', 'd', 'd@do.com', 'ddd', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('d', 'd', 'd@knights.ucf.edu', '33', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('d', 'd', 'e@knights.ucf.edu', '33', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('k', 'k', 'k@knights.ucf.edu', 'kkk', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('l', 'l', 'l@knights.ucf.edu', 'lll', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('m', 'm', 'm', 'm', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('me', 'me', 'meeeee', 'me', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('mrrm', 'rrmrr', 'mrm@knights.ucf.edu', '22299220000', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('new', 'account', 'new@knights.ucf.edu', 'nonono', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('newnew', 'account', 'newnew@knights.ucf.edu', 'nonono', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('newnewnew', 'account', 'newnewnew@knights.ucf.edu', 'nonono', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('s', 's', 's', 's', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 10', 'u10', 'u10@knights.ucf.edu', '4070000010', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 11', 'u11', 'u11@knights.ucf.edu', '4070000011', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 12', 'u12', 'u12@knights.ucf.edu', '4070000012', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 1', 'u1', 'u1@knights.ucf.edu', '4070000001', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 2', 'u2', 'u2@knights.ucf.edu', '4070000002', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 3', 'u3', 'u3@knights.ucf.edu', '4070000003', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 4', 'u4', 'u4@knights.ucf.edu', '4070000004', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 5', 'u5', 'u5@knights.ucf.edu', '4070000005', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 6', 'u6', 'u6@knights.ucf.edu', '4070000006', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 7', 'u7', 'u7@knights.ucf.edu', '4070000007', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 8', 'u8', 'u8@knights.ucf.edu', '4070000008', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai'),
+('user 9', 'u9', 'u9@knights.ucf.edu', '4070000009', '$2a$10$lEsbfsNkwSZfzYfU46ELzu3WM/HyVi7Q5niQBhfqzr8OahoBt8Sai');
 
 --
 -- Indexes for dumped tables
@@ -848,7 +904,7 @@ ALTER TABLE `userlist`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `comment`
 --
@@ -858,7 +914,7 @@ MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=197;
+MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
 --
 -- AUTO_INCREMENT for table `event_category`
 --
@@ -873,7 +929,7 @@ MODIFY `evid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `mail`
 --
 ALTER TABLE `mail`
-MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `rso`
 --
@@ -888,7 +944,7 @@ MODIFY `rtid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --

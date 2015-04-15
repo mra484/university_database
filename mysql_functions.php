@@ -155,6 +155,10 @@ function printEventList2($rid, $uid, $db){
 		"SELECT * FROM rso_event_list
 		LEFT JOIN event ON rso_event_list.eid = event.eid
 		WHERE (rso_event_list.rid) = '" . $rid . "'
+		UNION
+		SELECT * FROM rso_event_list
+		LEFT JOIN event ON rso_event_list.eid = event.eid
+		WHERE (rso_event_list.rid) = '" . $rid . "'
 			&& (SELECT COUNT(rid) from rso_member_list where (rid) = '" . $rid . "') > 4
 		UNION
 		SELECT * FROM university_event_list
