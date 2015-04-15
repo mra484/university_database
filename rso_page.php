@@ -38,7 +38,8 @@ if(!empty($_GET)){
 				created = NOW()
 				WHERE (rso_member_list.email) = '" . $email . "'");
 		}	
-		if( $sql->execute() ){
+		$sql->execute();
+		if( $db->affected_rows != 0 ){
 			echo 'Welcome to ' . $rso['name'];
 		} else {
 			echo 'Unable to join group';

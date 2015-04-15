@@ -108,6 +108,32 @@ function checkEventSuperAdmin($eid, $email, $db){
 	return false;
 }
 
+function printEventList($event){
+
+	if(!count($event)){
+		echo 'no events';
+	}
+	
+	foreach($event as $e){
+		$description = $e['description'];
+		if(strlen($description) > 150 ){
+			$description = substr($description, 0, 150) . ' ...';
+		}
+
+		$datetime = DateTime::createFromFormat("Y-m-d H:i:s", "" . $e['date'] . " " . $e['time'] . "");
+		$date_con = $datetime->format("D, M d, Y");
+		$time_con = $datetime->format("h:i a");
+		?>
+
+		<div id="event_block">
+			<h3><a href="event.php?event=<?php echo escape($e['eid']); ?>"><?php echo escape($e['name']); ?></h3></a>
+			<?php echo escape($date_con); ?> at <?php echo escape($time_con); ?> <br><br>
+			<p><?php echo nl2br($description); ?></p>
+		</div>
+		<?php
+	}
+}
+
 function printEventList2($rid, $uid, $db){
 	if($rid == NULL){
 		//look for university events linked to this rso
@@ -136,35 +162,30 @@ function printEventList2($rid, $uid, $db){
 		WHERE EXISTS (
 			SELECT * FROM university_rso_link
 			WHERE (rid) = '" . $rid . "' && (uid) = (university_event_list.uid))
+		ORDER BY date ASC, time ASC
 		");
 		
 	}
 
 	$event = $temp->fetch_all(MYSQLI_ASSOC);
+	printEventList($event);
+}
 
-	if(!count($event)){
-		echo 'no events';
-	}
+function printEventList3($email, $db){
+		$temp = $db->query("SELECT * FROM university_event_list
+		LEFT JOIN event ON university_event_list.eid = event.eid
+		WHERE (university_event_list.uid) IN (
+			SELECT uid FROM university_member_list WHERE (email) = '" . $email . "')
+		UNION
+		SELECT * FROM rso_event_list
+		LEFT JOIN event ON rso_event_list.eid = event.eid
+		WHERE (rso_event_list.rid) IN (
+			SELECT rid FROM rso_member_list WHERE (email) = '" . $email . "')
+		ORDER BY date ASC, time ASC");
+
+		$event = $temp->fetch_all(MYSQLI_ASSOC);
+		printEventList($event);
 	
-	foreach($event as $e){
-		$description = $e['description'];
-		if(strlen($description) > 150 ){
-			$description = substr($description, 0, 150) . ' ...';
-		}
-
-		$datetime = DateTime::createFromFormat("Y-m-d H:i:s", "" . $e['date'] . " " . $e['time'] . "");
-		$date_con = $datetime->format("D, M d, Y");
-		$time_con = $datetime->format("h:i a");
-		?>
-
-		<div id="event_block">
-			<h3><a href="event.php?event=<?php echo escape($e['eid']); ?>"><?php echo escape($e['name']); ?></h3></a>
-			<?php echo escape($date_con); ?> at <?php echo escape($time_con); ?> <br><br>
-			<p><?php echo escape($description); ?></p>
-		</div>
-		<?php
-	}
-
 }
 
 function getRSS($uid, $db){

@@ -78,6 +78,9 @@ if(isset($_COOKIE) && isset($_GET) ){
 
 
 	$admin = checkEventAdmin($eid, $email, $db);
+	//echo '<pre>', var_dump($eid), '</pre>';
+	//echo '<pre>', var_dump($email), '</pre>';
+	//echo '<pre>', var_dump($db), '</pre>';
 	//echo 'is admin?' . var_dump($admin) . '<br>';
 	$super_admin = checkEventSuperAdmin($eid, $email, $db);
 	//echo 'is super_admin?' . var_dump($super_admin);
@@ -201,7 +204,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 		<?php if(!empty($event['contact_phone']) && !empty($event['contact_email'])){ ?>
 			<div id="event_contact" >
 				Contact Phone: <?php echo escape($event['contact_phone']); ?> <br>
-				Contact Email: <?php echo escape($event['contact_email']); ?> <br>
+				Contact Email: <?php echo escape($event['contact_email']); ?> <br><br>
 			</div>
 		<?php } ?>
 
