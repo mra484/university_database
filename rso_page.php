@@ -112,8 +112,7 @@ if(!empty($_GET)){
 <h2><?php echo $rso['name']; ?>'s page</h2>
 <?php if(count($rso_member_list) < 5){
 	?>
-	This group does not meet the member requirement, events only visible 
-	within group until member count reaches 5<br>
+	This group does not meet the member requirement, group will be hidden to others until the member count reaches 5<br>
 	<?php
 }
 ?>

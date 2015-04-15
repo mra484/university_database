@@ -1,4 +1,5 @@
 <?php
+
 function createUserPanel($db, $email){
 	$temp = $db->query("SELECT mid FROM mail_list WHERE to_user = '" . $email . "'");
 	$temp2 = $temp->fetch_all(MYSQLI_ASSOC);
@@ -109,7 +110,7 @@ function checkEventSuperAdmin($eid, $email, $db){
 
 function printEventList2($rid, $uid, $db){
 	if($rid == NULL){
-		//echo 'checking for rso events: uid is ' . $uid . "\n";
+		//look for university events linked to this rso
 		$temp = $db->query(
 		"SELECT * FROM university_event_list
 		LEFT JOIN event ON university_event_list.eid = event.eid
@@ -123,11 +124,12 @@ function printEventList2($rid, $uid, $db){
 		");
 		
 	} else if ($uid == NULL){
-		//echo 'checking univ for events: rid is ' . $rid . "\n";
+		//look for visible events from rso event list that are related to this univ
 		$temp = $db->query(
 		"SELECT * FROM rso_event_list
 		LEFT JOIN event ON rso_event_list.eid = event.eid
 		WHERE (rso_event_list.rid) = '" . $rid . "'
+			&& (SELECT COUNT(rid) from rso_member_list where (rid) = '" . $rid . "') > 4
 		UNION
 		SELECT * FROM university_event_list
 		LEFT JOIN event ON university_event_list.eid = event.eid

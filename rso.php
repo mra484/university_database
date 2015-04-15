@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting(1);
 require 'db/connect.php';
 require 'db/security.php';
 require 'mysql_functions.php';
@@ -8,14 +8,24 @@ if(!empty($_COOKIE)){
 	//retrieve rows for user, rso that contains user and list of all rso
 	$email = trim($_COOKIE['user']);
 	$results = $db->query("SELECT * FROM userlist WHERE (email) = '" . $email . "' LIMIT 1");
-	$temp = $db->query("SELECT rm.email AS email, rm.rid AS rid, rm.admin AS admin, r.name AS name 
-		FROM rso_member_list AS rm, rso AS r
-		WHERE (email) = '" . $email . "' && (rm.rid) = (r.rid)");
+
+	//get joined rsos
+	$temp = $db->query("SELECT * FROM rso_member_list
+		LEFT JOIN rso ON rso_member_list.rid = rso.rid
+		LEFT JOIN (SELECT COUNT(rid) as members, rid from rso_member_list 
+			where (rso_member_list.rid) IN (SELECT rid FROM rso) group by rid ) as r ON rso.rid = r.rid
+		LEFT JOIN rso_type ON rso.rtid = rso_type.rtid
+		WHERE (email) = '" . $email . "'");
 	
 	$user_rso_list = $temp->fetch_all(MYSQLI_ASSOC);
 	
-	//TODO modify to only retrieve entries that don't exist in $user_rso_list
-	$temp = $db->query("SELECT * FROM rso");
+	//get visible rso no member of
+	$temp = $db->query("SELECT * FROM rso
+	LEFT JOIN (SELECT COUNT(rid) as members, rid from rso_member_list 
+		where (rso_member_list.rid) IN (SELECT rid FROM rso) group by rid ) as r ON rso.rid = r.rid
+	LEFT JOIN rso_type ON rso.rtid = rso_type.rtid
+	WHERE (r.members) > 4 && NOT EXISTS
+		(SELECT * FROM rso_member_list WHERE (email) = '" . $email . "' && (rid) = (rso.rid)) ");
 	$rso_list = $temp->fetch_all(MYSQLI_ASSOC);
 	
 	
@@ -62,14 +72,12 @@ if(!empty($_COOKIE)){
 			<?php
 			//iterate through user rso list and print each field
 				foreach($user_rso_list as $r){
-					$temp = $db->query("SELECT * FROM rso_member_list WHERE (rid) = '" . $r['rid'] . "'");
-					$temp2 = $temp->fetch_ALL(MYSQLI_BOTH);
 			?>
 			
 			<tr>
 				<td><?php echo escape($r['name']); ?></td>
-				<td><?php echo count($temp2); ?></td>
-				<td><!--TODO ?php echo escape($r->short_description); ?--></td>
+				<td><?php echo escape($r['members']); ?></td>
+				<td><?php echo escape($r['description']); ?></td>
 				<td><a href="rso_page.php?rso=<?php echo escape($r['rid']); ?>"/>Go</td>
 			</tr>
 			
@@ -110,14 +118,12 @@ if(!empty($_COOKIE)){
 			<?php
 			//iterate through list of rso
 				foreach($rso_list as $r){
-					$temp = $db->query("SELECT * FROM rso_member_list WHERE (rid) = '" . $r['rid'] . "'");
-					$temp2 = $temp->fetch_ALL(MYSQLI_BOTH);
 			?>
 			
 			<tr>
 				<td><?php echo escape($r['name']); ?></td>
-				<td><?php echo count($temp2); ?></td>
-				<td><!-- TODO short description --></td>
+				<td><?php echo escape($r['members']); ?></td>
+				<td><?php echo escape($r['description']); ?></td>
 				<td><a href="rso_page.php?rso=<?php echo escape($r['rid']); ?>"/>Go</td>
 			</tr>
 			
