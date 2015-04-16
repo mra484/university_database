@@ -31,6 +31,9 @@ if(!empty($_POST)) {
 		$email	 = trim($_POST['email']);
 		//create cookie for email that lasts 600 seconds
 		setCookie("user", $email, time() + (86400), "/");
+		$result = $db->query("SELECT * FROM userlist WHERE (email) = '" . $email . "' LIMIT 1");
+		//echo $result->num_rows;
+		$user = $result->fetch_assoc();
 
 	}  else if ( isset($_COOKIE['user'])) {
 		//cookie present, skip error
@@ -39,8 +42,7 @@ if(!empty($_POST)) {
 	header("Location:index.php?result=loginFailed");
 
 	}
-} 
-if ( isset($_COOKIE['user'])) {
+} else if ( isset($_COOKIE['user'])) {
 		//read from cookie
 		$email = trim($_COOKIE['user']);
 		$result = $db->query("SELECT * FROM userlist WHERE (email) = '" . $email . "' LIMIT 1");
