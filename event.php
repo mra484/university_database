@@ -134,8 +134,8 @@ if(isset($_COOKIE) && isset($_GET) ){
 			geocoder = new google.maps.Geocoder();
 			var mapCanvas = document.getElementById('map-canvas');
 			var mapOptions = {
-				center: new google.maps.LatLng(38, -98.5463),
-				zoom: 3,
+				center: new google.maps.LatLng(<?php echo escape($address['latitude']);?>,<?php echo escape($address['longitude']);?>),
+				zoom: 8,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			}
 			map = new google.maps.Map(mapCanvas, mapOptions);
@@ -167,7 +167,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 	</script>
 </head>
 
-<body onLoad="codeAddress()">
+<body>
 
 	<div id="map-canvas"></div>
 		<div id="event_info">

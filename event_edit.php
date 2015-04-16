@@ -3,7 +3,16 @@
 require 'db/connect.php';
 require 'db/security.php';
 include 'mysql_functions.php';
+?>
 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script>
+	var geocoder = new google.maps.Geocoder();
+	var latitude = 0;
+	var longitude = 0;
+</script>
+
+<?php
 if(!empty($_COOKIE)){
 	//retrieve rows for user information
 	$email = trim($_COOKIE['user']);
@@ -75,6 +84,9 @@ if(!empty($_POST)){
 		$city = trim($_POST['city']);
 		$state = trim($_POST['state']);
 		$p_code = trim($_POST['p_code']);
+		$address_s = "" . $street . "+" . $city . "+" . $state . "+" . $p_code;
+		
+		$address_string = preg_replace("/ /", "+", $address_s);
 		$contact_phone = trim($_POST['contact_phone']);
 		$contact_email = trim($_POST['contact_email']);
 		$event_category = trim($_POST['event_category']);
@@ -88,20 +100,34 @@ if(!empty($_POST)){
 		} 
 		$date_con = $datetime->format("Y-m-d");
 		$time_con = $datetime->format("H:i");
+		?>
 
-
+		<?php
 		if($eid == 0){
 			//create new address
 			$temp = $db->prepare("INSERT INTO address (street, city, sid, p_code) VALUES (?,?,?,?)");
 			$temp->bind_param('ssss', $street, $city, $state, $p_code);
 			$temp->execute();
-			if($db->affected_rows){
-				//echo 'successfully created new address';
-			} else {
-				//echo 'unable to create new address';
-			}
 			$aid = $db->insert_id;
-
+				echo 'successfully updated event';
+				$url = "http://maps.google.com/maps/api/geocode/json?address=$address_string&sensor=false";
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+				$response = curl_exec($ch);
+				curl_close($ch);
+				$response_a = json_decode($response);
+				$latitude = $response_a->results[0]->geometry->location->lat;
+				echo "<br />";
+				$longitude = $response_a->results[0]->geometry->location->lng;
+				$sql = $db->prepare("UPDATE address SET 
+					address.latitude = '" . $latitude . "', 
+					address.longitude = '" . $longitude . "' 
+					WHERE (address.aid) = '" . $aid. "'");
+				$sql->execute();
 			//create new event
 			if(empty($uid)){
 				$uid = NULL;
@@ -155,9 +181,26 @@ if(!empty($_POST)){
 				WHERE (address.aid) = '" . $aid['aid'] . "'");
 			$temp->bind_param('ssss', $street, $city, $state, $p_code);
 			$temp2 = $temp->execute();
-			if($db->affected_rows){
-				//echo 'successfully updated address';
-			} else {
+				echo 'successfully updated event';
+				$url = "http://maps.google.com/maps/api/geocode/json?address=$address_string&sensor=false";
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+				$response = curl_exec($ch);
+				curl_close($ch);
+				$response_a = json_decode($response);
+				$latitude = $response_a->results[0]->geometry->location->lat;
+				echo "<br />";
+				$longitude = $response_a->results[0]->geometry->location->lng;
+				$sql = $db->prepare("UPDATE address SET 
+					address.latitude = '" . $latitude . "', 
+					address.longitude = '" . $longitude . "' 
+					WHERE (address.aid) = '" . $aid['aid'] . "'");
+				$sql->execute();
+			
 				//echo 'unable to update address';
 			}
 
@@ -174,15 +217,14 @@ if(!empty($_POST)){
 			$temp->bind_param('sssssss', $name, $date_con, $time_con, $contact_phone, $contact_email,
 				$event_category, $event_visibility);
 			$temp2 = $temp->execute();
-			if($db->affected_rows){
-				//echo 'successfully updated event';
+			if($db->affected_rows ){
+
+
 			} else {
 				//echo 'unable to update event';
 			}
 		}
 	}
-
-}
 
 //start retrieving data to display fields
 if(!empty($_GET)){
@@ -330,7 +372,7 @@ if(!empty($_GET)){
 
 <h2>Edit event information</h2>
 
-<form action="?<?php echo $destination; ?>event=<?php echo escape($eid);?>" method="POST">
+<form action="?<?php echo $destination; ?>event=<?php echo escape($eid);?>&editaaaad=0" method="POST">
 	Event name:<input type="text" size="90" name="name" value="<?php echo escape($event['name']) ;?>"/><br>
 	Date:<input type="date" name="date" value="<?php echo escape($event['date']);?>"/><br>
 	Time:<input type="time" name="time" value="<?php echo escape($time) ;?>"/><br><br>
