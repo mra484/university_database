@@ -130,15 +130,21 @@ if(isset($_COOKIE) && isset($_GET) ){
 	<script>
 	var map;
 	var geocoder;
+	var coordinates = new google.maps.LatLng(<?php echo escape($address['latitude']);?>,<?php echo escape($address['longitude']);?>);
 		function initialize() {
 			geocoder = new google.maps.Geocoder();
 			var mapCanvas = document.getElementById('map-canvas');
 			var mapOptions = {
-				center: new google.maps.LatLng(<?php echo escape($address['latitude']);?>,<?php echo escape($address['longitude']);?>),
-				zoom: 8,
+				center: coordinates,
+				zoom: 10,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			}
 			map = new google.maps.Map(mapCanvas, mapOptions);
+
+			var marker = new google.maps.Marker({
+				map: map,
+				position: coordinates
+			});
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
 

@@ -48,6 +48,33 @@ if ( isset($_COOKIE['user'])) {
 		$user = $result->fetch_assoc();
 		$distance = 0;
 		$location = 0;
+		// <script>
+		// navigator.geolocation.getCurrentPosition(showPosition);
+
+		// function showPosition(position){
+		// 	x.innerHTML = "latitude: " + position.coords.latitude + 
+		// 	"<br> Longitude: " + position.coords.longitude;
+		// }
+		// </script>
+		if(isset($_GET['distance'])){
+			
+				 // <script>
+					// var x = document.getElementById("demo");
+					// function getLocation() {
+					//     if (navigator.geolocation) {
+					//         navigator.geolocation.getCurrentPosition(showPosition);
+					//     } else {
+					//         x.innerHTML = "Geolocation is not supported by this browser.";
+					//     }
+					// }
+					// function showPosition(position) {
+					//     x.innerHTML = "Latitude: " + position.coords.latitude +
+					//     "<br>Longitude: " + position.coords.longitude;
+					// }
+					// </script>
+					
+			//$distance = "SELECT id, ( 3959 * acos( cos( radians(position.coordsl.latitude) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance FROM markers HAVING distance < 25 ORDER BY distance LIMIT 0 , 20;"
+		}
 
 		if(isset($_POST['distance'])){
 			$distance = trim($_POST['distance']);
@@ -136,8 +163,9 @@ createUserPanel($db, $email);
 	
 	<!-- menu panel -->
 	<div id="side_panel" >
-		<p><a href="rso.php"> RSO </a></p>
-		<p><a href="university.php"> University </a></p>
+		<p><a href="rso.php"> My Groups </a></p>
+		<p><a href="university.php"> My University </a></p>
+		<p><a href="univ_select.php?browse=1"> Other Universities </a></p>
 		<p><a href="univ_edit.php?new=1"> Create University </a></p>
 		
 	</div>

@@ -51,19 +51,6 @@ if(!empty($_POST)){
 
 	$eid = trim($_GET['event']);
 
-	if(isset($_POST['delete'])) {
-
-		$sql = $db->prepare("DELETE FROM event WHERE (event.eid) = ?");
-		$sql->bind_param('s', $eid);
-
-		if($sql.execute()){
-			$db->query("DELETE FROM rso_event_list WHERE (rso_event_list.eid) = '" . $eid . "')");
-			$db->query("DELETE FROM university_event_list WHERE (university_event_list.eid) = '" . $eid . "')");
-			echo 'event deleted';
-		} else {
-			echo 'unable to delete event';
-		}
-	}
 
 	if(isset($_POST['description'])){
 		//read description, (update only);
@@ -142,6 +129,10 @@ if(!empty($_POST)){
 
 			//add connections
 			if($mode == 1){
+				//approve event if admin
+				if( mysqli_num_rows($db->query("SELECT * FROM rso_member_list where (email) = '" . $email . "' && (admin) = b'1'")) != 0){
+					$db->query("UPDATE event SET approval = b'1' where (eid) = '" . $eid . "'");
+				}
 				//created by rso, get list of related university groups
 				$temp = $db->query("SELECT uid FROM university_rso_link WHERE (rid) = '" . $rid . "'");
 				$uid_list = $temp->fetch_all(MYSQLI_ASSOC);
@@ -156,6 +147,32 @@ if(!empty($_POST)){
 
 
 			} else if($mode == 2){
+				//approve event if super admin
+				if( mysqli_num_rows($db->query("SELECT * FROM university_member_list where (email) = '" . $email . "' && (super_admin) = b'1'")) != 0){
+					$db->query("UPDATE event SET approval = b'1' where (eid) = '" . $eid . "'");
+				} else {
+							//create and send message
+					$temp = $db->query("SELECT email FROM university_member_list WHERE (uid) = '" . $uid . "' && (super_admin) = b'1'");
+
+					$to_user = $temp->fetch_assoc();
+					$subject = "Event pending approval: " . $name;
+					$link = '<a href="event_edit.php?event=' . $eid . '&approve=0">' . 'Approve the event' . '</a>';
+					$link2 = '<a href="event_edit.php?event=' . $eid . '&delete=1">' . 'Reject the event' . '</a>';
+					$description = "" . $name . "\n" . $street . "\n" . $city . " " . $state . " " . $p_code . "\n\nContact Phone:"
+						. $contact_phone . "\nContact Email" . $contact_email . "\n\n"
+					 . $link . "\n\n" . $link2;
+					$sql = $db->prepare("INSERT INTO mail (subject, message, sent)
+					VALUES (?,?,NOW())");
+					$sql->bind_param('ss', $subject, $description);
+					if( mysqli_num_rows($db->query("SELECT * FROM userlist WHERE (email) = '" . $to_user['email'] . "'"))  == 1 ){
+						$sql->execute();
+						$mid = $db->insert_id;
+						$db->query("INSERT INTO mail_list (to_user, from_user, mid)
+						VALUES ('" . $to_user['email'] . "', '" . $email . "', '" . $mid . "')");
+						echo 'Message sent';
+						
+					}
+				}
 				//created by university, get list of related rso groups
 				$temp = $db->query("SELECT rid FROM university_rso_link WHERE (uid) = '" . $uid . "'");
 				$rid_list = $temp->fetch_all(MYSQLI_ASSOC);
@@ -254,6 +271,28 @@ if(!empty($_GET)){
 		die();
 		//ader("Location:rso_page.php?rso=" . $rid . "");
 	}
+
+	if(isset($_GET['delete']) && $super_admin) {
+
+		$sql = $db->prepare("DELETE FROM event WHERE (event.eid) = ?");
+		$sql->bind_param('s', $eid);
+
+		if($sql->execute()){
+			$db->query("DELETE FROM rso_event_list WHERE (rso_event_list.eid) = '" . $eid . "')");
+			$db->query("DELETE FROM university_event_list WHERE (university_event_list.eid) = '" . $eid . "')");
+			echo 'event deleted';
+			echo "<br><a href='mainpage.php'>Back</a>";
+			die();
+		} else {
+			echo 'unable to delete event';
+		}
+	}
+
+	if(isset($_GET['approve']) && $super_admin){
+		$db->query("UPDATE event SET approval = b'1' WHERE (eid) = '" . $eid . "'");
+		$event['approval'] = 1;
+	}
+
 
 	//get event category and visibility information
 	$temp = $db->query("SELECT * FROM event_category");
@@ -373,6 +412,11 @@ if(!empty($_GET)){
 <h2>Edit event information</h2>
 
 <form action="?<?php echo $destination; ?>event=<?php echo escape($eid);?>&editaaaad=0" method="POST">
+<?php
+	if(!$new){
+				?>
+	Approved? <?php echo escape( ($event['approval'] != 0 ? "true" : "false" ) ); ?><br><br>
+	<?php } ?>
 	Event name:<input type="text" size="90" name="name" value="<?php echo escape($event['name']) ;?>"/><br>
 	Date:<input type="date" name="date" value="<?php echo escape($event['date']);?>"/><br>
 	Time:<input type="time" name="time" value="<?php echo escape($time) ;?>"/><br><br>
@@ -388,7 +432,15 @@ if(!empty($_GET)){
 
 	Event Visibility: <?php optionSelect("event_visibility", $event_visibility, "evid", "type", $event['evid']); ?><br>
 	<input type="submit" value="Save changes"/>
+</form><br><br>
+
+<?php
+	if(!$new){
+				?>
+<form action="?<?php echo $destination; ?>event=<?php echo escape($eid);?>&delete=1" method="POST">
+	<input type="submit" value="Delete event" />
 </form>
+<?php } ?>
 
 </body>
 </html>

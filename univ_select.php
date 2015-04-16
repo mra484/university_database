@@ -21,29 +21,36 @@ if(!empty($_COOKIE)){
 
 	//handle action taken join/leave
 if(!empty($_GET)){
-	$rso_id = trim($_GET['join']);
-	$temp2 = $db->query("SELECT email FROM university_member_list AS u WHERE (u.email) = '" . $user['email'] . "'");
-	$temp = $temp2->fetch_assoc();
-	if(empty($temp)) {
-		if($db->query("INSERT INTO university_member_list (email, uid, super_admin)
-			VALUES ('" . $user['email'] . "', '" . $rso_id . "', b'0')")) {
+	if(isset($_GET['browse'])){
+		$action = "university.php?browse=1&university=";
+	} else if (isset($_GET['join'])){
+		$rso_id = trim($_GET['join']);
+		$temp2 = $db->query("SELECT email FROM university_member_list AS u WHERE (u.email) = '" . $user['email'] . "'");
+		$temp = $temp2->fetch_assoc();
+		if(empty($temp)) {
+			if($db->query("INSERT INTO university_member_list (email, uid, super_admin)
+				VALUES ('" . $user['email'] . "', '" . $rso_id . "', b'0')")) {
+					header("Location:university.php");
+			}else {
+				echo 'unable to add user to university list';
+			}
+
+		}else {
+			$sql = $db->prepare("UPDATE university_member_list 
+				SET university_member_list.uid = ?, university_member_list.super_admin = b'0'
+				WHERE university_member_list.email = ?");
+			$sql->bind_param("ss", $rso_id, $email);
+
+			if($sql->execute()){
 				header("Location:university.php");
-		}else {
-			echo 'unable to add user to university list';
-		}
-
-	}else {
-		$sql = $db->prepare("UPDATE university_member_list 
-			SET university_member_list.uid = ?, university_member_list.super_admin = b'0'
-			WHERE university_member_list.email = ?");
-		$sql->bind_param("ss", $rso_id, $email);
-
-		if($sql->execute()){
-			header("Location:university.php");
-		}else {
-			echo 'unable to modify user\'s university';
+			}else {
+				echo 'unable to modify user\'s university';
+			}
 		}
 	}
+} else {
+
+		$action = "?join=";
 }
 
 ?>
@@ -76,7 +83,7 @@ if(!empty($_GET)){
 			<tr>
 				<td><?php echo escape($r['name']); ?></td>
 				<td>
-					<form action="?join=<?php echo escape($r['uid']); ?>" method="POST">
+					<form action="<?php echo escape($action);?><?php echo escape($r['uid']); ?>" method="POST">
 						<input type="submit" value="Select" name="submit">
 					</form>
 				</td>

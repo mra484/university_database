@@ -12,16 +12,31 @@ if(!empty($_COOKIE)){
 		WHERE (userlist.email) = '" . $email . "' && (u.email) = '" . $email . "' LIMIT 1");
 	$user = $temp->fetch_assoc();
 
-	//get university based on which one the user is a member of
-	$temp = $db->query("SELECT u.name AS name, u.uid AS uid, a.street AS street,
-		a.city AS city, a.p_code AS p_code, u.description AS description
-		FROM university AS u, address AS a
-		WHERE (u.uid) = (
-			SELECT uml.uid FROM university_member_list AS uml WHERE (uml.email) = '" . $user['email'] . "'
-			)");
-	$univ = $temp->fetch_assoc();
+	if(isset($_GET['browse'])){
+		$browse = 1;
+		$uid = trim($_GET['university']);
+
+		//get university being browsed
+		$temp = $db->query("SELECT u.name AS name, u.uid AS uid, a.street AS street,
+			a.city AS city, a.p_code AS p_code, u.description AS description
+			FROM university AS u, address AS a
+			WHERE (u.uid) = '" . $uid . "'");
+		$univ = $temp->fetch_assoc();
+
+	} else {
+		//get university based on which one the user is a member of
+		$temp = $db->query("SELECT u.name AS name, u.uid AS uid, a.street AS street,
+			a.city AS city, a.p_code AS p_code, u.description AS description
+			FROM university AS u, address AS a
+			WHERE (u.uid) = (
+				SELECT uml.uid FROM university_member_list AS uml WHERE (uml.email) = '" . $user['email'] . "'
+				)");
+		$univ = $temp->fetch_assoc();
+
+	}
 
 	if(!empty($univ)){
+		//get remaining university information
 		$uid = trim($univ['uid']);
 
 		//get events belonging to university
@@ -69,6 +84,7 @@ if(!empty($_COOKIE)){
 <body>
 
 <h1>Welcome to <?php echo escape($univ['name']); ?></h1>
+<?php if($browse != 1) { ?>
 <p><a href="univ_select.php">Not your university?</a></p><br>
 <?php
 	//admin panel
@@ -79,6 +95,7 @@ if(!empty($_COOKIE)){
 </form>
 
 <?php
+		}
 	}
 ?>
 		
@@ -88,6 +105,15 @@ if(!empty($_COOKIE)){
 
 <!-- output event list -->
 <h3>event list</h3>
+	<?php
+		if( mysqli_num_rows($db->query("SELECT * FROM university_member_list WHERE (uid) = '" . $uid . "' && (email) = '" . $email . "'")) != 0){
+			?>
+			<form action="event_edit.php?university=<?php echo escape($uid); ?>&new=1" method="POST">
+				<input type="submit" value="create event"/>
+			</form>
+	<?php
+		}
+		?>
 
 	<?php printEventList2(NULL, $uid, $db); ?>
 	
