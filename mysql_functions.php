@@ -7,9 +7,14 @@ function createUserPanel($db, $email){
 
 	?>
 	<div id="user_panel">
-		<a href="mainpage.php">Home</a> 
-		<a href="mailbox.php">Mail(<?php echo escape($inbox); ?>)</a> 
-		<a href="index.php?result=logout">Log out</a>
+		<?php if($email != 1){ ?>
+			<a href="mainpage.php">Home</a> 
+			<a href="mailbox.php">Mail(<?php echo escape($inbox); ?>)</a> 
+			<a href="index.php?result=logout">Log out</a>
+		<?php } else { ?>
+
+			<a href="index.php">Log in</a>
+		<?php } ?>
 	</div>
 <?php
 }

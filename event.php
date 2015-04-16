@@ -3,11 +3,13 @@ require 'db/connect.php';
 require 'db/security.php';
 require 'mysql_functions.php';
 
-if(isset($_COOKIE) && isset($_GET) ){
-	$email = trim($_COOKIE['user']);
-
-	if(empty($email)){
-		header("Location:index.php?result=no_email");
+if(isset($_GET)){
+	if(isset($_COOKIE['user'])){
+		$email = trim($_COOKIE['user']);
+		$browse = 0;
+	} else {
+		$browse = 1;
+		$email = 1;
 	}
 
 	$eid = trim($_GET['event']);
@@ -76,18 +78,19 @@ if(isset($_COOKIE) && isset($_GET) ){
 	$super_admin = false;
 	$owner = false;
 
+	if($browse != 1){
+		$admin = checkEventAdmin($eid, $email, $db);
+		//echo '<pre>', var_dump($eid), '</pre>';
+		//echo '<pre>', var_dump($email), '</pre>';
+		//echo '<pre>', var_dump($db), '</pre>';
+		//echo 'is admin?' . var_dump($admin) . '<br>';
+		$super_admin = checkEventSuperAdmin($eid, $email, $db);
+		//echo 'is super_admin?' . var_dump($super_admin);
 
-	$admin = checkEventAdmin($eid, $email, $db);
-	//echo '<pre>', var_dump($eid), '</pre>';
-	//echo '<pre>', var_dump($email), '</pre>';
-	//echo '<pre>', var_dump($db), '</pre>';
-	//echo 'is admin?' . var_dump($admin) . '<br>';
-	$super_admin = checkEventSuperAdmin($eid, $email, $db);
-	//echo 'is super_admin?' . var_dump($super_admin);
-
-	$owner = false;
-	if(strcmp($email, $event['owner'] ) == 0){
-		$owner = true;
+		$owner = false;
+		if(strcmp($email, $event['owner'] ) == 0){
+			$owner = true;
+		}
 	}
 
 	//get ratings
@@ -112,7 +115,7 @@ if(isset($_COOKIE) && isset($_GET) ){
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="pagestyle.css">
-	<?php createUserPanel($db, $email); ?>
+	<?php  createUserPanel($db, $email); ?>
 	<title><?php echo escape($event['name']); ?> </title>
 	<style>
 		#map-canvas {
@@ -148,22 +151,6 @@ if(isset($_COOKIE) && isset($_GET) ){
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
 
-		function codeAddress(){
-			var address = <?php echo json_encode($address_string); ?>;
-			geocoder.geocode( { 'address': address}, function(results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					map.setCenter(results[0].geometry.location);
-					map.setZoom(12);
-					var marker = new google.maps.Marker({
-						map: map,
-						position: results[0].geometry.location
-					});
-				} else {
-					//alert("Geocode was not successful for the following reasons: " + status);
-					
-				}
-			});
-		}
 
 		function handleRating(input){
 			if(input.value < 0) input.value = 0;
@@ -215,22 +202,27 @@ if(isset($_COOKIE) && isset($_GET) ){
 		<?php } ?>
 
 		User rating: <?php echo escape( ($votes['votes'] == 0 ? 0.0 : $votes['sum'] / $votes['votes']) ); ?> (<?php echo escape($votes['votes']); ?>)<br>
+		<?php if($browse != 1){ ?>
 		<form method="POST" action="?event=<?php echo escape($eid); ?>">
 			My rating: <input type="text" onchange="handleRating(this);" name="rating" />
 			<input type="submit" value="Rate" name="rate"/>
 		</form>
+		<?php } ?>
+		<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 		</div>
 
 	<hr>
 	<br>
 	<div id="event_comment_section" >
+		<?php if($browse != 1){ ?>
 		<div id="event_comment">
 			<form action="?event=<?php echo escape($event['eid']); ?>" method="POST" >
 				<textarea cols="40" rows="5" name="comment_text"></textarea><br>
 				<input type="submit" value="New Comment" /><br>
 			</form>
 		</div>
-		<?php
+		<?php 
+		}
 		foreach($comments as $c){
 			?>
 			<div id="event_comment">
