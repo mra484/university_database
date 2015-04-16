@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1:33060
--- Generation Time: Apr 16, 2015 at 01:44 AM
+-- Generation Time: Apr 16, 2015 at 01:44 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `p_code` varchar(30) DEFAULT NULL,
   `latitude` float(10,6) NOT NULL DEFAULT '38.000000',
   `longitude` float(10,6) NOT NULL DEFAULT '-98.000000'
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `address`
@@ -42,31 +42,48 @@ CREATE TABLE IF NOT EXISTS `address` (
 
 INSERT INTO `address` (`aid`, `street`, `city`, `sid`, `p_code`, `latitude`, `longitude`) VALUES
 (0, '', '', 'IN', '', 41.782860, -87.974892),
-(1, '1010 street23', 'City12', 'AZ', '32819', 0.000000, -98.000000),
-(2, '5678 street', 'City2', 'FL', '32825', 0.000000, -98.000000),
-(4, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
-(5, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
-(6, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
-(7, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
-(8, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
-(9, '5000 street', 'orlando', 'FL', '32819', 0.000000, -98.000000),
-(10, '333', '3566', 'DE', '32', 0.000000, -98.000000),
-(11, '3242', 'orlando', 'FL', '23432', 0.000000, -98.000000),
-(12, '3242', 'orlando', 'FL', '23432', 0.000000, -98.000000),
-(13, '3242', 'orlando', 'FL', '23432', 0.000000, -98.000000),
-(14, '3242', 'orlando', 'FL', '23432', 0.000000, -98.000000),
-(15, '55500 street', 'oralndo', 'IL', '60559', 0.000000, -98.000000),
-(16, '55500 street', 'oralndo', 'IL', '60559', 0.000000, -98.000000),
-(17, 'asdfadsf123123', 'asdf', 'AL', 'asdfawsddsdASD', 0.000000, -98.000000),
-(18, '1324123 streetdd', 'cesadfa ity', 'IA', '564156', 0.000000, -98.000000),
-(19, 'kl;jasd;lkfj', ';l', 'AK', '234243', 0.000000, -98.000000),
-(20, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465', 0.000000, -98.000000),
-(21, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465', 0.000000, -98.000000),
-(22, '456', '456456', 'AK', '546', 0.000000, -98.000000),
-(23, '4564', '654', 'AK', '456', 0.000000, -98.000000),
-(24, '4000 central florida blvd', 'orlando', 'FL', '32816', 0.000000, -98.000000),
-(25, '7503 fake street', '', 'AK', '', 38.000000, -98.000000),
-(26, '3330 cass avenue12333333333333333', 'westmont', 'IL', '60559', 38.000000, -98.000000);
+(1, '1010 street23', 'City12', 'AZ', '32819', 41.782860, -87.974892),
+(2, '5678 street', 'City2', 'FL', '32825', 41.782860, -87.974892),
+(4, '5000 street', 'orlando', 'FL', '32819', 41.782860, -87.974892),
+(5, '5000 street', 'orlando', 'FL', '32819', 41.782860, -87.974892),
+(6, '5000 street', 'orlando', 'FL', '32819', 41.782860, -87.974892),
+(7, '5000 street', 'orlando', 'FL', '32819', 41.782860, -87.974892),
+(8, '5000 street', 'orlando', 'FL', '32819', 41.782860, -87.974892),
+(9, '5000 street', 'orlando', 'FL', '32819', 41.782860, -87.974892),
+(10, '333', '3566', 'DE', '32', 41.782860, -87.974892),
+(11, '3242', 'orlando', 'FL', '23432', 41.782860, -87.974892),
+(12, '3242', 'orlando', 'FL', '23432', 41.782860, -87.974892),
+(13, '3242', 'orlando', 'FL', '23432', 41.782860, -87.974892),
+(14, '3242', 'orlando', 'FL', '23432', 41.782860, -87.974892),
+(15, '55500 street', 'oralndo', 'IL', '60559', 41.782860, -87.974892),
+(16, '55500 street', 'oralndo', 'IL', '60559', 41.782860, -87.974892),
+(17, 'asdfadsf123123', 'asdf', 'AL', 'asdfawsddsdASD', 41.782860, -87.974892),
+(18, '1324123 streetdd', 'cesadfa ity', 'IA', '564156', 41.782860, -87.974892),
+(19, 'kl;jasd;lkfj', ';l', 'AK', '234243', 41.782860, -87.974892),
+(20, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465', 41.782860, -87.974892),
+(21, 'sterqwe', 'asdfjkledsr;fkl', 'AK', '565465', 41.782860, -87.974892),
+(22, '456', '456456', 'AK', '546', 41.782860, -87.974892),
+(23, '4564', '654', 'AK', '456', 41.782860, -87.974892),
+(24, '4000 central florida blv', 'orlando', 'FL', '32816', 28.606890, -81.197273),
+(25, '7503 fake street', '', 'AK', '', 41.782860, -87.974892),
+(26, '3330 cass avenue1233333333333333333', 'westmont', 'IL', '60559', 41.782860, -87.974892),
+(27, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(28, '4000 central florida blvd333', 'orlando', 'FL', '32816', 28.601763, -81.200905),
+(29, '4000 central florida blvd3', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(30, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(31, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(32, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(33, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(34, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(35, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(36, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(37, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(38, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(39, '4000 central florida blvd', 'orlando', 'FL', '32816', 41.782860, -87.974892),
+(40, '4000 central florida blvd', 'orlando', 'FL', '32816', 28.606890, -81.197273),
+(41, '5710 Langhurst ct', 'new york', 'NY', '', 40.712784, -74.005943),
+(42, '324 street street', 'Miami', 'FL', '', 25.942835, -80.195580),
+(43, '324 street street', 'Miami', 'FL', '', 25.942835, -80.195580);
 
 -- --------------------------------------------------------
 
@@ -80,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `message` varchar(250) DEFAULT NULL,
   `created` datetime NOT NULL,
   `eid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `comment`
@@ -96,7 +113,8 @@ INSERT INTO `comment` (`cid`, `email`, `message`, `created`, `eid`) VALUES
 (13, 's', 'asdfasdfsdfdsfadsfsdfsdfsd', '2015-04-07 18:45:45', 11),
 (14, 'm', 'fasdfasdf', '2015-04-07 18:47:06', 11),
 (15, 'm', '4545645', '2015-04-09 16:27:27', 12),
-(16, 'm', '4545645', '2015-04-09 16:27:43', 12);
+(16, 'm', '4545645', '2015-04-09 16:27:43', 12),
+(17, 'm', '456456', '2015-04-16 07:00:28', 214);
 
 -- --------------------------------------------------------
 
@@ -118,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `contact_email` varchar(255) DEFAULT NULL,
   `ecid` int(11) DEFAULT NULL,
   `evid` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=268 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event`
@@ -268,12 +286,8 @@ INSERT INTO `event` (`eid`, `owner`, `name`, `rating`, `date`, `approval`, `desc
 (170, '', 'UCF Men''s Tennis vs. Memphis', NULL, '2015-04-12', NULL, 'Come out and support your UCF Men''s Tennis team as they take on the Memphis Tigers. Admission is free for everyone.', '10:00:00', NULL, NULL, NULL, NULL, NULL),
 (171, '', 'Orlando REP & UCF Choirs perform Civil War Voices', NULL, '2015-04-12', NULL, 'By James<br>R. Harris | Original Musical Arrangements by Mark Hayes<br>Best<br>suited for 6th grade and up<br><i>Civil<br>War Voices</i> tells<br>the compelling and passionate true stories of individuals who lived through the<br>conflict, using their actual words that were left behind in diaries, letters,<br>and other writings. The show features songs of the period, such as â€œBattle Hymn<br>of the Republic,â€ â€œAmazing Grace,â€ and â€œSometimes I Feel Like a Motherless<br>Child.â€ Â  Actors bring the characters to life and join<br>with a stirringÂ <br><br>The UCF Celebrates the Arts event is an annual showcase featuring an interactive exhibition of student artwork in areas of Studio Art, Music, Theatre, Dance, Digital Media, Gaming, Animation, Photography, Web Design, and Film. It utilizes the entire Dr. Phillips Center for Performing Arts facility, including the adjacent CNL Plaza. Each year there are several projects in our community that demonstrate the artsâ€™ vital role in innovation, fostering creativity. This event will allow UCF to share the products and performances of the arts units, demonstrate the universityâ€™s commitment to partnerships, and illustrates UCFâ€™s strong positive impact in the Central Florida Region and beyond.<br><br>Reserve your free ticket online atÂ <a href="http://arts.cah.ucf.edu/" target="">http://arts.cah.ucf.edu/</a>', '10:30:00', NULL, NULL, NULL, NULL, NULL),
 (172, '', 'Careerfest Business Alumni Panels (alumni & students)', NULL, '2015-04-10', NULL, 'Join fellow UCF College of Business students, alumni faculty and administration for the Business Alumni Careerfest event. Hear from alumni who have been in your shoes and are now successful!', '09:30:00', NULL, NULL, NULL, NULL, NULL),
-(173, '', 'Graduate Student Appreciation Week: International Social with ISC', NULL, '2015-04-10', NULL, 'Join the International Services Center and Career Services for an International Social with Refreshments. RSVP with Daren Cain at daren.caine@ucf.edu.', '11:00:00', NULL, NULL, NULL, NULL, NULL),
 (174, '', 'String Theory Meets Star Trek Voyager - an interview of physicist Brian Greene and actress Kate Mulgrew', NULL, '2015-04-10', NULL, 'The UCF iCubed Project presents:Â  "String Theory Meets Star Trek Voyager" -Â an interview of physicist Brian Greene and actress Kate Mulgrew.Â  The event will be hosted by multi-Emmy award winning journalist Tom Johnson.<br><br>A book signing event by the speakers will take place immediately after the interview.<br>For more detailes information, contact Costas Efthimiou as costas@physics.ucf.edu', '11:00:00', NULL, NULL, NULL, NULL, NULL),
 (175, '', 'Conversation With A Female Organic Farmer, Marketer, and Entrepreneur', NULL, '2015-04-10', NULL, 'Come out and discuss what is essential to succeed as a female Organic Farmer, Marketer and Entrepreneur with other female UCF students and Maya Fiallos, the founder and Marketing Director of Maya Papaya Organic Farm. Maya will lead a conversation around what she''s learned about being a female entrepreneur, marketer and organic farmer founder.Â <br><br>Maya Fiallos is the founder and Marketing Director of Maya Papaya Organic Farms. She has expert experience in Marketing and Entrepreneurship. To learn more about Maya Papaya Organic Farms visit <a href="http://mayapapayaorganic.com/" target="">http://mayapapayaorganic.com/</a>.Â <br>', '12:00:00', NULL, NULL, NULL, NULL, NULL),
-(176, '', 'UCF Men''s Tennis vs. Middle Tennessee State', NULL, '2015-04-10', NULL, 'Come out and support your UCF Men''s Tennis team as they take on the Blue Raiders. Admission is free for everyone.', '02:00:00', NULL, NULL, NULL, NULL, NULL),
-(177, '', '"A Day of Gaming" presented by FIEA', NULL, '2015-04-10', NULL, 'The Florida Interactive Entertainment Academy (FIEA) will demonstrate through visual presentation the beginning to end of an interactive development process. To accommodate a continuous flow of guests, FIEA will have narrative walk-throughs of the differing technologies and processes today''s students are mastering. Final products and artwork will be on display showcasing the works of local students and professionals.<br><br>The UCF Celebrates the Arts event is an annual showcase featuring an interactive exhibition of student artwork in areas of Studio Art, Music, Theatre, Dance, Digital Media, Gaming, Animation, Photography, Web Design, and Film. It utilizes the entire Dr. Phillips Center for Performing Arts facility, including the adjacent CNL Plaza. Each year there are several projects in our community that demonstrate the artsâ€™ vital role in innovation, fostering creativity. This event will allow UCF to share the products and performances of the arts units, demonstrate the universityâ€™s commitment to partnerships, and illustrates UCFâ€™s strong positive impact in the Central Florida Region and beyond.<br><br>Reserve your free ticket online atÂ <a href="http://arts.cah.ucf.edu/" target="">http://arts.cah.ucf.edu/</a><br><br>', '06:00:00', NULL, NULL, NULL, NULL, NULL),
-(178, '', 'UCF Alumni: A Knight at the Museum in Boston', NULL, '2015-04-10', NULL, 'Registrations for theÂ Knight at theÂ Museum event on Friday, April 10 have closed. If you are interested in still attending, please contact Shaloni Prine at <a target="">shaloni.prine@ucf.edu</a> to see if special arrangements can be made. Thank you. <br><br>Join UCF alumni and friends from the UCF College of Sciences Alumni Chapter and the Boston UCF Alumni Club for a once-in-a-lifetime experience in Bean Town.Â  For $10 per person*, guests will have the opportunity to view the Museum of Science''s current exhibit,Â Maya: Hidden Worlds Revealed, with a tour led by UCF professors and ancient Maya experts, Arlen and Diane Chase. Arlen and Diane consulted on the exhibit and continue to lead excavations in Caracol, Belize.Â <br><br>After the tour, guests will take a short walk to the second stop, Restaurant Dante (located in Royal Sonesta Hotel), to enjoy appetizers and a drink ticket. Black and gold business attire is suggested.Â Advanced registration is required by March 27Â atÂ <u><a href="https://www.ucfknightsnetwork.com/maya" target="">https://www.ucfknightsnetwork.com/maya</a>.</u>Alumni Chapter and the Boston UCF Alumni Club for a once-in-a-lifetime experience in Bean Town.Â <br><br><br><b>Special guests include</b><b><i>Â </i></b><b><a href="http://www.cos.ucf.edu/people/johnson-michael-d/" target="_blank">Dr. Michael Johnson</a>, dean of the UCF College<br>of Sciences,</b><b><i>Â </i></b><b><a href="http://www.cos.ucf.edu/people/chase-arlen-f/" target="_blank">Dr. Arlen Chase</a>, associate dean of the UCF<br>College of Sciences and a Pegasus Professor in the UCF Department of<br>Anthropology, and<a href="http://anthropology.cos.ucf.edu/people/chase-diane-z/" target="_blank">Dr. Diane Chase</a>, UCF''s<br>executive vice provost and Pegasus Professor.</b><br><br><br><br><i>Maya: Hidden Worlds<br>RevealedÂ </i>is the largest exhibition of its kind in the<br>United States. The exhibit invites you to uncover the rise and decline of this<br>majestic civilization â€” including its social, natural and spiritual realms â€”<br>through never-before-seen artifacts, hands-on activities, multimedia components<br>and re-created environments. You can experience a cross-section of Maya life,<br>from divine kings to the artisans and laborers who formed the backbone of their<br>society, as well as learn how the Maya people and their culture endure to this<br>day. To learn more, please visitÂ <a href="http://www.mos.org/exhibits/maya" target="_blank">http://www.mos.org/exhibits/maya</a>.Â  Â  <i>*Please let us know if you are a member of the Museum of Science<br>in Boston, as special arrangements will need to be made.</i> <br>', '06:00:00', NULL, NULL, NULL, NULL, NULL),
 (179, '', 'Free Blackfish Screening: Q&A with Former SeaWorld Trainers', NULL, '2015-04-10', NULL, 'Blackfish Racing and the body of animal rights campaign will be hosting a free movie screening of Blackfish on April 10th in the College of Sciences Building, room 101. Doors open at 6:30pm, movie at 7pm with vegan snacks and a prize giveaway. After the film, you can ask former SeaWorld trainers from the film any questions you have during the Q&amp;A session. Trainers include Samantha Berg, Kim Ashdown andÂ John Jett. <br>', '06:30:00', NULL, NULL, NULL, NULL, NULL),
 (180, '', 'UCF Baseball vs. UCONN', NULL, '2015-04-10', NULL, 'Come out and support your UCF Baseball team as they take on the UCONN Huskies. Admission is free to students with Student ID.', '06:30:00', NULL, NULL, NULL, NULL, NULL),
 (181, '', 'Battle Knights III', NULL, '2015-04-10', NULL, 'It is Elements Of Hip Hop''s third annual urban dance competition! We will have 3 vs 3 crew battles, 1 vs 1 bgirl battles, and cypher king and queen. People from all over Florida and even out of state will be competing.Â The event is free and we want the UCF community to come experience a dance jam first hand. Come check it out!', '07:00:00', NULL, NULL, NULL, NULL, NULL),
@@ -295,7 +309,74 @@ INSERT INTO `event` (`eid`, `owner`, `name`, `rating`, `date`, `approval`, `desc
 (197, 'm', 'Event with good map location', NULL, '2015-04-13', NULL, 'Event with a proper address for map', '07:30:00', 24, 'nophone', 'noemail', 1, 1),
 (198, 'm', 'eventevents', NULL, '1984-11-04', NULL, NULL, '12:01:00', 1, 'nono', 'nononono', 1, 1),
 (199, 'm', 'eventeventevent', NULL, '0012-05-15', NULL, NULL, '17:00:00', 0, 'no', 'nono', 1, 1),
-(200, 'm', 'eventeventevent5682333333333333333', NULL, '2031-01-01', NULL, NULL, '03:00:00', 26, 'no', 'no', 1, 1);
+(200, 'm', 'eventeventevent5682333333333333333333', NULL, '2031-01-01', NULL, NULL, '03:00:00', 26, 'no', 'no', 1, 1),
+(201, 'm', 'ucfevent', NULL, '2012-02-12', NULL, NULL, '15:30:00', 27, '', '', 1, 1),
+(202, 'm', 'roooooooof33', NULL, '0011-04-30', NULL, NULL, '17:55:00', 28, 'no', 'no', 1, 1),
+(203, 'm', 'EVENT3', NULL, '2016-02-12', NULL, NULL, '15:00:00', 29, '', '', 1, 1),
+(204, 'm', 'eventfasdfjikl;awerfjkl;', NULL, '2015-04-13', NULL, NULL, '22:00:00', 0, '', '', 1, 1),
+(205, 'm', 'eventfasdfjikl;awerfjkl;', NULL, '2015-04-13', NULL, NULL, '22:00:00', 0, '', '', 1, 1),
+(206, 'm', 'event3', NULL, '2015-02-02', NULL, NULL, '15:00:00', 32, '', '', 1, 1),
+(207, 'm', 'event33', NULL, '2015-02-02', NULL, NULL, '15:00:00', 33, '', '', 1, 1),
+(208, 'm', 'event33333', NULL, '2015-02-02', NULL, NULL, '15:00:00', 34, '', '', 1, 1),
+(209, 'm', 'event333333', NULL, '2015-02-02', NULL, NULL, '15:00:00', 35, '', '', 1, 1),
+(210, 'm', 'event3333333', NULL, '2015-02-02', NULL, NULL, '15:00:00', 36, '', '', 1, 1),
+(211, 'm', 'event33333333', NULL, '2015-02-02', NULL, NULL, '15:00:00', 37, '', '', 1, 1),
+(212, 'm', 'event333333333', NULL, '2015-02-02', NULL, NULL, '15:00:00', 38, '', '', 1, 1),
+(213, 'm', 'event3333333333', NULL, '2015-02-02', NULL, 'new event new address work', '15:00:00', 39, '', '', 1, 1),
+(214, 'm', 'eventupdateplease', NULL, '2013-03-13', NULL, NULL, '16:00:00', 40, '', '', 1, 1),
+(215, 'u1@knights.ucf.edu', 'user created event', NULL, '2020-04-11', NULL, NULL, '16:40:00', 41, 'd', 'sdsds', 1, 1),
+(216, 'u3@knights.ucf.edu', 'user event 2', NULL, '2030-04-04', NULL, NULL, '16:00:00', 42, '', '', 1, 1),
+(218, '', 'UCF Professional MS in Real Estate Information Session', NULL, '2015-04-16', b'1', 'The <b>UCF Professional Master of Science in Real Estate Information Session </b>provides interested candidates with an overview of the program format, curriculum, admission requirements and application process. Admissions staff will be available forÂ questions. For more information or to register, visit <a href="http://business.ucf.edu/degree/professional-ms-real-estate/" target="">http://business.ucf.edu/degree/professional-ms-real-estate/</a>.<a href="http://business.ucf.edu/degree/professional-ms-management-business-analytics-track/" target=""></a>', '09:00:00', NULL, NULL, NULL, NULL, NULL),
+(219, '', 'How to Win Electronsâ€™ Friendship and Make Them Dance for You', NULL, '2015-04-16', b'1', '<b>Dr. Luca Argenti</b><br><b>Universidad AutÃ³noma de Madrid</b><br><br>In the realm of electrons, in atoms and molecules, things happen fast. According to Bohrâ€™s planetary model for the hydrogen atom, for example, the "sidereal year", i.e., the time it takes to the electron to complete the shortest orbit around the nucleus, has the fantastically small duration of 152 attoseconds (as; 1as = 10-18 s).Â  This estimate remains true even when formulated in the language of quantum mechanics. Such ultrafast motion could not be directly confirmed until, at the turn of this century, groundbreaking advancements in laser technology led to the production of flashes of light with sufficiently short duration (the world record is 67 as) to take clear snapshots of it.<br><br>In systems bigger than hydrogen, the same Coulomb force that binds an electron to the nucleus also acts repulsively between electrons. The main effect of such repulsion is to screen the nuclear charge, thus reducing the<br>binding energy of each individual electron. To a first approximation, therefore, in several complex systems, electrons can act as if they were independent. As a result, their motion may appear not much more complicated than the one observed in the hydrogen atom. In fact, most of the experiments carried out so far to follow the electronic movement could set in motion only one electron at a time, thus confirming this picture.<br><br>Electrostatic repulsion, however, has also a secondary, subtler effect. In the same way as a bus passenger avoids not only to sit next to the other passengers, if she can, but also to bump into them as she walks down the isle, electrons try to avoid each other as they move across an atom or a molecule: the motion of the electrons is correlated. Keeping each other at armâ€™s length, electrons minimize their mutual repulsion and, as a consequence, they stabilize the ground state of the atom or molecule to which they belong. Such stabilization influences the energy balance of all natural processes, and is key to our understanding and control of matter, from energy transfer in photosynthetic systems, to the inner workings of futuristic quantum computers.Â  Correlation alters even more dramatically the dynamics in excited states, where pairs of electrons move in unison. Until recently, such concerted motion eluded direct experimental observation. By combining flashes of extreme ultraviolet and visible laser light with a duration of only a few hundred attoseconds and timed very accurately with<br>respect to each other, however, it was eventually shown that monitoring and controlling this motion is in fact possible.<br><br>In this colloquium I will illustrate with examples taken from my research on the helium atom, a prototype of poly-electronic systems, how attosecond spectroscopies have opened the road that leads to the direct observation and control of correlated electronic motion in matter. <br><br>', '10:45:00', NULL, NULL, NULL, NULL, NULL),
+(220, '', 'Written Job Search Communication', NULL, '2015-04-16', b'1', 'Present yourself favorably on paper. Well written applications, cover letters and thank you letters are essential and will distinguish you from the competition.', '11:00:00', NULL, NULL, NULL, NULL, NULL),
+(221, '', 'Blood Drive', NULL, '2015-04-16', b'1', 'Blood drives are one of the many ways our Knight family demonstrates its giving spirit.Â  Come join us on the Big Red Bus!Â  <br><br><i>Knights Bleed Black &amp; Gold!Â  </i>Visit <a href="http://BloodDrives-UCF.org" target="">http://BloodDrives-UCF.org</a> for information for students, faculty, and staff regarding drives, events, volunteering, blood donor facts, advocacy, and UCF training and educational opportunities.<br><br>Thank you for making a difference!<br>', '11:30:00', NULL, NULL, NULL, NULL, NULL),
+(222, '', 'Nonprofit and Public Service Career Showcase', NULL, '2015-04-16', b'1', 'Do you have an interest in careers in the nonprofit, service, and government sectors? Attend the annual Nonprofit &amp; Public Service Career Showcase on April 16 from 12pm to 3pm in the Student Union (Key West Ballroom/Garden Key Meeting Room). Open to UCF students and alumni, this showcase provides you with an opportunity to:<br><ul><li>Find employment, internship, and volunteer opportunities</li><li>Explore various career paths</li><li>Learn about the organizations'' best practicesÂ  </li></ul>Whether you are exploring career options or searching for a position, this showcase is for you. More than 35 organizations will be on hand, including the Department of State, The American Cancer Society, Department of Children and Families, Central Intelligence Agency, Orange County Government, Peace Corps, City Year, and the Urban Teacher Center. For a complete list of organizations, visit career.ucf.edu. This showcase is hosted by <a href="http://career.ucf.edu/" target="_blank">Career Services</a> in collaboration with the <a href="http://www.cohpa.ucf.edu/publicadmin/" target="_blank">School of Public Administration</a> and the <a href="http://www.cohpa.ucf.edu/" target="_blank">College of Health and Public Affairs</a>.<br><br>Questions? Contact Courtney Handy (courtney.handy@ucf.edu; 407-823-4459).<br>', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(223, '', 'Thesis Defense', NULL, '2015-04-16', b'1', '"Modeling<br>and Analysis ofÂ a Three-Species Food Web with Facilitated and Intraguild<br>Predation" presented by Josh<br>Castro', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(224, '', 'How To Close Any Deal', NULL, '2015-04-16', b'1', 'Come out and learn how to successfully close and deal from Brent Henderson, the founder of Party Tutor, UCF''s #1 smartphone app helping college students to party, eat, save and live. Brent will walk students through his process of persuading people and how he has closed many deals using straight line sales techniques. If you need help in selling, this is an event you won''t want to miss!<br><br>Brent Henderson is the founder of Party Tutor, UCF''s #1 smartphone app and website that helps college students find the best places to party, eat, save and live. As of 2015 they have more than 50,000 active users and 30 venue clients. They operate at four university campuses and are looking to expand to five more before the end of 2015.', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(225, '', 'M&S Seminar Series: Theoretical Foundations for Developing Cybersecurity Training', NULL, '2015-04-16', b'1', '<u><b>PRESENTATION OVERVIEW:</b></u>Â  Cybersecurity is a computer term regarding the detection, anticipation, and prevention of computer technologies and peripherals from damage, attack, or unauthorized access. These technologies include the monitoring of networks, programs, applications, and personnel. Cybersecurity can be viewed from both an offensive or defensive posture involving maintaining and proactively assessing security vulnerabilities. In 2013, Eric Snowden used his position as an infrastructure analyst to leak thousands of top-secret classified documents detailing the U.S. Governmentâ€™s global covert surveillance and eavesdropping undertakings to the public. This incident identified the human threat as a contributing factor that highlighted several weaknesses in the present state of U.S. cybersecurity affairs. In efforts to strengthen cyber defenses, a solid theoretical research foundation regarding cyber vulnerabilities is warranted. Building upon that foundation, training and experimentation can provide insight into current cybersecurity training methods and how they can be transitioned and implemented into future training regimens.<br><br><u><b>SPEAKER BIOGRAPHY:</b></u>Â  Mr. Eric Ortiz is a respected leader with over 20 years of experience in the development of digital media content, interactive web-based technologies, military simulations, serious games, and virtual environments (VE). Eric has extensive knowledge in 3D content applications, and VE-related game engines. Additionally, throughout his career, Eric has successfully served as a project manager and also fulfilled the role as the art director for the development of various modeling and simulation (M&amp;S) based research efforts, entertainment-based projects, and interactive online learning and performance solutions for multiple DoD efforts.Â Â  Recently, Eric was selected by the M&amp;S program to complete a certificate program in the Foundations of Cybersecurity as a traveling scholar from the University of Maryland. As part of his dissertation, Eric will leverage the knowledge gained from the certificate program and focus his research on the theoretical foundations for developing cybersecurity training.<br><br><a href="https://www.facebook.com/events/1600065310234843/" target="_blank">Facebook</a> <a href="https://www.linkedin.com/in/ucfmodelingandsimulation" target="_blank">LinkedIn</a><br>', '02:00:00', NULL, NULL, NULL, NULL, NULL),
+(226, '', 'Cornerstone Competition', NULL, '2015-04-16', b'1', 'The Cornerstone Social Entrepreneurship Competition is the lab portion of the Cornerstone course, in which students create teams, develop and implement a business-fundraising plan for a cause of their choice.', '02:00:00', NULL, NULL, NULL, NULL, NULL),
+(227, '', 'Journaling To Self-Discovery (JSD)', NULL, '2015-04-16', b'1', 'Join us for these FREE workshops!<br>Every Thursday from 3:00 PM - 5:00 PM<br> JournalingÂ Â | ArtÂ Â | Self-AssessmentÂ Â  <br> <br> {ALL MATERIALS PROVIDED}', '03:00:00', NULL, NULL, NULL, NULL, NULL),
+(228, '', 'CANCELED: Workers Compensation-PER114 (UCF Faculty & Staff only).', NULL, '2015-04-16', b'1', '(UCF Faculty &amp; Staff only).Â  This free workshop will emphasize topics for supervisors and HR Liaisons who want to learn more about the UCF Workers Compensation Program.Â  It will include topics such are reporting an injury at work, insurance under workers compensation, who is covered, what is a DWC-25, the return to work plan, job modifications and alternate duty, the importance of returning to work as soon as possible.Â  This short 90 minute workshop will provide information on employee benefits for work related injuries or illness.', '03:00:00', NULL, NULL, NULL, NULL, NULL),
+(229, '', 'Central Intelligence Agency Information Session', NULL, '2015-04-16', b'1', 'Please consider joining us for an information session<br>where we plan to discuss CIA''s mission, career opportunities, student programs,<br>and the application process.', '04:00:00', NULL, NULL, NULL, NULL, NULL),
+(230, '', 'Deanâ€™s Excellence Awards Program & Reception', NULL, '2015-04-16', b'1', 'The Annual #UCFBusiness Dean''s Excellence Awards are intended to encourage the continued development of a strong culture of engagement that promotes risk-taking, cross-disciplinary collaboration, and data-driven decision-making.Â <br>Learn more:Â <a href="http://business.ucf.edu/college/annual-deans-excellence-awards/" target="">http://business.ucf.edu/college/annual-deans-excellence-awards/</a><br><br>', '04:00:00', NULL, NULL, NULL, NULL, NULL),
+(231, '', 'UCF Alumni: Denver Networking Knight', NULL, '2015-04-16', b'1', 'Set your DVRs to record your favorite Thursday night show because you aren''t going to want to miss this Networking Knight!Â Join the Denver UCF Alumni Chapter on Thursday, April 16 to wind down the week at Tavern Downtown.<br><br>Meet us at 5 p.m. in yourÂ blackÂ andÂ goldÂ business attire and come ready with your perfect elevator speech. Don''t'' forget your business cards and be sure toÂ <a href="https://www.ucfknightsnetwork.com/denverevents" target="_blank">RSVP</a>.Â Alumni will have a chance to win a great UCF door prize. We hope to see you there!', '05:00:00', NULL, NULL, NULL, NULL, NULL),
+(232, '', 'Brother to Brother Workshop', NULL, '2015-04-16', b'1', 'Being well-rounded means not only doing well in academics, but succeeding outside of the classroom, too. Come learn about ways to get involved on- and off-campus!', '05:00:00', NULL, NULL, NULL, NULL, NULL),
+(233, '', 'How to Start Your Business', NULL, '2015-04-16', b'1', 'This NO COST seminar is designed to help entrepreneurs understand what it takes to start a business, including:<br>â€¢ An introduction to business plans and the importance of preparing one.<br>â€¢ Exploring business entities - sole proprietorship, partnership, corporation, andÂ Limited Liability Corporation<br>â€¢ Determining the local, state, or federal licensing requirements.', '06:00:00', NULL, NULL, NULL, NULL, NULL),
+(234, '', 'Making Sense of the Numbers: Bookkeeping & Tax Basics', NULL, '2015-04-16', b'1', 'A three-hour seminar providing the basic record keeping and tax preparation for yourÂ small business. Topics included chart of accounts, federal &amp; state tax requirements,Â sales tax and tax decisions.For more information and to register, please go to:Â <a href="http://www.sbdcorlando.com/lakecounty" target="">www.sbdcorlando.com/lakecounty</a>Â or click one of the following dates:<br><a href="http://goo.gl/CfohfB" target="_blank">January 15 (North Lake Location)</a><br><a href="http://goo.gl/l8a0sF" target="_blank">January 22Â (South Lake Location)</a><br><a href="http://goo.gl/uOqHjt" target="_blank">April 16 (North Lake Location)</a><br><a href="http://goo.gl/VK5I6k" target="_blank">April 23 (South Lake Location)</a><br><a href="http://goo.gl/GTHnvc" target="_blank">July 16 (North Lake Location)</a><br><a href="http://goo.gl/eS9ka5" target="_blank">July 23 (South Lake Location)</a><br><a href="http://goo.gl/qQvnhO" target="_blank">October 8 (North Lake Location)</a><br><a href="http://goo.gl/5CiuxW" target="_blank">October 15 (South Lake Location)</a><br>', '06:00:00', NULL, NULL, NULL, NULL, NULL),
+(235, '', 'Graduate School Student Panel', NULL, '2015-04-16', b'1', 'This workshop serves to give undergraduates insight into how graduate school is, what the application process is like, and things to do to get into professional school.', '06:00:00', NULL, NULL, NULL, NULL, NULL),
+(236, '', 'Rosen College Graduate Program Information Session', NULL, '2015-04-16', b'1', 'Are you ready to take the next step in your career and advance into top-level management roles? Gain your competitive edge at Rosen College. Our graduate programs provide a multifaceted learning experience that will prepare you to achieve your professional goals.<br><br><i>Now offering in person, online and mixed-mode course options for busy professionals!</i>Â  <br><br><ul><li><b>Master of Science in Hospitality &amp; Tourism Management</b> <b>Â </b> </li><li><b>Event Management Graduate Certificate</b> <b>Â </b> </li><li><b>Destination Marketing &amp; Management Graduate Certificate</b> <b>Â </b> </li><li><b>Ph.D. in Hospitality Management</b> Â  </li></ul><br>To learn more, visit <a href="http://www.hospitality.ucf.edu/graduateadmissions" target="">www.hospitality.ucf.edu/graduateadmissions</a> <br>', '06:00:00', NULL, NULL, NULL, NULL, NULL),
+(237, '', 'Symphony Under the Stars', NULL, '2015-04-16', b'1', 'The annual Symphony Under the Stars event is back. Listen to the breathtaking sounds of the UCF Symphony under the open night sky with the luminescent glow of the Reflecting Pond. It is sure to be the source of memories made to last a lifetime.<br>Free and open to the public.', '08:00:00', NULL, NULL, NULL, NULL, NULL),
+(238, '', 'Blood Drive', NULL, '2015-04-17', b'1', 'Blood drives are one of the many ways our Knight family demonstrates its giving spirit.Â  Come join us on the Big Red Bus!Â  <br><br><i>Knights Bleed Black &amp; Gold!Â  </i>Visit <a href="http://BloodDrives-UCF.org" target="">http://BloodDrives-UCF.org</a> for information for students, faculty, and staff regarding drives, events, volunteering, blood donor facts, advocacy, and UCF training and educational opportunities.<br><br>Thank you for making a difference!<br>', '11:30:00', NULL, NULL, NULL, NULL, NULL),
+(239, '', 'JOUST Finals', NULL, '2015-04-17', b'1', 'The $75,000 Joust Business Plan Tournament is UCFâ€™s penultimate showcase for student venture proposals. Students from across the spectrum of academic disciplines compete for cash awards and essential business services needed to launch a venture. Â This event brings together big prizes, big ideas and prominent business leaders to create one of UCFâ€™s most exciting student events.<br>Learn more:Â <a href="http://cel.ucf.edu/joust/" target="">http://cel.ucf.edu/joust/</a><br><br>', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(240, '', 'Lead Out Loud Retreat', NULL, '2015-04-17', b'1', 'The Lead Out Loud Retreat is designed to prepare you for leadership at UCF and beyond.Â  We have planned activities and workshops that will challenge and encourage you to move to the next level in your leadership development.Â  Any individual student is invited to register. We have also designed workshops and set aside time Registered Student Organization E-Boards to prepare and plan for the next academic year.<br><br><br><b>Date: Friday,April 17, 2015</b><br><b><br></b><b>Time: 12:00pm-5:00pm</b><br><b><br>Location: UCF--Libra Community Center</b><b> </b><br><br><br><br>Registration includes general sessions, seminar/workshop materials, meals, conference materials<br><br>â€¢ All individuals registering for the conference waive their right to being videotaped or photographed<br><br>â€¢ Please let us know if you have special dietary needs or disability accommodations<br><br><br><br>Register here: <a href="http://ucf.qualtrics.com//SE/?SID=SV_0eWVvXcKX8LbHX7" target="_blank">http://ucf.qualtrics.com//SE/?SID=SV_0eWVvXcKX8LbHX7</a><br><br><br><br><br>For more information please contact Tava Bingham at Tava.Bingham@ucf.edu<br><br><br><br><br><br>', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(241, '', 'Dress for Success/MASS Closing Ceremony', NULL, '2015-04-17', b'1', 'Have you ever wondered what is and is not appropriate to wear to professional interviews and conferences? This workshop/closing ceremony will host a fashion show to exhibit the do''s and don''ts!', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(242, '', '2015 Retirement & Investment Series: Save More Tomorrow', NULL, '2015-04-17', b'1', 'UCF alumnus Glenn Dial will be sharing a quantifiable way to help you save more for retirement. The SaveÂ More Tomorrow program was developed by Professors Shlomo Benartzi (UCLA) and Richard ThalerÂ (University of Chicago). As Managing Director and Head of US Retirement for Allianz Global Investors, Mr. Â Dialâ€™s purpose is to help every American retire with dignity.Â <i>*Refreshments and door prize provided by TIAA-CREF.<br></i><br>UCF employees can register for each session by logging into Employee Self ServiceÂ at <a href="https://my.ucf.edu" target="">https://my.ucf.edu</a>. Seating is limited, so reserve your spot today!<br><br>COURSE#: RET06, SESSION: 001<br>', '03:00:00', NULL, NULL, NULL, NULL, NULL),
+(243, '', 'UCF Professional MS in Real Estate Information Session', NULL, '2015-04-16', b'1', 'The <b>UCF Professional Master of Science in Real Estate Information Session </b>provides interested candidates with an overview of the program format, curriculum, admission requirements and application process. Admissions staff will be available forÂ questions. For more information or to register, visit <a href="http://business.ucf.edu/degree/professional-ms-real-estate/" target="">http://business.ucf.edu/degree/professional-ms-real-estate/</a>.<a href="http://business.ucf.edu/degree/professional-ms-management-business-analytics-track/" target=""></a>', '09:00:00', NULL, NULL, NULL, NULL, NULL),
+(244, '', 'How to Win Electronsâ€™ Friendship and Make Them Dance for You', NULL, '2015-04-16', b'1', '<b>Dr. Luca Argenti</b><br><b>Universidad AutÃ³noma de Madrid</b><br><br>In the realm of electrons, in atoms and molecules, things happen fast. According to Bohrâ€™s planetary model for the hydrogen atom, for example, the "sidereal year", i.e., the time it takes to the electron to complete the shortest orbit around the nucleus, has the fantastically small duration of 152 attoseconds (as; 1as = 10-18 s).Â  This estimate remains true even when formulated in the language of quantum mechanics. Such ultrafast motion could not be directly confirmed until, at the turn of this century, groundbreaking advancements in laser technology led to the production of flashes of light with sufficiently short duration (the world record is 67 as) to take clear snapshots of it.<br><br>In systems bigger than hydrogen, the same Coulomb force that binds an electron to the nucleus also acts repulsively between electrons. The main effect of such repulsion is to screen the nuclear charge, thus reducing the<br>binding energy of each individual electron. To a first approximation, therefore, in several complex systems, electrons can act as if they were independent. As a result, their motion may appear not much more complicated than the one observed in the hydrogen atom. In fact, most of the experiments carried out so far to follow the electronic movement could set in motion only one electron at a time, thus confirming this picture.<br><br>Electrostatic repulsion, however, has also a secondary, subtler effect. In the same way as a bus passenger avoids not only to sit next to the other passengers, if she can, but also to bump into them as she walks down the isle, electrons try to avoid each other as they move across an atom or a molecule: the motion of the electrons is correlated. Keeping each other at armâ€™s length, electrons minimize their mutual repulsion and, as a consequence, they stabilize the ground state of the atom or molecule to which they belong. Such stabilization influences the energy balance of all natural processes, and is key to our understanding and control of matter, from energy transfer in photosynthetic systems, to the inner workings of futuristic quantum computers.Â  Correlation alters even more dramatically the dynamics in excited states, where pairs of electrons move in unison. Until recently, such concerted motion eluded direct experimental observation. By combining flashes of extreme ultraviolet and visible laser light with a duration of only a few hundred attoseconds and timed very accurately with<br>respect to each other, however, it was eventually shown that monitoring and controlling this motion is in fact possible.<br><br>In this colloquium I will illustrate with examples taken from my research on the helium atom, a prototype of poly-electronic systems, how attosecond spectroscopies have opened the road that leads to the direct observation and control of correlated electronic motion in matter. <br><br>', '10:45:00', NULL, NULL, NULL, NULL, NULL),
+(245, '', 'Written Job Search Communication', NULL, '2015-04-16', b'1', 'Present yourself favorably on paper. Well written applications, cover letters and thank you letters are essential and will distinguish you from the competition.', '11:00:00', NULL, NULL, NULL, NULL, NULL),
+(246, '', 'Blood Drive', NULL, '2015-04-16', b'1', 'Blood drives are one of the many ways our Knight family demonstrates its giving spirit.Â  Come join us on the Big Red Bus!Â  <br><br><i>Knights Bleed Black &amp; Gold!Â  </i>Visit <a href="http://BloodDrives-UCF.org" target="">http://BloodDrives-UCF.org</a> for information for students, faculty, and staff regarding drives, events, volunteering, blood donor facts, advocacy, and UCF training and educational opportunities.<br><br>Thank you for making a difference!<br>', '11:30:00', NULL, NULL, NULL, NULL, NULL),
+(247, '', 'Nonprofit and Public Service Career Showcase', NULL, '2015-04-16', b'1', 'Do you have an interest in careers in the nonprofit, service, and government sectors? Attend the annual Nonprofit &amp; Public Service Career Showcase on April 16 from 12pm to 3pm in the Student Union (Key West Ballroom/Garden Key Meeting Room). Open to UCF students and alumni, this showcase provides you with an opportunity to:<br><ul><li>Find employment, internship, and volunteer opportunities</li><li>Explore various career paths</li><li>Learn about the organizations'' best practicesÂ  </li></ul>Whether you are exploring career options or searching for a position, this showcase is for you. More than 35 organizations will be on hand, including the Department of State, The American Cancer Society, Department of Children and Families, Central Intelligence Agency, Orange County Government, Peace Corps, City Year, and the Urban Teacher Center. For a complete list of organizations, visit career.ucf.edu. This showcase is hosted by <a href="http://career.ucf.edu/" target="_blank">Career Services</a> in collaboration with the <a href="http://www.cohpa.ucf.edu/publicadmin/" target="_blank">School of Public Administration</a> and the <a href="http://www.cohpa.ucf.edu/" target="_blank">College of Health and Public Affairs</a>.<br><br>Questions? Contact Courtney Handy (courtney.handy@ucf.edu; 407-823-4459).<br>', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(248, '', 'Thesis Defense', NULL, '2015-04-16', b'1', '"Modeling<br>and Analysis ofÂ a Three-Species Food Web with Facilitated and Intraguild<br>Predation" presented by Josh<br>Castro', '12:00:00', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `event` (`eid`, `owner`, `name`, `rating`, `date`, `approval`, `description`, `time`, `aid`, `contact_phone`, `contact_email`, `ecid`, `evid`) VALUES
+(249, '', 'How To Close Any Deal', NULL, '2015-04-16', b'1', 'Come out and learn how to successfully close and deal from Brent Henderson, the founder of Party Tutor, UCF''s #1 smartphone app helping college students to party, eat, save and live. Brent will walk students through his process of persuading people and how he has closed many deals using straight line sales techniques. If you need help in selling, this is an event you won''t want to miss!<br><br>Brent Henderson is the founder of Party Tutor, UCF''s #1 smartphone app and website that helps college students find the best places to party, eat, save and live. As of 2015 they have more than 50,000 active users and 30 venue clients. They operate at four university campuses and are looking to expand to five more before the end of 2015.', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(250, '', 'M&S Seminar Series: Theoretical Foundations for Developing Cybersecurity Training', NULL, '2015-04-16', b'1', '<u><b>PRESENTATION OVERVIEW:</b></u>Â  Cybersecurity is a computer term regarding the detection, anticipation, and prevention of computer technologies and peripherals from damage, attack, or unauthorized access. These technologies include the monitoring of networks, programs, applications, and personnel. Cybersecurity can be viewed from both an offensive or defensive posture involving maintaining and proactively assessing security vulnerabilities. In 2013, Eric Snowden used his position as an infrastructure analyst to leak thousands of top-secret classified documents detailing the U.S. Governmentâ€™s global covert surveillance and eavesdropping undertakings to the public. This incident identified the human threat as a contributing factor that highlighted several weaknesses in the present state of U.S. cybersecurity affairs. In efforts to strengthen cyber defenses, a solid theoretical research foundation regarding cyber vulnerabilities is warranted. Building upon that foundation, training and experimentation can provide insight into current cybersecurity training methods and how they can be transitioned and implemented into future training regimens.<br><br><u><b>SPEAKER BIOGRAPHY:</b></u>Â  Mr. Eric Ortiz is a respected leader with over 20 years of experience in the development of digital media content, interactive web-based technologies, military simulations, serious games, and virtual environments (VE). Eric has extensive knowledge in 3D content applications, and VE-related game engines. Additionally, throughout his career, Eric has successfully served as a project manager and also fulfilled the role as the art director for the development of various modeling and simulation (M&amp;S) based research efforts, entertainment-based projects, and interactive online learning and performance solutions for multiple DoD efforts.Â Â  Recently, Eric was selected by the M&amp;S program to complete a certificate program in the Foundations of Cybersecurity as a traveling scholar from the University of Maryland. As part of his dissertation, Eric will leverage the knowledge gained from the certificate program and focus his research on the theoretical foundations for developing cybersecurity training.<br><br><a href="https://www.facebook.com/events/1600065310234843/" target="_blank">Facebook</a> <a href="https://www.linkedin.com/in/ucfmodelingandsimulation" target="_blank">LinkedIn</a><br>', '02:00:00', NULL, NULL, NULL, NULL, NULL),
+(251, '', 'Cornerstone Competition', NULL, '2015-04-16', b'1', 'The Cornerstone Social Entrepreneurship Competition is the lab portion of the Cornerstone course, in which students create teams, develop and implement a business-fundraising plan for a cause of their choice.', '02:00:00', NULL, NULL, NULL, NULL, NULL),
+(252, '', 'Journaling To Self-Discovery (JSD)', NULL, '2015-04-16', b'1', 'Join us for these FREE workshops!<br>Every Thursday from 3:00 PM - 5:00 PM<br> JournalingÂ Â | ArtÂ Â | Self-AssessmentÂ Â  <br> <br> {ALL MATERIALS PROVIDED}', '03:00:00', NULL, NULL, NULL, NULL, NULL),
+(253, '', 'CANCELED: Workers Compensation-PER114 (UCF Faculty & Staff only).', NULL, '2015-04-16', b'1', '(UCF Faculty &amp; Staff only).Â  This free workshop will emphasize topics for supervisors and HR Liaisons who want to learn more about the UCF Workers Compensation Program.Â  It will include topics such are reporting an injury at work, insurance under workers compensation, who is covered, what is a DWC-25, the return to work plan, job modifications and alternate duty, the importance of returning to work as soon as possible.Â  This short 90 minute workshop will provide information on employee benefits for work related injuries or illness.', '03:00:00', NULL, NULL, NULL, NULL, NULL),
+(254, '', 'Central Intelligence Agency Information Session', NULL, '2015-04-16', b'1', 'Please consider joining us for an information session<br>where we plan to discuss CIA''s mission, career opportunities, student programs,<br>and the application process.', '04:00:00', NULL, NULL, NULL, NULL, NULL),
+(255, '', 'Deanâ€™s Excellence Awards Program & Reception', NULL, '2015-04-16', b'1', 'The Annual #UCFBusiness Dean''s Excellence Awards are intended to encourage the continued development of a strong culture of engagement that promotes risk-taking, cross-disciplinary collaboration, and data-driven decision-making.Â <br>Learn more:Â <a href="http://business.ucf.edu/college/annual-deans-excellence-awards/" target="">http://business.ucf.edu/college/annual-deans-excellence-awards/</a><br><br>', '04:00:00', NULL, NULL, NULL, NULL, NULL),
+(256, '', 'UCF Alumni: Denver Networking Knight', NULL, '2015-04-16', b'1', 'Set your DVRs to record your favorite Thursday night show because you aren''t going to want to miss this Networking Knight!Â Join the Denver UCF Alumni Chapter on Thursday, April 16 to wind down the week at Tavern Downtown.<br><br>Meet us at 5 p.m. in yourÂ blackÂ andÂ goldÂ business attire and come ready with your perfect elevator speech. Don''t'' forget your business cards and be sure toÂ <a href="https://www.ucfknightsnetwork.com/denverevents" target="_blank">RSVP</a>.Â Alumni will have a chance to win a great UCF door prize. We hope to see you there!', '05:00:00', NULL, NULL, NULL, NULL, NULL),
+(257, '', 'Brother to Brother Workshop', NULL, '2015-04-16', b'1', 'Being well-rounded means not only doing well in academics, but succeeding outside of the classroom, too. Come learn about ways to get involved on- and off-campus!', '05:00:00', NULL, NULL, NULL, NULL, NULL),
+(258, '', 'How to Start Your Business', NULL, '2015-04-16', b'1', 'This NO COST seminar is designed to help entrepreneurs understand what it takes to start a business, including:<br>â€¢ An introduction to business plans and the importance of preparing one.<br>â€¢ Exploring business entities - sole proprietorship, partnership, corporation, andÂ Limited Liability Corporation<br>â€¢ Determining the local, state, or federal licensing requirements.', '06:00:00', NULL, NULL, NULL, NULL, NULL),
+(259, '', 'Making Sense of the Numbers: Bookkeeping & Tax Basics', NULL, '2015-04-16', b'1', 'A three-hour seminar providing the basic record keeping and tax preparation for yourÂ small business. Topics included chart of accounts, federal &amp; state tax requirements,Â sales tax and tax decisions.For more information and to register, please go to:Â <a href="http://www.sbdcorlando.com/lakecounty" target="">www.sbdcorlando.com/lakecounty</a>Â or click one of the following dates:<br><a href="http://goo.gl/CfohfB" target="_blank">January 15 (North Lake Location)</a><br><a href="http://goo.gl/l8a0sF" target="_blank">January 22Â (South Lake Location)</a><br><a href="http://goo.gl/uOqHjt" target="_blank">April 16 (North Lake Location)</a><br><a href="http://goo.gl/VK5I6k" target="_blank">April 23 (South Lake Location)</a><br><a href="http://goo.gl/GTHnvc" target="_blank">July 16 (North Lake Location)</a><br><a href="http://goo.gl/eS9ka5" target="_blank">July 23 (South Lake Location)</a><br><a href="http://goo.gl/qQvnhO" target="_blank">October 8 (North Lake Location)</a><br><a href="http://goo.gl/5CiuxW" target="_blank">October 15 (South Lake Location)</a><br>', '06:00:00', NULL, NULL, NULL, NULL, NULL),
+(260, '', 'Graduate School Student Panel', NULL, '2015-04-16', b'1', 'This workshop serves to give undergraduates insight into how graduate school is, what the application process is like, and things to do to get into professional school.', '06:00:00', NULL, NULL, NULL, NULL, NULL),
+(261, '', 'Rosen College Graduate Program Information Session', NULL, '2015-04-16', b'1', 'Are you ready to take the next step in your career and advance into top-level management roles? Gain your competitive edge at Rosen College. Our graduate programs provide a multifaceted learning experience that will prepare you to achieve your professional goals.<br><br><i>Now offering in person, online and mixed-mode course options for busy professionals!</i>Â  <br><br><ul><li><b>Master of Science in Hospitality &amp; Tourism Management</b> <b>Â </b> </li><li><b>Event Management Graduate Certificate</b> <b>Â </b> </li><li><b>Destination Marketing &amp; Management Graduate Certificate</b> <b>Â </b> </li><li><b>Ph.D. in Hospitality Management</b> Â  </li></ul><br>To learn more, visit <a href="http://www.hospitality.ucf.edu/graduateadmissions" target="">www.hospitality.ucf.edu/graduateadmissions</a> <br>', '06:00:00', NULL, NULL, NULL, NULL, NULL),
+(262, '', 'Symphony Under the Stars', NULL, '2015-04-16', b'1', 'The annual Symphony Under the Stars event is back. Listen to the breathtaking sounds of the UCF Symphony under the open night sky with the luminescent glow of the Reflecting Pond. It is sure to be the source of memories made to last a lifetime.<br>Free and open to the public.', '08:00:00', NULL, NULL, NULL, NULL, NULL),
+(263, '', 'Blood Drive', NULL, '2015-04-17', b'1', 'Blood drives are one of the many ways our Knight family demonstrates its giving spirit.Â  Come join us on the Big Red Bus!Â  <br><br><i>Knights Bleed Black &amp; Gold!Â  </i>Visit <a href="http://BloodDrives-UCF.org" target="">http://BloodDrives-UCF.org</a> for information for students, faculty, and staff regarding drives, events, volunteering, blood donor facts, advocacy, and UCF training and educational opportunities.<br><br>Thank you for making a difference!<br>', '11:30:00', NULL, NULL, NULL, NULL, NULL),
+(264, '', 'JOUST Finals', NULL, '2015-04-17', b'1', 'The $75,000 Joust Business Plan Tournament is UCFâ€™s penultimate showcase for student venture proposals. Students from across the spectrum of academic disciplines compete for cash awards and essential business services needed to launch a venture. Â This event brings together big prizes, big ideas and prominent business leaders to create one of UCFâ€™s most exciting student events.<br>Learn more:Â <a href="http://cel.ucf.edu/joust/" target="">http://cel.ucf.edu/joust/</a><br><br>', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(265, '', 'Lead Out Loud Retreat', NULL, '2015-04-17', b'1', 'The Lead Out Loud Retreat is designed to prepare you for leadership at UCF and beyond.Â  We have planned activities and workshops that will challenge and encourage you to move to the next level in your leadership development.Â  Any individual student is invited to register. We have also designed workshops and set aside time Registered Student Organization E-Boards to prepare and plan for the next academic year.<br><br><br><b>Date: Friday,April 17, 2015</b><br><b><br></b><b>Time: 12:00pm-5:00pm</b><br><b><br>Location: UCF--Libra Community Center</b><b> </b><br><br><br><br>Registration includes general sessions, seminar/workshop materials, meals, conference materials<br><br>â€¢ All individuals registering for the conference waive their right to being videotaped or photographed<br><br>â€¢ Please let us know if you have special dietary needs or disability accommodations<br><br><br><br>Register here: <a href="http://ucf.qualtrics.com//SE/?SID=SV_0eWVvXcKX8LbHX7" target="_blank">http://ucf.qualtrics.com//SE/?SID=SV_0eWVvXcKX8LbHX7</a><br><br><br><br><br>For more information please contact Tava Bingham at Tava.Bingham@ucf.edu<br><br><br><br><br><br>', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(266, '', 'Dress for Success/MASS Closing Ceremony', NULL, '2015-04-17', b'1', 'Have you ever wondered what is and is not appropriate to wear to professional interviews and conferences? This workshop/closing ceremony will host a fashion show to exhibit the do''s and don''ts!', '12:00:00', NULL, NULL, NULL, NULL, NULL),
+(267, '', '2015 Retirement & Investment Series: Save More Tomorrow', NULL, '2015-04-17', b'1', 'UCF alumnus Glenn Dial will be sharing a quantifiable way to help you save more for retirement. The SaveÂ More Tomorrow program was developed by Professors Shlomo Benartzi (UCLA) and Richard ThalerÂ (University of Chicago). As Managing Director and Head of US Retirement for Allianz Global Investors, Mr. Â Dialâ€™s purpose is to help every American retire with dignity.Â <i>*Refreshments and door prize provided by TIAA-CREF.<br></i><br>UCF employees can register for each session by logging into Employee Self ServiceÂ at <a href="https://my.ucf.edu" target="">https://my.ucf.edu</a>. Seating is limited, so reserve your spot today!<br><br>COURSE#: RET06, SESSION: 001<br>', '03:00:00', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -357,6 +438,7 @@ CREATE TABLE IF NOT EXISTS `event_voters` (
 
 INSERT INTO `event_voters` (`email`, `eid`, `vote`) VALUES
 ('m', 194, 2),
+('m', 213, 5),
 ('s', 194, 5);
 
 -- --------------------------------------------------------
@@ -371,7 +453,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `opened` date DEFAULT NULL,
   `subject` varchar(255) NOT NULL,
   `message` varchar(10000) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `mail`
@@ -392,7 +474,9 @@ INSERT INTO `mail` (`mid`, `sent`, `opened`, `subject`, `message`) VALUES
 (15, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page=6&join=2">Join the group</a>'),
 (16, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page.php?rso=6&join=2">Join the group</a>'),
 (17, '2015-04-12', NULL, 'Invitation to group created 1', 'You have been invited to the group "group created 1" follow the link to join this group\n\n<a href="rso_page.php?rso=6&join=2">Join the group</a>'),
-(18, '2015-04-15', NULL, 'Invitation to 415123', 'You have been invited to the group "415123" follow the link to join this group\n\n<a href="rso_page.php?rso=7&join=2">Join the group</a>');
+(18, '2015-04-15', NULL, 'Invitation to 415123', 'You have been invited to the group "415123" follow the link to join this group\n\n<a href="rso_page.php?rso=7&join=2">Join the group</a>'),
+(19, '2015-04-16', NULL, 'Event pending approval: user event 2', 'user event 2\n324 street street\nMiami FL \n\nContact Phone:\nContact Email\n\n<a href="event_edit?event=216&approve=0">Approve the event</a>\n\n<a href="event_edit?event=216&delete=1">Reject the event</a>'),
+(20, '2015-04-16', NULL, 'Event pending approval: user event 3', 'user event 3\n324 street street\nMiami FL \n\nContact Phone:\nContact Email\n\n<a href="event_edit?event=217&approve=0">Approve the event</a>\n\n<a href="event_edit?event=217&delete=1">Reject the event</a>');
 
 -- --------------------------------------------------------
 
@@ -422,7 +506,8 @@ INSERT INTO `mail_list` (`mid`, `to_user`, `from_user`) VALUES
 (15, 'a@knights.ucf.edu', 'm'),
 (16, 'a@knights.ucf.edu', 'm'),
 (17, 'u1@knights.ucf.edu', 'm'),
-(18, 's', 'm');
+(18, 's', 'm'),
+(20, 'u5@knights.ucf.edu', 'u3@knights.ucf.edu');
 
 -- --------------------------------------------------------
 
@@ -471,7 +556,25 @@ INSERT INTO `rso_event_list` (`rid`, `eid`) VALUES
 (6, 197),
 (7, 198),
 (7, 199),
-(7, 200);
+(7, 200),
+(7, 201),
+(7, 202),
+(7, 203),
+(7, 204),
+(7, 205),
+(7, 206),
+(7, 207),
+(7, 208),
+(7, 209),
+(7, 210),
+(7, 211),
+(7, 212),
+(7, 213),
+(7, 214),
+(1, 215),
+(6, 215),
+(1, 216),
+(6, 216);
 
 -- --------------------------------------------------------
 
@@ -645,33 +748,32 @@ CREATE TABLE IF NOT EXISTS `university_event_list` (
 
 INSERT INTO `university_event_list` (`uid`, `eid`) VALUES
 (5, 17),
-(1, 172),
-(1, 173),
-(1, 174),
-(1, 175),
-(1, 176),
-(1, 177),
-(1, 178),
-(1, 179),
-(1, 180),
-(1, 181),
-(1, 182),
-(1, 183),
-(1, 184),
-(1, 185),
-(1, 186),
-(1, 187),
-(1, 188),
-(1, 189),
-(1, 190),
-(1, 191),
-(1, 192),
-(1, 193),
-(1, 194),
-(1, 195),
-(1, 196),
-(1, 197),
-(2, 197);
+(2, 197),
+(1, 243),
+(1, 244),
+(1, 245),
+(1, 246),
+(1, 247),
+(1, 248),
+(1, 249),
+(1, 250),
+(1, 251),
+(1, 252),
+(1, 253),
+(1, 254),
+(1, 255),
+(1, 256),
+(1, 257),
+(1, 258),
+(1, 259),
+(1, 260),
+(1, 261),
+(1, 262),
+(1, 263),
+(1, 264),
+(1, 265),
+(1, 266),
+(1, 267);
 
 -- --------------------------------------------------------
 
@@ -904,17 +1006,17 @@ ALTER TABLE `userlist`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
+MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=268;
 --
 -- AUTO_INCREMENT for table `event_category`
 --
@@ -929,7 +1031,7 @@ MODIFY `evid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `mail`
 --
 ALTER TABLE `mail`
-MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `rso`
 --
