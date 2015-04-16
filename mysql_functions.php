@@ -128,6 +128,10 @@ function printEventList($event){
 		$datetime = DateTime::createFromFormat("Y-m-d H:i:s", "" . $e['date'] . " " . $e['time'] . "");
 		$date_con = $datetime->format("D, M d, Y");
 		$time_con = $datetime->format("h:i a");
+
+		if(time() > $datetime->getTimestamp()){
+			continue;
+		}
 		?>
 
 		<div id="event_block">
@@ -181,6 +185,7 @@ function printEventList2($rid, $uid, $db){
 }
 
 function printEventList3($email, $db){
+	//print all events from groups and universities this email is a member of
 		$temp = $db->query("SELECT * FROM university_event_list
 		LEFT JOIN event ON university_event_list.eid = event.eid
 		WHERE (university_event_list.uid) IN (
