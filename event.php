@@ -67,6 +67,13 @@ if(isset($_GET)){
 	$temp = $db->query("SELECT * FROM event WHERE (eid) = '" . $eid . "'");
 	$event = $temp->fetch_assoc();
 
+	$datetime = DateTime::createFromFormat("Y-m-d H:i:s", "" . $event['date'] . " " . $event['time'] . "");
+	$date_con = $datetime->format("D, M d, Y");
+	$time_con = $datetime->format("h:i a");
+
+	$event['date'] = $date_con;
+	$event['time'] = $time_con;
+
 	$temp = $db->query("SELECT address.*, state.name FROM address, state
 			WHERE (address.aid) = '" . $event['aid'] . "' && (state.sid) = (address.sid) " );
 	$address = $temp->fetch_assoc();
