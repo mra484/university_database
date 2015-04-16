@@ -62,6 +62,8 @@ if(!empty($_GET)){
 		if( mysqli_num_rows($db->query("SELECT * FROM userlist WHERE (email) = '" . $to_user . "'"))  == 1 ){
 			$sql->execute();
 			$mid = $db->insert_id;
+
+			//link message to users and set invited user's member status to pending
 			$db->query("INSERT INTO mail_list (to_user, from_user, mid)
 			VALUES ('" . $to_user . "', '" . $email . "', '" . $mid . "')");
 			$db->query("INSERT INTO rso_member_list (email, rid, admin) 

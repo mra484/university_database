@@ -39,9 +39,9 @@ if(!empty($_POST)){
 		$univ = $temp->fetch_assoc();
 
 		if(!empty($univ['rss']) ){
-			$db->query("DELETE FROM event WHERE (eid) = 
+			$db->query("DELETE FROM event WHERE (eid) IN 
 				(SELECT eid FROM university_event_list 
-					WHERE (university_list.uid) = '" . $uid . "')");
+					WHERE (university_event_list.uid) = '" . $uid . "')");
 			$db->query("DELETE FROM university_event_list WHERE (university_event_list.uid) = '" . $uid . "'");
 			getRSS($uid, $db);
 		}

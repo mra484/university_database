@@ -196,7 +196,7 @@ if(isset($_GET)){
 
 		<?php } ?>
 			<div id="event_description" >
-				<p><?php echo escape($event['description']); ?></p>
+				<p><?php echo nl2br($event['description']); ?></p>
 			</div>
 
 			<br>

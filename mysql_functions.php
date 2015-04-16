@@ -122,7 +122,7 @@ function printEventList($event){
 	foreach($event as $e){
 		$description = $e['description'];
 		if(strlen($description) > 150 ){
-			$description = substr($description, 0, 150) . ' ...';
+			$description = substr($description, 0, 150) . ' ...</i></b></a></u>';
 		}
 
 		$datetime = DateTime::createFromFormat("Y-m-d H:i:s", "" . $e['date'] . " " . $e['time'] . "");
@@ -203,9 +203,10 @@ function printEventList3($email, $db){
 }
 
 function getRSS($uid, $db){
-	$temp = $db->query("SELECT rss FROM university WHERE (uid) = '" . $uid . "'");
-	$temp2 = $temp->fetch_assoc();
-	$url = $temp2['rss'];
+	$temp = $db->query("SELECT rss, aid FROM university WHERE (uid) = '" . $uid . "'");
+	$univ = $temp->fetch_assoc();
+	$url = $univ['rss'];
+	$aid = trim($univ['aid']);
 	$rss = simplexml_load_file($url);
 	$feed = array();
 
@@ -217,8 +218,8 @@ function getRSS($uid, $db){
 		$date3 = $date2->format('Y-m-d');
 		$time = $date2->format('g:i a');
 
-		$sql = $db->prepare("INSERT INTO event (name, description, date, time, approval) VALUES (?,?,?,?, b'1')");
-		$sql->bind_param('ssss', $title, $desc, $date3, $time);
+		$sql = $db->prepare("INSERT INTO event (name, description, date, time, approval, aid) VALUES (?,?,?,?, b'1', ?)");
+		$sql->bind_param('sssss', $title, $desc, $date3, $time, $aid);
 		if($sql->execute()){
 			$id = $db->insert_id;
 			$db->query("INSERT INTO university_event_list (uid, eid) VALUES ('" . $uid . "', '" . $id . "')");
