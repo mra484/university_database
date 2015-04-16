@@ -113,7 +113,7 @@ if(!empty($_POST['email']) && empty($_POST['distance'])) {
 			case 3:
 			$source = "everywhere";
 			$temp = $db->query("SELECT * FROM event WHERE (eid) > 0
-			&& (evid) = '0' ORDER BY date ASC, time ASC");
+			&& (evid) = '1' ORDER BY date ASC, time ASC");
 			$events = $temp->fetch_all(MYSQLI_ASSOC);
 		}
 	} else {
