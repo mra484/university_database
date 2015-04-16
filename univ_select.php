@@ -9,7 +9,7 @@ if(!empty($_COOKIE)){
 	$email = trim($_COOKIE['user']);
 	$temp = $db->query("SELECT * FROM userlist WHERE (email) = '" . $email . "' LIMIT 1");
 	$user = $temp->fetch_assoc();
-	$temp = $db->query("SELECT * FROM university");
+	$temp = $db->query("SELECT * FROM university WHERE (uid) > 0");
 	$univ = $temp->fetch_all(MYSQLI_ASSOC);
 	
 	} else  {

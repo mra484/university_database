@@ -6,9 +6,11 @@ require 'db/security.php';
 //message on return to this page
 if(!empty($_GET)){
 	if(isset($_GET['result'])){
+		setcookie("user", "", time() - 3600);
 		echo $_GET['result'];
 	}
 }
+
 
 ?>
 
