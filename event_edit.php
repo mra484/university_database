@@ -96,7 +96,7 @@ if(!empty($_POST)){
 			$temp->bind_param('ssss', $street, $city, $state, $p_code);
 			$temp->execute();
 			$aid = $db->insert_id;
-				echo 'successfully updated event';
+				echo 'created new address';
 				$url = "http://maps.google.com/maps/api/geocode/json?address=$address_string&sensor=false";
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $url);
@@ -134,16 +134,16 @@ if(!empty($_POST)){
 					$db->query("UPDATE event SET approval = b'1' where (eid) = '" . $eid . "'");
 				}
 				//created by rso, get list of related university groups
-				$temp = $db->query("SELECT uid FROM university_rso_link WHERE (rid) = '" . $rid . "'");
-				$uid_list = $temp->fetch_all(MYSQLI_ASSOC);
+				// $temp = $db->query("SELECT uid FROM university_rso_link WHERE (rid) = '" . $rid . "'");
+				// $uid_list = $temp->fetch_all(MYSQLI_ASSOC);
 
 				//add rso link to event
 				$db->query("INSERT INTO rso_event_list (eid, rid) VALUES ('" . $eid . "', '" . $rid . "')");
 
 				//add university link to event if present
-				foreach($uid_list as $uid){
-					$db->query("INSERT INTO university_event_list (eid, uid) VALUES ('" . $eid . "', '" . $uid['uid'] . "')");
-				}
+				// foreach($uid_list as $uid){
+				// 	$db->query("INSERT INTO university_event_list (eid, uid) VALUES ('" . $eid . "', '" . $uid['uid'] . "')");
+				// }
 
 
 			} else if($mode == 2){
@@ -174,16 +174,16 @@ if(!empty($_POST)){
 					}
 				}
 				//created by university, get list of related rso groups
-				$temp = $db->query("SELECT rid FROM university_rso_link WHERE (uid) = '" . $uid . "'");
-				$rid_list = $temp->fetch_all(MYSQLI_ASSOC);
+				//$temp = $db->query("SELECT rid FROM university_rso_link WHERE (uid) = '" . $uid . "'");
+				//$rid_list = $temp->fetch_all(MYSQLI_ASSOC);
 
 				//add university link to event
 				$db->query("INSERT INTO university_event_list (eid, uid) VALUES ('" . $eid . "', '" . $uid . "')");
 
 				//add rso link to event if present
-				foreach($rid_list as $rid){
-					$db->query("INSERT INTO rso_event_list (eid, rid) VALUES ('" . $eid . "', '" . $rid['rid'] . "')");
-				}
+				//foreach($rid_list as $rid){
+				//	$db->query("INSERT INTO rso_event_list (eid, rid) VALUES ('" . $eid . "', '" . $rid['rid'] . "')");
+				//}
 			}
 
 		} else {

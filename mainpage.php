@@ -6,7 +6,7 @@ require 'mysql_functions.php';
 
 $records = array();
 
-if(!empty($_POST)) {
+if(!empty($_POST['email']) && empty($_POST['distance'])) {
  	if(isset($_POST['email'], $_POST['password'])) {
 		$email	 = trim($_POST['email']);
 		$password	 = trim($_POST['password']);
@@ -112,9 +112,12 @@ if(!empty($_POST)) {
 			break;
 			case 3:
 			$source = "everywhere";
-			$temp = $db->query("SELECT * FROM event WHERE (eid) > 0 ORDER BY date ASC, time ASC");
+			$temp = $db->query("SELECT * FROM event WHERE (eid) > 0
+			&& (evid) = '0' ORDER BY date ASC, time ASC");
 			$events = $temp->fetch_all(MYSQLI_ASSOC);
 		}
+	} else {
+		header("Location:index.php?result=time_out");
 	}
 ?>
 

@@ -118,6 +118,8 @@ function printEventList($event){
 	if(!count($event)){
 		echo 'no events';
 	}
+
+	$check = 0;
 	
 	foreach($event as $e){
 		$description = $e['description'];
@@ -132,8 +134,8 @@ function printEventList($event){
 		if(time() > $datetime->getTimestamp()){
 			continue;
 		}
+		$check = 1;
 		?>
-
 		<div id="event_block">
 			<h3><a href="event.php?event=<?php echo escape($e['eid']); ?>"><?php echo escape($e['name']); ?></h3></a>
 			<?php echo escape($date_con); ?> at <?php echo escape($time_con); ?> <br><br>
@@ -141,38 +143,39 @@ function printEventList($event){
 		</div>
 		<?php
 	}
+	if($check == 0){ echo 'no events'; }
 }
 
 function printEventList2($rid, $uid, $db){
 	if($rid == NULL){
-		//look for university events linked to this rso
+		//look for visible events from rso event list that are related to this univ
 		$temp = $db->query(
 		"SELECT * FROM university_event_list
 		LEFT JOIN event ON university_event_list.eid = event.eid
-		WHERE (university_event_list.uid) = '" . $uid . "'
+		WHERE (university_event_list.uid) = '" . $uid . "' && (event.evid) != 2
 		UNION
 		SELECT * FROM rso_event_list
 		LEFT JOIN event ON rso_event_list.eid = event.eid
-		WHERE EXISTS (
+		WHERE (event.evid) != 2 && EXISTS (
 			SELECT * FROM university_rso_link
 			WHERE (uid) = '" . $uid . "' && (rid) = (rso_event_list.rid))
 		");
 		
 	} else if ($uid == NULL){
-		//look for visible events from rso event list that are related to this univ
+		//look for university events linked to this rso
 		$temp = $db->query(
 		"SELECT * FROM rso_event_list
 		LEFT JOIN event ON rso_event_list.eid = event.eid
-		WHERE (rso_event_list.rid) = '" . $rid . "'
+		WHERE (rso_event_list.rid) = '" . $rid . "' && (event.evid) != 3
 		UNION
 		SELECT * FROM rso_event_list
 		LEFT JOIN event ON rso_event_list.eid = event.eid
-		WHERE (rso_event_list.rid) = '" . $rid . "'
+		WHERE (rso_event_list.rid) = '" . $rid . "' && (event.evid) != 3
 			&& (SELECT COUNT(rid) from rso_member_list where (rid) = '" . $rid . "') > 4
 		UNION
 		SELECT * FROM university_event_list
 		LEFT JOIN event ON university_event_list.eid = event.eid
-		WHERE EXISTS (
+		WHERE (event.evid) != 3 && EXISTS (
 			SELECT * FROM university_rso_link
 			WHERE (rid) = '" . $rid . "' && (uid) = (university_event_list.uid))
 		ORDER BY date ASC, time ASC
